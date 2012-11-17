@@ -36,3 +36,13 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem "thin", ">= 1.5.0"
+gem "haml", ">= 3.1.7"
+gem "haml-rails", ">= 0.3.5", :group => :development
+gem "hpricot", ">= 0.8.6", :group => :development
+gem "ruby_parser", ">= 3.0.1", :group => :development
+gem "compass-rails", ">= 1.0.3", :group => :assets
+gem "zurb-foundation", ">= 3.2.0", :group => :assets
+gem "devise", ">= 2.1.2"
+gem "simple_form", ">= 2.0.4"
