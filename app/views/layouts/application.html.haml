@@ -12,8 +12,10 @@
     #container.container
       %header
         = render 'layouts/navigation'
-        = render 'layouts/messages'
-      #main{:role => "main"}
-        = yield
+        .six.columns.centered
+          = render 'layouts/messages'
+      .six.columns.centered
+        #main{:role => "main"}
+          = yield
       %footer
     / ! end of #container

@@ -1,0 +1,5 @@
+<p>Welcome <%= @resource.email %> to MIT Event+!</p>
+
+<p>Thanks for registering an account with us. Please confirm your student group wishes to start an account by clicking the following confirmation link</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
