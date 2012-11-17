@@ -1,0 +1,12 @@
+%h1 Events
+.six.columns.centered
+  %table.table
+    %thead
+      %tr
+        %th Title
+        %th Location
+    %tbody
+      %tr
+        - @user.events.each do |event|
+          %td event.title
+          %td event.location
