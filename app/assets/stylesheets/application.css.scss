@@ -12,6 +12,9 @@
  *= require foundation_and_overrides
  *= require_tree .
 */
+
+@import 'foundation-icons';
+
 ul.nav {
   list-style: none;
   margin: 0 0 2em;
