@@ -1,29 +1,31 @@
-%h3 Events
-.event-table
-  .six.columns.centered
-    %bootstrap
-      %table.table
-        %thead
-          %tr
-            %th Title
-            %th Location
-        %tbody
-          - @user.events.each do |event|
-            - if event.title
-              %tr
-                %td 
-                  = event.title
-                %td
-                  = event.location
+.six.columns
+  #calendar
 
-%fieldset 
-  %legend Create Event
-  = simple_form_for(@event, :html => {:class => 'form-vertical' }) do |f|
-    .six.columns
-      = f.input :title, :autofocus => true
-    .six.columns
-      = f.input :location
-    %ul.right
-      = f.button :submit, "Create", :class => 'small button'
+.six.columns
+  %h3 Events
+  .event-table
+    .six.columns.centered
+      %bootstrap
+        %table.table
+          %thead
+            %tr
+              %th Title
+              %th Location
+          %tbody
+            - @user.events.each do |event|
+              - if event.title
+                %tr
+                  %td 
+                    = event.title
+                  %td
+                    = event.location
 
-#calendar
+  %fieldset 
+    %legend Create Event
+    = simple_form_for(@event, :html => {:class => 'form-vertical' }) do |f|
+      .six.columns
+        = f.input :title, :autofocus => true
+      .six.columns
+        = f.input :location
+      %ul.right
+        = f.button :submit, "Create", :class => 'small button'

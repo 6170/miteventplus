@@ -14,8 +14,7 @@
         = render 'layouts/navigation'
         .six.columns.centered
           = render 'layouts/messages'
-      .six.columns.centered
-        #main{:role => "main"}
-          = yield
+      #main{:role => "main"}
+        = yield
       %footer
     / ! end of #container

@@ -7,7 +7,7 @@ Please put it here: http://test.herokuapp.com
 
 ###Notes
 
-Any instructions or notes for your grader should be placed here.
+To populate the database with the ASA database info, run "rake import"
 
 ###Code Deliverables
 
