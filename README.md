@@ -7,7 +7,9 @@ Please put it here: http://test.herokuapp.com
 
 ###Notes
 
-To populate the database with the ASA database info, run "rake import"
+- To populate the database with the ASA database info, run "rake import" after rake db:migrate
+- The email account used for the mailer is miteventplus@gmail.com (pw is risd@mit)
+- A test group is included in the database: eventplus@mit.edu
 
 ###Code Deliverables
 
