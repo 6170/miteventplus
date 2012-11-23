@@ -9,7 +9,13 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
   
   # Validation that email is in ASA student group exec DB
-  validates_inclusion_of :email, :in => AsaDb.find(:all).collect(&:email), :message => "is not a valid ASA student group officer mailing list."
+  validate :must_be_asa_group_email
   
   has_many :events
+
+  def must_be_asa_group_email
+    if not AsaDb.find(:all).collect(&:email).include?(email)
+      errors.add(:email, "is not a valid ASA student group officer mailing list.")
+    end
+  end
 end

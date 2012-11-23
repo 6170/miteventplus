@@ -154,6 +154,7 @@ GEM
       sass (>= 3.2.0)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
