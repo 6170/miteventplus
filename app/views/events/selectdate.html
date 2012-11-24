@@ -24,19 +24,11 @@
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end, allDay) { //do something here
-				/*var title = prompt('Event Title:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
+				var correct_date = confirm('Are you sure you want ' + start.toDateString());
+				if (correct_date) {
+					$('event_time_tab').click;
 				}
-				calendar.fullCalendar('unselect');*/
+				calendar.fullCalendar('unselect');
 			},
 			editable: false,
 			events: [ //this is where all of the events go

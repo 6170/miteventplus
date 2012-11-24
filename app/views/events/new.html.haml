@@ -1,2 +1,48 @@
-%h1 Events#new
-%p Find me in app/views/events/new.html.haml
+
+%dl.tabs
+   %dd.active
+      %a{:href => '#details', :id => 'event_details_tab'} Event Details
+   %dd
+      %a{:href => '#date', :id => 'event_date_tab'} Pick a Date
+   %dd
+      %a{:href => '#time', :id => 'event_time_tab'} Pick a Time
+   %dd
+      %a{:href => '#finalize', :id => 'event_finalize_tab'} Finalize Event
+%ul.tabs-content
+   %li.active#detailsTab 
+      .row
+         .ten.columns.offset-by-two
+            %h4 Event Information
+      .row
+         .nine.columns.offset-by-three
+            %form
+               .row
+                  .two.columns
+                     %label.right.inline Title:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight'}
+               .row
+                  .two.columns
+                     %label.right.inline Location:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight'}
+               .row
+                  .two.columns
+                     %label.right.inline Description:
+                  .ten.columns
+                     %textarea
+   %li#dateTab
+      #calendar
+   %li#timeTab
+      #agendacalendar
+   %li#finalizeTab
+%br
+.row
+   .two.columns
+      %a << Back
+   .two.columns.offset-by-eight
+      %a Next >>
+
+
+   
+      
