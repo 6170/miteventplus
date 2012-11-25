@@ -15,13 +15,12 @@
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		
-		var calendar = $('#agendacalendar').fullCalendar({
+		var calendar = $('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
 				center: 'New Event',
-				right: 'agendaDay'
+				right: 'month'
 			},
-			defaultView: 'agendaDay',
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end, allDay) { //do something here
