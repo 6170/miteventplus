@@ -1,14 +1,25 @@
 .six.columns.centered
   %h2 
-    Edit #{resource_name.to_s.humanize}
+    Edit Account Info
   = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-vertical' }) do |f|
     = f.error_notification
-    = f.input :name, :autofocus => true
+    
+    %hr
+    %h5 Club Information
+    = f.input :club_name, :autofocus => true
     = f.input :email, :required => true
-    = f.input :password, :autocomplete => "off", :placeholder => "leave blank to keep password", :required => false
-    = f.input :password_confirmation, :required => false
-    = f.input :current_password, :placeholder => "we need your current password to confirm your changes", :required => true
+    
+    %hr
+    %h5 Change Password
+    = f.input :password, :autocomplete => "off", :placeholder => "Leave this field blank to keep your current password.", :required => false
+    = f.input :password_confirmation, :placeholder => "Leave this field blank to keep your current password.", :required => false
+
+    %hr
+    %h5 Save Changes
+    = f.input :current_password, :placeholder => "Type your current password to save changes.", :required => true
     = f.button :submit, 'Update', :class => 'button'
+
+  %hr
   %h3 Cancel my account
   %p
     Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete}.

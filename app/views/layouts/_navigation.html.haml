@@ -10,6 +10,8 @@
       %li
         = link_to 'Login', new_user_session_path
     - else
+      %li
+        = link_to "Welcome, "+ current_user.club_name + "!", "#"
       %li.has-dropdown
         %a.active{:href => "#"}
           %i.general.foundicon-settings 
