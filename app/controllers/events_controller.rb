@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    current_user.events.create(params[:event])
+
     redirect_to user_path(current_user);
   end
 

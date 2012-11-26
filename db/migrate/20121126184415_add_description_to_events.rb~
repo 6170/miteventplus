@@ -1,0 +1,4 @@
+class AddDescriptionToEvents < ActiveRecord::Migration
+  def change
+  end
+end
