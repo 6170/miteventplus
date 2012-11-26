@@ -3,4 +3,6 @@ Risd::Application.routes.draw do
   devise_for :users
   resources :users, :only => [:index, :update, :destroy, :show]
   resources :events
+
+  match "/user/events" => "users#events", :as => "user_events"
 end

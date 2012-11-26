@@ -1,0 +1,16 @@
+.six.columns.centered
+  %h2= "Events for " + current_user.club_name
+  %table.twelve
+    %thead
+      %tr
+        %th Title
+        %th Location
+        %th Edit
+        %th Delete
+    %tbody
+      - current_user.events.each do |event|
+        %tr
+          %td= event.title
+          %td= event.location
+          %td= link_to "Edit", event, :class => "small success button"
+          %td= link_to "Delete", event, method: :delete, data: {confirm: 'Are you sure?' }, :class => "small alert button"

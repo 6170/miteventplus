@@ -11,12 +11,14 @@
         = link_to 'Login', new_user_session_path
     - else
       %li
-        = link_to "Welcome, "+ current_user.club_name + "!", "#"
+        = link_to "Welcome, "+ current_user.club_name + "!", "#", :onclick => "return false;"
       %li.has-dropdown
         %a.active{:href => "#"}
           %i.general.foundicon-settings 
-          Account 
+          Account
         %ul.dropdown{:style => "width: 117px;"}
+          %li
+            = link_to "Your Events", user_events_path
           %li
             = link_to 'Edit account', edit_user_registration_path
           %li
