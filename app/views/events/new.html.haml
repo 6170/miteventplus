@@ -20,22 +20,56 @@
                   .two.columns
                      %label.right.inline Title:
                   .ten.columns
-                     %input{:type => 'text', :class => 'eight'}
+                     %input{:type => 'text', :class => 'eight event_input_field', :id => 'title'}
                .row
                   .two.columns
                      %label.right.inline Location:
                   .ten.columns
-                     %input{:type => 'text', :class => 'eight'}
+                     %input{:type => 'text', :class => 'eight event_input_field', :id => 'location'}
                .row
                   .two.columns
                      %label.right.inline Description:
                   .ten.columns
-                     %textarea
+                     %textarea{:class => 'event_input_field', :id => 'description'}
    %li#dateTab
-      #calendar
+      #event_calendar
    %li#timeTab
       #agendacalendar
    %li#finalizeTab
+      .row
+         .ten.columns.offset-by-two
+            %h4 Event Summary
+      .row
+         .nine.columns.offset-by-three
+            %form
+               .row
+                  .two.columns
+                     %label.right.inline Title:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'title', :id => 'title_s'}
+               .row
+                  .two.columns
+                     %label.right.inline Location:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'location', :id => 'location_s'}
+               .row
+                  .two.columns
+                     %label.right.inline Description:
+                  .ten.columns
+                     %textarea{:readonly => 'readonly', :name => 'description', :id => 'description_s'}
+               .row
+                  .two.columns
+                     %label.right.inline Start Date:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'start_time', :id => 'start_date_s'}
+               .row
+                  .two.columns
+                     %label.right.inline End Date:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'end_time', :id => 'end_date_s'}
+               .row
+                  .two.columns.offset-by-ten
+                     %input{:type => 'submit'}
 %br
 .row
    .two.columns

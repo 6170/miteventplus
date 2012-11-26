@@ -22,6 +22,9 @@
 				right: 'month'
 			},
 			selectable: true,
+                        dayClick: function() {
+                              alert('a day has been clicked!');
+                        },
 			selectHelper: true,
 			select: function(start, end, allDay) { //do something here
 				var correct_date = confirm('Are you sure you want ' + start.toDateString());
