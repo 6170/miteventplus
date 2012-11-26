@@ -10,8 +10,10 @@ class EventsController < ApplicationController
   end
 
   def create
-
-    redirect_to user_path(current_user);
+    start_date = DateTime.parse(params[:start_date]+params[:start_time])
+    end_date = DateTime.parse(params[:end_date]+params[:end_time])
+    current_user.events.create(:title => params[:title], :location => params[:location], :description => params[:description]).time_block.create(:starttime => start_date, :endtime => end_date)
+    redirect_to user_path(current_user)
   end
 
   def destroy
