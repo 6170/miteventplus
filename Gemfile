@@ -23,3 +23,4 @@ gem "thin", ">= 1.5.0"
 gem "haml", ">= 3.1.7"
 gem "devise", ">= 2.1.2"
 gem "simple_form", ">= 2.0.4"
+gem 'savon'
