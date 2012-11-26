@@ -1,16 +1,19 @@
 .six.columns.centered
   %h2= "Events for " + current_user.club_name
-  %table.twelve
-    %thead
-      %tr
-        %th Title
-        %th Location
-        %th Edit
-        %th Delete
-    %tbody
-      - current_user.events.each do |event|
+  - if current_user.events.count != 0
+    %table.twelve
+      %thead
         %tr
-          %td= event.title
-          %td= event.location
-          %td= link_to "Edit", event, :class => "small success button"
-          %td= link_to "Delete", event, method: :delete, data: {confirm: 'Are you sure?' }, :class => "small alert button"
+          %th Title
+          %th Location
+          %th Edit
+          %th Delete
+      %tbody
+        - current_user.events.each do |event|
+          %tr
+            %td= event.title
+            %td= event.location
+            %td= link_to "Edit", event, :class => "small success button"
+            %td= link_to "Delete", event, method: :delete, data: {confirm: 'Are you sure?' }, :class => "small alert button"
+  - else
+    %h4 You don't have any events listed, create one to get started!
