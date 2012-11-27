@@ -7,8 +7,7 @@ var date = new Date();
 var d = date.getDate();
 var m = date.getMonth();
 var y = date.getFullYear();
-var start_date_json;
-var end_date_json;
+var current_start_date = new Date();
 		
 var calendar = $('#event_calendar').fullCalendar({
 	header: {
@@ -17,13 +16,12 @@ var calendar = $('#event_calendar').fullCalendar({
 		right: 'month'
 	},
 	selectable: true,
-	selectHelper: true, 
+	selectHelper: true,
 	select: function(start, end, allDay) { //do something here
 	    var correct_date = confirm('Are you sure you want your event to start on ' + start.toLocaleDateString() + '?');
 		if (correct_date) {
 		    $('#event_time_tab').click();
-		    start_date_json = start.toJSON();
-		    end_date_json = end.toJSON();
+		    current_start_date = start;
 		    start_date = start.toLocaleDateString();
 		    end_date = end.toLocaleDateString();
 		    $('#start_date_s').val(start_date);
@@ -31,6 +29,7 @@ var calendar = $('#event_calendar').fullCalendar({
 		}
 		calendar.fullCalendar('unselect');
 	},
+    events: '/events/1',
 	editable: false
 		});
     var agenda_calendar = $('#agenda_calendar').fullCalendar({
@@ -40,6 +39,10 @@ var calendar = $('#event_calendar').fullCalendar({
 				right: 'agendaDay'
 			},
 			defaultView: 'agendaDay',
+	year: current_start_date.getFullYear(),
+        month: current_start_date.getMonth(),
+        day: current_start_date.getDay(), 
+                        events: '/events/1',
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end, allDay) { //do something here
@@ -53,13 +56,13 @@ var calendar = $('#event_calendar').fullCalendar({
 			    }
 				agenda_calendar.fullCalendar('unselect');
 			},
-			editable: false,
-			events: []
+			editable: false
 		});		
     
     $('.event_input_field').focusout(function(){
 	var summary_page_id = '#'+$(this).attr("id") + '_s';
 	$(summary_page_id).val($(this).val());
     });
+    
 
 });
