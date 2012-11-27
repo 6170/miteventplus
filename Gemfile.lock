@@ -137,6 +137,7 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 1.1.0)
       wasabi (~> 2.5.0)
+    sexp_processor (4.1.2)
     simple_form (2.0.4)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -187,6 +188,7 @@ DEPENDENCIES
   ruby_parser (>= 3.0.1)
   sass-rails (~> 3.2.3)
   savon
+  sexp_processor (~> 4.1)
   simple_form (>= 2.0.4)
   sqlite3
   thin (>= 1.5.0)
