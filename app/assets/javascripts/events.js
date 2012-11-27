@@ -63,5 +63,6 @@ var calendar = $('#event_calendar').fullCalendar({
 	var summary_page_id = '#'+$(this).attr("id") + '_s';
 	$(summary_page_id).val($(this).val());
     });
+    
 
 });
