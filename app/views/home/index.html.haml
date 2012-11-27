@@ -40,12 +40,3 @@
       = f.input :password, :required => true, :placeholder => "Pick a good password"
       = f.input :password_confirmation, :required => true, :placeholder => "Type it again!"
       = f.button :submit, 'Sign up', :class => 'button'
-
-#loginModal.reveal-modal.medium
-  %h2 Sign in
-  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-vertical' }) do |f|
-    = f.input :email, :autofocus => true, :placeholder => "Club exec email"
-    = f.input :password
-    = f.input :remember_me, :as => :boolean if devise_mapping.rememberable?
-    = f.button :submit, "Sign in", :class => 'button'
-  = render "devise/shared/links"
