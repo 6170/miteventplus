@@ -1,0 +1,72 @@
+%dl.tabs
+   %dd.active
+      %a{:href => '#date', :id => 'event_date_tab'} Pick a Date
+   %dd
+      %a{:href => '#time', :id => 'event_time_tab'} Pick a Time
+   %dd
+      %a{:href => '#finalize', :id => 'event_finalize_tab'} Save Event
+%ul.tabs-content
+   %li#dateTab
+      #event_calendar
+         %br
+         .row
+            .two.columns.offset-by-ten
+               %a{:class => 'time_tab_button small button'} Next >>
+   %li#timeTab
+      #agenda_calendar
+      %br
+      .row
+         .two.columns
+            %a{:class => 'date_tab_button small button'} << Back
+         .two.columns.offset-by-eight
+            %a{:class => 'finalize_tab_button small button'} Next >>
+   %li#finalizeTab
+      .row
+         .ten.columns.offset-by-two
+            %h4 Save Event
+      .row
+         .nine.columns.offset-by-three
+            %form{:name => 'event_form', :method => 'POST', :action => '/settime/'+ @event.id.to_s}
+               .row
+                  .two.columns
+                     %label.right.inline Title:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'title', :id => 'title_s', :value => @event.title}
+               .row
+                  .two.columns
+                     %label.right.inline Location:
+                  .ten.columns
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'location', :id => 'location_s, :value => @event.location'}
+               .row
+                  .two.columns
+                     %label.right.inline Description:
+                  .ten.columns
+                     %textarea{:readonly => 'readonly', :class => 'eight', :name => 'description', :id => 'description_s', :value => @event.description}
+               .row
+                  .two.columns
+                     %label.right.inline Start Date:
+                  .ten.columns
+                     .row
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'start_date', :id => 'start_date_s'}
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'start_time', :id => 'start_time_s'}
+               .row
+                  .two.columns
+                     %label.right.inline End Date:
+                  .ten.columns
+                     .row
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'end_date', :id => 'end_date_s'}
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'end_time', :id => 'end_time_s'}
+               .row
+                  .three.columns.offset-by-nine
+                    
+               %br
+               .row
+                  .two.columns
+                     %a{:class => 'time_tab_button small button'} << Back
+                  .two.columns.offset-by-eight
+                     %input{:type => 'submit', :value => 'Save Event'}
+

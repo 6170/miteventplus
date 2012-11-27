@@ -41,10 +41,27 @@ class EventsController < ApplicationController
     event.id = Event.last.id + 1
     event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
     event.save
-    
+
     event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
     event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
     event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "publicity")
     redirect_to :root
+  end
+
+  #Route: GET '/settime/:id'
+  def new_time
+    @event = Event.find(params[:id])
+  end
+  #Route: POST '/settime/:id'
+  def set_time
+    this_event = Event.find(params[:id])
+    parse = '%m/%d/%Y %I:%M:%S %p'
+    start_date = DateTime.strptime(params[:start_date]+' '+params[:start_time], parse)
+    end_date = DateTime.strptime(params[:end_date]+' '+params[:end_time], parse)
+    this_time_block = this_event.time_block
+    this_time_block.starttime = start_date
+    this_time_block.endtime = end_date
+    this_time_block.save
+    redirect_to '/'
   end
 end
