@@ -72,4 +72,8 @@ $(document).ready(function() {
 		  }
 		]
 	});
+
+  $("#loginModalButton").click(function() {
+    $("#loginModal").reveal();
+  });
 });

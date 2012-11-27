@@ -1,3 +1,42 @@
-.six.columns.centered
-  %h1 Home#index
-  %p Find me in app/views/home/index.html.haml
+.eight.columns
+  %h2 MIT Event+
+  %h4.subtitle The Solution to MIT Event Planning
+  %hr
+  .no-bullet-area
+    %ul
+      %li
+        %i.general.foundicon-checkmark
+        %span.description  
+          %span.bold
+            Event planning checklist.
+          Streamline the event planning process with an easy to use and customizable checklist.
+      %li
+        %i.general.foundicon-calendar
+        %span.description
+          %span.bold
+            MIT Event Calendar Integration. 
+          Quickly see when other events are planned so yours is at the optimal time.
+      %li
+        %i.general.foundicon-cart
+        %span.description
+          %span.bold
+            Yelp Integration.
+        Search Yelp to quickly choose a restaraunt for your event. Filter by location, price, and more!
+      %li
+        %i.general.foundicon-page
+        %span.description
+          %span.bold
+            MIT CopyTech Integration.
+        Easily send poster orders to CopyTech to help publicize your event.
+      %li
+        = "... and more! All in one easy to use web application."
+.four.columns
+  .panel
+    %h2 Sign up now!
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-vertical' }) do |f|
+      = f.error_notification
+      = f.input :club_name, :placeholder => "Type your club's name"
+      = f.input :email, :required => true, :placeholder => "Your club's exec email list - this will be verified"
+      = f.input :password, :required => true, :placeholder => "Pick a good password"
+      = f.input :password_confirmation, :required => true, :placeholder => "Type it again!"
+      = f.button :submit, 'Sign up', :class => 'button'

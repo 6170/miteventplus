@@ -50,11 +50,36 @@ ul.nav li {
   background-color: #FCC;
   border: solid 1px #C66;
 }
+.subtitle {
+  color: #616161;
+  font-size:20px;
+  font-weight:bold;
+}
+.bold {
+  font-weight:bold;
+}
+
+i {
+  font-size: 30px;
+  color: #616161;
+  vertical-align:middle !important;
+  margin-right: 8px;
+}
+
+.no-bullet-area {
+  ul, li {
+    list-style-type: none;
+  }
+}
 
 #main {
   padding: 30px;
   width: 90%;
   margin: 0 auto;
+}
+
+.description {
+  display:inline;
 }
 
 // Bootstrap Table CSS
