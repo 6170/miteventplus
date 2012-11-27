@@ -24,15 +24,27 @@ class EventsController < ApplicationController
     end_date = DateTime.strptime(params[:end_date]+' '+params[:end_time], parse)
     event = Event.create(:title => params[:title], :location => params[:location], :description => params[:description]).create_time_block(:starttime => start_date, :endtime => end_date)
 
-    event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "location")
-    event.checklist_items.create(:text => "Pick a restaraunt to cater food for your event.", :tag => "food")
-    event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "publicity")
-
     redirect_to '/'
   end
 
   def destroy
     Event.find(params[:id]).delete
     redirect_to :back
+  end
+
+  def new_event
+    @event = Event.new
+  end
+
+  def create_event
+    event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
+    event.id = Event.last.id + 1
+    event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
+    event.save
+    
+    event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "location")
+    event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
+    event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "publicity")
+    redirect_to :root
   end
 end

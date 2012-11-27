@@ -5,6 +5,9 @@ Risd::Application.routes.draw do
   resources :events
   resources :checklist_items
 
+
+  match "/create_event" => "events#create_event", :method => :post
+  match "/new_event" => "events#new_event"
   match "/user/events" => "users#events", :as => "user_events"
   match "/checklist_item/:id/toggle_checked" => "checklist_items#toggle_checked", :method => :post
 end
