@@ -1,8 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :user
   has_one :time_block
-  has_many :checklist_items
-  attr_accessible :title, :location, :description, :user_id
+  attr_accessible :title, :location, :description
   validate :ensure_event_is_unique
 
   def ensure_event_is_unique
@@ -23,28 +22,3 @@ class Event < ActiveRecord::Base
   	end
   end
 end
-
-=begin
-
-Savon event pulling	
-
-# Gets events from clubs/interest groups from start_date to end_date. 
-client = Savon.client("http://events.mit.edu/MITEventsFull.wsdl")
-response = client.request :mns, :get_category_events do
-  soap.namespaces["xmlns:mns"] = "http://events.mit.edu/MIT/Events/EventManager"
-  soap.body = {
-  	:category_id => 7,
-  	:start_date => "2012/11/26",
-  	:end_date => "2012/11/26"
-  }
-end
-items = response.body[:get_category_events_response][:array][:item]
-items.each do |item|
-  item[:description]
-  item[:start]
-  item[:end]
-  item[:location]
-  item[:infomail]
-end
-
-=end
