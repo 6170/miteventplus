@@ -1,8 +1,8 @@
 .eight.columns.centered
-  %h1= current_user.club_name + " Dashboard"
+  %h1 Events Dashboard
   %hr
 
-  = button_to "Create New Event", "/new_event", :class => "success button"
+  = button_to "+ Create New Event", "/new_event", :class => "success button"
   .no-bullet-area
     %ul
       - if current_user.events.count == 0
@@ -13,8 +13,8 @@
           .panel.radius
             %li{:class => "#{index == 0 ? 'active' : ''}"}
               .title
-                %h3= event.title
-                %h5.subtitle= event.location
+                %h3
+                  = event.title
               %hr
               .content
                 %div{:id => "existing-checklist-items-" + event.id.to_s}
@@ -23,16 +23,19 @@
                       %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
                       - if checklist_item.tag == 'datetime'
                         %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
-                        = link_to checklist_item.text, "/settime/#{event.id}"
+                        = link_to checklist_item.text, "/settime/#{event.id}", :class => "datetime-link"
                       - else
                         %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
                           = checklist_item.text
                       %span.right-align
-                        = link_to "Delete", "#", :id => checklist_item.id.to_s, :class => "delete-checklist-item"
+                        = link_to "Delete", "#", :id => checklist_item.id.to_s, :class => "delete-checklist-item", data: {confirm: "Are you sure you want to delete this checklist item?"}
                       %br
                 = form_tag do
                   %i{:class => "general foundicon-plus", :style => "padding-left:10px;"}
                   = text_field_tag(event.id, nil, :placeholder => 'Type in a new checklist item for this event.', :class => "new-checklist-item")
+              .footer
+                %hr
+                = link_to "Delete Event", event, method: :delete, data: {confirm: 'Are you sure?' }
 
 
 :javascript
@@ -61,7 +64,7 @@
           var div_start = '<div id="checklist-item-' + data.id + '" style="padding-left:10px;">'
           var icon_code = '<i class="general foundicon-remove unchecked" id="' + data.id + '"></i>'
           var text_code = '<span class="bold">&nbsp;' + text + '</span>'
-          var delete_button = '<span class="right-align"><a href="#" class="delete-checklist-item" id="' + data.id + '">Delete</a></span>'
+          var delete_button = '<span class="right-align"><a href="#" class="delete-checklist-item" id="' + data.id + '" data-confirm="Are you sure you want to delete this checklist item?">Delete</a></span>'
           var ending = '<br></div>'
           $(div_start + icon_code + text_code + delete_button + ending).hide().appendTo("#existing-checklist-items-" + event_id).fadeIn(800);
         }, this)
