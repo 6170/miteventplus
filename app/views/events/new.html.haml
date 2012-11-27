@@ -1,59 +1,29 @@
 %dl.tabs
    %dd.active
-      %a{:href => '#details', :id => 'event_details_tab'} Event Details
-   %dd
       %a{:href => '#date', :id => 'event_date_tab'} Pick a Date
    %dd
       %a{:href => '#time', :id => 'event_time_tab'} Pick a Time
    %dd
-      %a{:href => '#finalize', :id => 'event_finalize_tab'} Finalize Event
+      %a{:href => '#finalize', :id => 'event_finalize_tab'} Save Event
 %ul.tabs-content
-   %li.active#detailsTab 
-      .row
-         .ten.columns.offset-by-two
-            %h4 Event Information
-      .row
-         .nine.columns.offset-by-three
-            %form
-               .row
-                  .two.columns
-                     %label.right.inline Title:
-                  .ten.columns
-                     %input{:type => 'text', :class => 'eight event_input_field', :id => 'title'}
-               .row
-                  .two.columns
-                     %label.right.inline Location:
-                  .ten.columns
-                     %input{:type => 'text', :class => 'eight event_input_field', :id => 'location'}
-               .row
-                  .two.columns
-                     %label.right.inline Description:
-                  .ten.columns
-                     %textarea{:class => 'event_input_field', :id => 'description', :class => 'eight'}
-      %br
-      .row
-         .two.columns.offset-by-ten
-            %a{:href => '#finalize'} Next >>
    %li#dateTab
       #event_calendar
          %br
          .row
-            .two.columns
-               %a{:href => '#details'} << Back
-            .two.columns.offset-by-eight
-               %a{:href => '#time'} Next >>
+            .two.columns.offset-by-ten
+               %a{:class => 'time_tab_button small button'} Next >>
    %li#timeTab
       #agenda_calendar
       %br
       .row
          .two.columns
-            %a{:href => '#date'} << Back
+            %a{:class => 'date_tab_button small button'} << Back
          .two.columns.offset-by-eight
-            %a{:href => '#finalize'} Next >>
+            %a{:class => 'finalize_tab_button small button'} Next >>
    %li#finalizeTab
       .row
          .ten.columns.offset-by-two
-            %h4 Event Summary
+            %h4 Save Event
       .row
          .nine.columns.offset-by-three
             %form{:name => 'event_form', :method => 'POST', :action => '/events'}
@@ -96,7 +66,7 @@
                %br
                .row
                   .two.columns
-                     %a{:href => '#time'} << Back
+                     %a{:class => 'time_tab_button small button'} << Back
                   .two.columns.offset-by-eight
                      %input{:type => 'submit', :value => 'Create Event'}
 

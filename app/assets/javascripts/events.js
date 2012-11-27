@@ -92,7 +92,18 @@ function toFormattedDateString(x){
 		var summary_page_id = '#'+$(this).attr("id") + '_s';
 		$(summary_page_id).val($(this).val());
     });
-
+    $('.details_tab_button').click(function(){
+	$('#event_details_tab').click();
+    });
+    $('.date_tab_button').click(function(){
+	$('#event_date_tab').click();
+    });
+    $('.time_tab_button').click(function(){
+	$('#event_time_tab').click();
+    });
+    $('.finalize_tab_button').click(function(){
+	$('#event_finalize_tab').click();
+    });
     
     
 });
