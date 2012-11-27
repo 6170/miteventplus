@@ -17,16 +17,13 @@
 //= require_tree ../fullcalendar
 
 $(document).ready(function() {
-  $("#loginModalButton").click(function() {
-    $("#loginModal").reveal();
-  });
 	
   var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();
 	var y = date.getFullYear();
 
-	$('#calendar').fullCalendar({
+	$('#event_calendar').fullCalendar({
 		editable: true,
 		events: [
 		  {
@@ -74,5 +71,8 @@ $(document).ready(function() {
 		    url: 'http://google.com/'
 		  }
 		]
+	});
+	$("#loginModalButton").click(function() {
+		$("#loginModal").reveal();
 	});
 });
