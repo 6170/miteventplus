@@ -52,7 +52,7 @@ function toFormattedDateString(x){
 				$('#start_date_s').val(start_date);
 				$('#end_date_s').val(end_date);
 			}
-			calendar.fullCalendar('unselect');
+			calendar.fullCalendar('destroy');
 		},
 		events: '/events/1',
 		editable: false
@@ -60,13 +60,14 @@ function toFormattedDateString(x){
     var agenda_calendar = $('#agenda_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
-			center: 'title',
+			center: '',
 			right: ''
 		},
 		defaultView: 'resourceDay',
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
         day: current_start_date.getDay(), 
+        gotoDate: current_start_date,
 		events: '/events/1',
 		selectable: true,
 		selectHelper: true,
@@ -85,7 +86,7 @@ function toFormattedDateString(x){
 		firstDay: 1,
 		minTime: 8,
 		maxTime:16,
-		resources: [{"name":"New Event","id":"resource2"}]
+		resources: [{"name":"Select Time","id":"newevent"}]
 	});		
     
     $('.event_input_field').focusout(function(){
