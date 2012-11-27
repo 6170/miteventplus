@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126184829) do
+ActiveRecord::Schema.define(:version => 20121127031136) do
 
   create_table "asa_dbs", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(:version => 20121126184829) do
   end
 
   add_index "asa_dbs", ["email"], :name => "index_asa_dbs_on_email"
+
+  create_table "checklist_items", :force => true do |t|
+    t.text     "text"
+    t.boolean  "checked",    :default => false
+    t.integer  "event_id",                      :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "tag"
+  end
 
   create_table "events", :force => true do |t|
     t.string   "title"

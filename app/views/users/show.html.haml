@@ -3,12 +3,18 @@
   %hr
 
   %ul.accordion
-    - current_user.events.each_with_index do |event, index|
+    - current_user.events.reverse.each_with_index do |event, index|
       %li{:class => "#{index == 0 ? 'active' : ''}"}
         .title
           %h5= event.title
         .content
-          = event.location
+          = form_tag do
+            - event.checklist_items.each do |checklist_item|
+              = check_box_tag( "HI" )
+              = event.location
+              = checklist_item.text
+              = checklist_item.event_id
+              = checklist_item.checked.to_s
 
 
 -#
