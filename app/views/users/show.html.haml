@@ -1,31 +1,63 @@
-.six.columns
-  #calendar
+.eight.columns.centered
+  %h1= current_user.club_name + " Dashboard"
+  %hr
 
-.six.columns
-  %h3 Events
-  .event-table
-    .six.columns.centered
-      %bootstrap
-        %table.table
-          %thead
-            %tr
-              %th Title
-              %th Location
-          %tbody
-            - @user.events.each do |event|
-              - if event.title
-                %tr
-                  %td 
-                    = event.title
-                  %td
-                    = event.location
+  .no-bullet-area
+    %ul
+      - current_user.events.reverse.each_with_index do |event, index|
+        .panel
+          %li{:class => "#{index == 0 ? 'active' : ''}"}
+            .title
+              %h3= event.title
+              %h5.subtitle= event.location
+            .content
+              - event.checklist_items.each do |checklist_item|
+                %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
+                %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                  = checklist_item.text
+                %br
 
-  %fieldset 
-    %legend Create Event
-    = simple_form_for(@event, :html => {:class => 'form-vertical' }) do |f|
-      .six.columns
-        = f.input :title, :autofocus => true
-      .six.columns
-        = f.input :location
-      %ul.right
-        = f.button :submit, "Create", :class => 'small button'
+:javascript
+  $(".foundicon-checkmark, .foundicon-remove").click(function() {
+    $.ajax({
+      type: "POST",
+      url: "/checklist_item/" + $(this).attr("id") + "/toggle_checked",
+      success: $.proxy(function() {
+        $(this).toggleClass("foundicon-checkmark foundicon-remove").toggleClass("checked unchecked");
+        $(this).next().toggleClass("strikethrough bold");
+      }, this)
+    });
+  });
+
+-#
+  .six.columns
+    #calendar
+
+  .six.columns
+    %h3 Events
+    .event-table
+      .six.columns.centered
+        %bootstrap
+          %table.table
+            %thead
+              %tr
+                %th Title
+                %th Location
+            %tbody
+              - @user.events.each do |event|
+                - if event.title
+                  %tr
+                    %td 
+                      = event.title
+                    %td
+                      = event.location
+
+    %fieldset 
+      %legend Create Event
+      = simple_form_for(@event, :html => {:class => 'form-vertical' }) do |f|
+        .six.columns
+          = f.input :title, :autofocus => true
+        .six.columns
+          = f.input :location
+        %ul.right
+          = f.button :submit, "Create", :class => 'small button'

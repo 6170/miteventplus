@@ -33,14 +33,14 @@
    %li#dateTab
       #event_calendar
    %li#timeTab
-      #agendacalendar
+      #agenda_calendar
    %li#finalizeTab
       .row
          .ten.columns.offset-by-two
             %h4 Event Summary
       .row
          .nine.columns.offset-by-three
-            %form
+            %form{:name => 'event_form', :method => 'POST', :action => '/events'}
                .row
                   .two.columns
                      %label.right.inline Title:
@@ -55,20 +55,28 @@
                   .two.columns
                      %label.right.inline Description:
                   .ten.columns
-                     %textarea{:readonly => 'readonly', :name => 'description', :id => 'description_s'}
+                     %textarea{:readonly => 'readonly', :class => 'eight', :name => 'description', :id => 'description_s'}
                .row
                   .two.columns
                      %label.right.inline Start Date:
                   .ten.columns
-                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'start_time', :id => 'start_date_s'}
+                     .row
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'start_date', :id => 'start_date_s'}
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'start_time', :id => 'start_time_s'}
                .row
                   .two.columns
                      %label.right.inline End Date:
                   .ten.columns
-                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'end_time', :id => 'end_date_s'}
+                     .row
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'end_date', :id => 'end_date_s'}
+                        .six.columns
+                           %input{:type => 'text', :readonly => 'readonly', :name => 'end_time', :id => 'end_time_s'}
                .row
-                  .two.columns.offset-by-ten
-                     %input{:type => 'submit'}
+                  .three.columns.offset-by-nine
+                     %input{:type => 'submit', :value => 'Create Event'}
 %br
 .row
    .two.columns
