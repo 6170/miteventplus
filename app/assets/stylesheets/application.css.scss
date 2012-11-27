@@ -58,12 +58,24 @@ ul.nav li {
 .bold {
   font-weight:bold;
 }
+.strikethrough {
+  text-decoration:line-through;
+  font-weight:bold;
+}
 
 i {
   font-size: 30px;
   color: #616161;
   vertical-align:middle !important;
   margin-right: 8px;
+}
+
+.checked {
+  color: #88cf4f;
+}
+
+.unchecked {
+  color: #ff7578;
 }
 
 .no-bullet-area {
