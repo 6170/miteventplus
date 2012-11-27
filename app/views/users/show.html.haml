@@ -22,6 +22,7 @@
     $.ajax({
       type: "POST",
       url: "/checklist_item/" + $(this).attr("id") + "/toggle_checked",
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: $.proxy(function() {
         $(this).toggleClass("foundicon-checkmark foundicon-remove").toggleClass("checked unchecked");
         $(this).next().toggleClass("strikethrough bold");

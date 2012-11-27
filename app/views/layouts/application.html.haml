@@ -1,6 +1,7 @@
 !!!
 %html
   %head
+    = csrf_meta_tag
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
       %title= content_for?(:title) ? yield(:title) : "MIT Event+"
       %meta{:content => content_for?(:description) ? yield(:description) : "Risd", :name => "description"}
