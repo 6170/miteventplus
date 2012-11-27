@@ -11,10 +11,10 @@ class ChecklistItemsController < ApplicationController
   end
 
   def create
-    start_date = DateTime.parse(params[:start_date]+params[:start_time])
-    end_date = DateTime.parse(params[:end_date]+params[:end_time])
-    current_user.events.create(:title => params[:title], :location => params[:location], :description => params[:description]).time_block.create(:starttime => start_date, :endtime => end_date)
-    redirect_to user_path(current_user)
+    @new_item = ChecklistItem.create(:text => params[:text], :event_id => params[:event_id])
+    respond_to do |format|
+      format.json{ render :json => @new_item}
+    end
   end
 
   def destroy

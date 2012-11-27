@@ -4,30 +4,58 @@
 
   .no-bullet-area
     %ul
-      - current_user.events.reverse.each_with_index do |event, index|
+      - if current_user.events.count == 0
         .panel
-          %li{:class => "#{index == 0 ? 'active' : ''}"}
-            .title
-              %h3= event.title
-              %h5.subtitle= event.location
-            .content
-              - event.checklist_items.each do |checklist_item|
-                %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
-                %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
-                  = checklist_item.text
-                %br
+          %h3.subtitle You currently don't have any events - make one!
+      - else
+        - current_user.events.reverse.each_with_index do |event, index|
+          .panel
+            %li{:class => "#{index == 0 ? 'active' : ''}"}
+              .title
+                %h3= event.title
+                %h5.subtitle= event.location
+              .content
+                %div{:class => "existing-checklist-items-" + event.id.to_s}
+                  - event.checklist_items.each do |checklist_item|
+                    %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
+                    %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                      = checklist_item.text
+                    %br
+                = form_tag do
+                  %i.general.foundicon-plus
+                  = text_field_tag(event.id, nil, :placeholder => 'Type in a new checklist item for this event.', :class => "new-checklist-item")
+
 
 :javascript
-  $(".foundicon-checkmark, .foundicon-remove").click(function() {
+  $(".foundicon-checkmark, .foundicon-remove").live('click', function() {
     $.ajax({
       type: "POST",
       url: "/checklist_item/" + $(this).attr("id") + "/toggle_checked",
-      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: $.proxy(function() {
         $(this).toggleClass("foundicon-checkmark foundicon-remove").toggleClass("checked unchecked");
         $(this).next().toggleClass("strikethrough bold");
       }, this)
     });
+  });
+
+  $(".new-checklist-item").keypress(function(e) {
+    if (e.which == 13) {
+      var event_id = $(this).attr('id');
+      var text = $(this).val();
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: "/checklist_items",
+        data: "text=" + text + "&event_id=" + event_id,
+        success: $.proxy(function(data) {
+          $(this).val('');
+          var icon_code = '<i class="general foundicon-remove unchecked" id="' + data.id + '"></i>'
+          var text_code = '<span class="bold">' + text + '</span>'
+          var ending = '<br>'
+          $(".existing-checklist-items-" + event_id).append(icon_code + text_code + ending);
+        }, this)
+      });
+    }
   });
 
 -#
