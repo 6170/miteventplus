@@ -17,11 +17,7 @@
 //= require_tree ../fullcalendar
 
 $(document).ready(function() {
-  $("#loginModalButton").click(function() {
-    $("#loginModal").reveal();
-  });
-	
-  var date = new Date();
+	var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();
 	var y = date.getFullYear();
@@ -75,4 +71,8 @@ $(document).ready(function() {
 		  }
 		]
 	});
+
+  $("#loginModalButton").click(function() {
+    $("#loginModal").reveal();
+  });
 });
