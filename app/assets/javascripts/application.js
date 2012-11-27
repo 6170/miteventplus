@@ -26,7 +26,7 @@ $(document).ready(function() {
 	var m = date.getMonth();
 	var y = date.getFullYear();
 
-	$('#event_calendar').fullCalendar({
+	$('#calendar').fullCalendar({
 		editable: true,
 		events: [
 		  {
