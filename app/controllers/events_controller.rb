@@ -6,6 +6,7 @@ class EventsController < ApplicationController
     start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
     events = []
+    resources = []
     TimeBlock.where(:starttime => (start_time...end_time)).each do |t|
       e = t.event
       events << {:id => e.id, :title => e.title, :allDay => false, :start => t.starttime, :end => t.endtime}

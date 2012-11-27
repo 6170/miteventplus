@@ -13,7 +13,7 @@ var current_start_date = new Date();
 		header: {
 			left: 'prev,next today',
 			center: 'New Event',
-			right: 'month'
+			right: ''
 		},
 		selectable: true,
 		selectHelper: true,
@@ -35,10 +35,10 @@ var current_start_date = new Date();
     var agenda_calendar = $('#agenda_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
-			center: 'New Event',
-			right: 'agendaDay'
+			center: 'title',
+			right: ''
 		},
-		defaultView: 'agendaDay',
+		defaultView: 'resourceDay',
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
         day: current_start_date.getDay(), 
@@ -56,8 +56,12 @@ var current_start_date = new Date();
 			    }
 				agenda_calendar.fullCalendar('unselect');
 			},
-			editable: false
-		});		
+		editable: false,
+		firstDay: 1,
+		minTime: 8,
+		maxTime:16,
+		resources: [{"name":"New Event","id":"resource2"}]
+	});		
     
     $('.event_input_field').focusout(function(){
 		var summary_page_id = '#'+$(this).attr("id") + '_s';
