@@ -64,5 +64,18 @@ var calendar = $('#event_calendar').fullCalendar({
 	$(summary_page_id).val($(this).val());
     });
     
-
+    // Keep track of the active tab
+    var event_creation_state = 'event_details_tab'
+    $('#event_details_tab').click(function (){
+	event_creation_state = 'event_details_tab';
+    });
+    $('#event_date_tab').click(function (){
+	event_creation_state = 'event_date_tab';
+    });
+    $('#event_time_tab').click(function (){
+	event_creation_state = 'event_time_tab';
+    });
+    $('#event_finalize_tab').click(function (){
+	event_creation_state = 'event_finalize_tab';
+    });
 });

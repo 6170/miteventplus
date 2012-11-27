@@ -30,11 +30,27 @@
                   .two.columns
                      %label.right.inline Description:
                   .ten.columns
-                     %textarea{:class => 'event_input_field', :id => 'description'}
+                     %textarea{:class => 'event_input_field', :id => 'description', :class => 'eight'}
+      %br
+      .row
+         .two.columns.offset-by-ten
+            %a{:href => '#finalize'} Next >>
    %li#dateTab
       #event_calendar
+         %br
+         .row
+            .two.columns
+               %a{:href => '#details'} << Back
+            .two.columns.offset-by-eight
+               %a{:href => '#time'} Next >>
    %li#timeTab
       #agenda_calendar
+      %br
+      .row
+         .two.columns
+            %a{:href => '#date'} << Back
+         .two.columns.offset-by-eight
+            %a{:href => '#finalize'} Next >>
    %li#finalizeTab
       .row
          .ten.columns.offset-by-two
@@ -77,13 +93,13 @@
                            %input{:type => 'text', :readonly => 'readonly', :name => 'end_time', :id => 'end_time_s'}
                .row
                   .three.columns.offset-by-nine
+                    
+               %br
+               .row
+                  .two.columns
+                     %a{:href => '#time'} << Back
+                  .two.columns.offset-by-eight
                      %input{:type => 'submit', :value => 'Create Event'}
-%br
-.row
-   .two.columns
-      %a << Back
-   .two.columns.offset-by-eight
-      %a Next >>
 
 
    
