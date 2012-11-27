@@ -1,7 +1,8 @@
 class Event < ActiveRecord::Base
   belongs_to :user
   has_one :time_block
-  attr_accessible :title, :location, :description
+  has_many :checklist_items
+  attr_accessible :title, :location, :description, :tag
   validate :ensure_event_is_unique
 
   def ensure_event_is_unique
