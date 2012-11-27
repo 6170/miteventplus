@@ -19,7 +19,7 @@ class ChecklistItemsController < ApplicationController
 
   def destroy
     ChecklistItem.find(params[:id]).delete
-    redirect_to :back
+    render :text => "Success!"
   end
 
   def toggle_checked

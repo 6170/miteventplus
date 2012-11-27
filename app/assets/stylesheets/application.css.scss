@@ -62,6 +62,13 @@ ul.nav li {
   text-decoration:line-through;
   font-weight:bold;
 }
+.right-align {
+  float:right;
+}
+.delete-checklist-item {
+  display:none;
+  vertical-align:middle;
+}
 
 i {
   font-size: 30px;

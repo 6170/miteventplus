@@ -15,14 +15,17 @@
                 %h3= event.title
                 %h5.subtitle= event.location
               .content
-                %div{:class => "existing-checklist-items-" + event.id.to_s}
+                %div{:id => "existing-checklist-items-" + event.id.to_s}
                   - event.checklist_items.each do |checklist_item|
-                    %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
-                    %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
-                      = checklist_item.text
-                    %br
+                    %div{:id => "checklist-item-" + checklist_item.id.to_s, :style => "padding-left:10px;"}
+                      %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
+                      %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                        = checklist_item.text
+                      %span.right-align
+                        = link_to "Delete", "#", :id => checklist_item.id.to_s, :class => "delete-checklist-item"
+                      %br
                 = form_tag do
-                  %i.general.foundicon-plus
+                  %i{:class => "general foundicon-plus", :style => "padding-left:10px;"}
                   = text_field_tag(event.id, nil, :placeholder => 'Type in a new checklist item for this event.', :class => "new-checklist-item")
 
 
@@ -49,13 +52,43 @@
         data: "text=" + text + "&event_id=" + event_id,
         success: $.proxy(function(data) {
           $(this).val('');
+          var div_start = '<div id="checklist-item-' + data.id + '" style="padding-left:10px;">'
           var icon_code = '<i class="general foundicon-remove unchecked" id="' + data.id + '"></i>'
-          var text_code = '<span class="bold">' + text + '</span>'
-          var ending = '<br>'
-          $(".existing-checklist-items-" + event_id).append(icon_code + text_code + ending);
+          var text_code = '<span class="bold">&nbsp;' + text + '</span>'
+          var delete_button = '<span class="right-align"><a href="#" class="delete-checklist-item" id="' + data.id + '">Delete</a></span>'
+          var ending = '<br></div>'
+          $(div_start + icon_code + text_code + delete_button + ending).hide().appendTo("#existing-checklist-items-" + event_id).fadeIn(800);
         }, this)
       });
     }
+  });
+
+  $(".delete-checklist-item").live('click', function() {
+    var checklist_id = $(this).attr('id');
+    $.ajax({
+      type: "DELETE",
+      url: "/checklist_items/" + checklist_id,
+      success: $.proxy(function() {
+        $("#checklist-item-" + checklist_id).fadeOut(300, function() {
+          $(this).remove();
+        })
+      }, this)
+    });
+
+    return false;
+  });
+
+  $("div[id|='checklist-item']").live({
+    mouseenter:
+      function() {
+        $("a", this).show();
+        $(this).css("background", '#e0e0e0');
+      },
+    mouseleave:
+      function() {
+        $("a", this).hide();
+        $(this).css("background", 'transparent');
+      }
   });
 
 -#
