@@ -10,8 +10,8 @@ var y = date.getFullYear();
 var current_start_date = new Date();
 
 function toFormattedDateString(x){
-	m = String(x.getMonth());
-	d = String(x.getDay());
+	m = String(x.getMonth()+1);
+	d = String(x.getDate());
         y = String(x.getFullYear());
 	if (m.length < 2){ m = '0'+m;}
 	if (d.length < 2){ d = '0'+d;}
