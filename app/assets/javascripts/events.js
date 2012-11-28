@@ -52,7 +52,7 @@ function toFormattedDateString(x){
 				$('#start_date_s').val(start_date);
 				$('#end_date_s').val(end_date);
 			}
-			calendar.fullCalendar('unselect');
+			calendar.fullCalendar('destroy');
 		},
 		events: '/events/1',
 		editable: false
