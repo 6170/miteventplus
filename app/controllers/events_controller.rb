@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
     event.save
     
-    event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "location")
+    event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
     event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
     event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "publicity")
     redirect_to :root
