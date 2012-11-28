@@ -87,12 +87,12 @@
   $("div[id|='checklist-item']").live({
     mouseenter:
       function() {
-        $("a", this).show();
+        $("a.delete-checklist-item", this).show();
         $(this).css("background", '#e0e0e0');
       },
     mouseleave:
       function() {
-        $("a", this).hide();
+        $("a.delete-checklist-item", this).hide();
         $(this).css("background", 'transparent');
       }
   });
