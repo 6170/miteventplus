@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+
   def index
   end
 
@@ -24,7 +25,7 @@ class EventsController < ApplicationController
     end_date = DateTime.strptime(params[:end_date]+' '+params[:end_time], parse)
     event = Event.create(:title => params[:title], :location => params[:location], :description => params[:description]).create_time_block(:starttime => start_date, :endtime => end_date)
 
-    redirect_to '/'
+    redirect_to :root
   end
 
   def destroy
@@ -52,6 +53,7 @@ class EventsController < ApplicationController
   def new_time
     @event = Event.find(params[:id])
   end
+
   #Route: POST '/settime/:id'
   def set_time
     this_event = Event.find(params[:id])
@@ -62,6 +64,9 @@ class EventsController < ApplicationController
     this_time_block.starttime = start_date
     this_time_block.endtime = end_date
     this_time_block.save
-    redirect_to '/'
+
+    this_event.checklist_items.where(:tag => "datetime")[0].set_checked_true
+
+    redirect_to :root
   end
 end

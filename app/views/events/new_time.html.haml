@@ -26,7 +26,7 @@
             %h4 Save Event
       .row
          .nine.columns.offset-by-three
-            %form{:name => 'event_form', :method => 'POST', :action => '/settime/'+ @event.id.to_s}
+            %form{:name => 'event_form', :method => 'POST', :url => '/settime/'+ @event.id.to_s}
                .row
                   .two.columns
                      %label.right.inline Title:
@@ -69,4 +69,5 @@
                      %a{:class => 'time_tab_button small button'} << Back
                   .two.columns.offset-by-eight
                      %input{:type => 'submit', :value => 'Save Event'}
+                  %input{:name => "authenticity_token", :value => form_authenticity_token, :type => 'hidden'}
 
