@@ -63,7 +63,7 @@ function toFormattedDateString(x){
 			center: 'title',
 			right: ''
 		},
-		defaultView: 'agendaDay',
+		defaultView: 'resourceDay',
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
         day: current_start_date.getDay(), 
@@ -83,10 +83,10 @@ function toFormattedDateString(x){
 				agenda_calendar.fullCalendar('unselect');
 			},
 		editable: false,
-		/*firstDay: 1,
+		firstDay: 1,
 		minTime: 8,
 		maxTime:16,
-		resources: [{"name":"Select Time","id":"newevent"}]*/
+		resources: [{"name":"Select Time","id":"newevent"}]
 	});		
     
     $('.event_input_field').focusout(function(){
