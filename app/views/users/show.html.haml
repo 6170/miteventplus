@@ -2,7 +2,7 @@
   %h1= current_user.club_name + " Dashboard"
   %hr
 
-  = link_to "Create New Event", "/new_event"
+  = button_to "Create New Event", "/new_event", :class => "success button"
   .no-bullet-area
     %ul
       - if current_user.events.count == 0
@@ -21,8 +21,12 @@
                   - event.checklist_items.each do |checklist_item|
                     %div{:id => "checklist-item-" + checklist_item.id.to_s, :style => "padding-left:10px;"}
                       %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
-                      %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
-                        = checklist_item.text
+                      - if checklist_item.tag == 'datetime'
+                        %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                        = link_to checklist_item.text, "/events/new"
+                      - else
+                        %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                          = checklist_item.text
                       %span.right-align
                         = link_to "Delete", "#", :id => checklist_item.id.to_s, :class => "delete-checklist-item"
                       %br

@@ -18,6 +18,21 @@ function toFormattedDateString(x){
 	answer = m + '/'+d+'/'+y;
 	return answer;
     }
+    function toFormattedTimeString(x){
+	h = x.getHours();
+	PM = false;
+	if (h > 12) {h = h - 12; PM = true;}
+	h = String(h);
+	m = String(x.getMinutes());
+        s = String(x.getSeconds());
+	if (h.length < 2){ h = '0'+h;}
+	if (m.length < 2){ m = '0'+m;}
+	if (d.length < 2){ d = '0'+d;}
+	answer = h + ':'+m+':'+d+ " ";
+	if (PM) { answer += 'PM';}
+	else    { answer += 'AM';}
+	return answer;
+    }
 
 	var calendar = $('#event_calendar').fullCalendar({
 		header: {
@@ -37,7 +52,7 @@ function toFormattedDateString(x){
 				$('#start_date_s').val(start_date);
 				$('#end_date_s').val(end_date);
 			}
-			calendar.fullCalendar('unselect');
+			calendar.fullCalendar('destroy');
 		},
 		events: '/events/1',
 		editable: false
@@ -45,13 +60,14 @@ function toFormattedDateString(x){
     var agenda_calendar = $('#agenda_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
-			center: 'title',
+			center: '',
 			right: ''
 		},
 		defaultView: 'resourceDay',
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
         day: current_start_date.getDay(), 
+        gotoDate: current_start_date,
 		events: '/events/1',
 		selectable: true,
 		selectHelper: true,
@@ -59,8 +75,8 @@ function toFormattedDateString(x){
 			var correct_time = confirm('Are you sure you want your event to start at ' + start.toLocaleTimeString() + '?');
 				if (correct_time) {
 					$('#event_finalize_tab').click();
-					start_time = start.toLocaleTimeString();
-					end_time = end.toLocaleTimeString();
+				    start_time = toFormattedTimeString(start);
+				    end_time = toFormattedTimeString(end);
 					$('#start_time_s').val(start_time);
 					$('#end_time_s').val(end_time);
 			    }
@@ -70,7 +86,7 @@ function toFormattedDateString(x){
 		firstDay: 1,
 		minTime: 8,
 		maxTime:16,
-		resources: [{"name":"New Event","id":"resource2"}]
+		resources: [{"name":"Select Time","id":"newevent"}]
 	});		
     
     $('.event_input_field').focusout(function(){
