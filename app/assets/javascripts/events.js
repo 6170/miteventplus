@@ -8,7 +8,17 @@ var d = date.getDate();
 var m = date.getMonth();
 var y = date.getFullYear();
 var current_start_date = new Date();
-		
+
+function toFormattedDateString(x){
+	m = String(x.getMonth());
+	d = String(x.getDay());
+        y = String(x.getFullYear());
+	if (m.length < 2){ m = '0'+m;}
+	if (d.length < 2){ d = '0'+d;}
+	answer = m + '/'+d+'/'+y;
+	return answer;
+    }
+
 	var calendar = $('#event_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -22,10 +32,10 @@ var current_start_date = new Date();
 			if (correct_date) {
 				$('#event_time_tab').click();
 				current_start_date = start;
-				start_date = start.toLocaleDateString();
-				end_date = end.toLocaleDateString();
+				start_date = toFormattedDateString(start);
+				end_date = toFormattedDateString(end);
 				$('#start_date_s').val(start_date);
-						$('#end_date_s').val(end_date);
+				$('#end_date_s').val(end_date);
 			}
 			calendar.fullCalendar('unselect');
 		},
@@ -68,5 +78,7 @@ var current_start_date = new Date();
 		var summary_page_id = '#'+$(this).attr("id") + '_s';
 		$(summary_page_id).val($(this).val());
     });
+
+    
     
 });
