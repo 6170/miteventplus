@@ -37,7 +37,7 @@ function toFormattedDateString(x){
 	var calendar = $('#event_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
-			center: 'New Event',
+			center: 'title',
 			right: ''
 		},
 		selectable: true,
@@ -60,7 +60,7 @@ function toFormattedDateString(x){
     var agenda_calendar = $('#agenda_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
-			center: '',
+			center: 'title',
 			right: ''
 		},
 		defaultView: 'resourceDay',
@@ -93,9 +93,12 @@ function toFormattedDateString(x){
 		var summary_page_id = '#'+$(this).attr("id") + '_s';
 		$(summary_page_id).val($(this).val());
     });
-    $('.details_tab_button').click(function(){
-	$('#event_details_tab').click();
-    });
+ 
+
+    $('#event_time_tab').click(function(){
+    	$('#agenda_calendar').fullCalendar('render');
+    })
+
     $('.date_tab_button').click(function(){
 	$('#event_date_tab').click();
     });
@@ -105,6 +108,5 @@ function toFormattedDateString(x){
     $('.finalize_tab_button').click(function(){
 	$('#event_finalize_tab').click();
     });
-    
-    
+
 });
