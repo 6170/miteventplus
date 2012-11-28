@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/*/
 
-$(document).ready(function(){
+$(document).one('ready', function () {
 var date = new Date();
 var d = date.getDate();
 var m = date.getMonth();
@@ -10,8 +10,8 @@ var y = date.getFullYear();
 var current_start_date = new Date();
 
 function toFormattedDateString(x){
-	m = String(x.getMonth());
-	d = String(x.getDay());
+	m = String(x.getMonth()+1);
+	d = String(x.getDate());
         y = String(x.getFullYear());
 	if (m.length < 2){ m = '0'+m;}
 	if (d.length < 2){ d = '0'+d;}
@@ -63,7 +63,7 @@ function toFormattedDateString(x){
 			center: 'title',
 			right: ''
 		},
-		defaultView: 'resourceDay',
+		defaultView: 'agendaDay',
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
         day: current_start_date.getDay(), 
@@ -83,10 +83,10 @@ function toFormattedDateString(x){
 				agenda_calendar.fullCalendar('unselect');
 			},
 		editable: false,
-		firstDay: 1,
+		/*firstDay: 1,
 		minTime: 8,
 		maxTime:16,
-		resources: [{"name":"Select Time","id":"newevent"}]
+		resources: [{"name":"Select Time","id":"newevent"}]*/
 	});		
     
     $('.event_input_field').focusout(function(){

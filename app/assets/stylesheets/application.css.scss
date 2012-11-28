@@ -64,7 +64,7 @@ ul.nav li {
 }
 .right-align {
   float:right;
-  padding-top:12px;
+  padding-top:5px;
   padding-right:8px;
 }
 .delete-checklist-item {
@@ -83,10 +83,16 @@ i {
 
 .checked {
   color: #88cf4f;
+  font-size:20px;
 }
 
 .unchecked {
   color: #ff7578;
+  font-size: 20px;
+}
+
+.add {
+  font-size: 20px;
 }
 
 .no-bullet-area {

@@ -16,7 +16,7 @@
 //= require_tree .
 //= require_tree ../fullcalendar
 
-$(document).ready(function() {
+$(document).one('ready', function () {
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
