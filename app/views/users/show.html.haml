@@ -2,6 +2,7 @@
   %h1= current_user.club_name + " Dashboard"
   %hr
 
+  = link_to "Create New Event", "/new_event"
   .no-bullet-area
     %ul
       - if current_user.events.count == 0
@@ -9,11 +10,12 @@
           %h3.subtitle You currently don't have any events - make one!
       - else
         - current_user.events.reverse.each_with_index do |event, index|
-          .panel
+          .panel.radius
             %li{:class => "#{index == 0 ? 'active' : ''}"}
               .title
                 %h3= event.title
                 %h5.subtitle= event.location
+              %hr
               .content
                 %div{:id => "existing-checklist-items-" + event.id.to_s}
                   - event.checklist_items.each do |checklist_item|
