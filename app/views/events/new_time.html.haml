@@ -6,7 +6,7 @@
    %dd
       %a{:href => '#finalize', :id => 'event_finalize_tab'} Save Event
 %ul.tabs-content
-   %li#dateTab.active
+   %li#dateTab
       #event_calendar
          %br
          .row
@@ -26,22 +26,22 @@
             %h4 Save Event
       .row
          .nine.columns.offset-by-three
-            %form{:name => 'event_form', :method => 'POST', :action => '/events'}
+            %form{:name => 'event_form', :method => 'POST', :url => '/settime/'+ @event.id.to_s}
                .row
                   .two.columns
                      %label.right.inline Title:
                   .ten.columns
-                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'title', :id => 'title_s'}
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'title', :id => 'title_s', :value => @event.title}
                .row
                   .two.columns
                      %label.right.inline Location:
                   .ten.columns
-                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'location', :id => 'location_s'}
+                     %input{:type => 'text', :class => 'eight', :readonly => 'readonly', :name => 'location', :id => 'location_s, :value => @event.location'}
                .row
                   .two.columns
                      %label.right.inline Description:
                   .ten.columns
-                     %textarea{:readonly => 'readonly', :class => 'eight', :name => 'description', :id => 'description_s'}
+                     %textarea{:readonly => 'readonly', :class => 'eight', :name => 'description', :id => 'description_s', :value => @event.description}
                .row
                   .two.columns
                      %label.right.inline Start Date:
@@ -68,5 +68,6 @@
                   .two.columns
                      %a{:class => 'time_tab_button small button'} << Back
                   .two.columns.offset-by-eight
-                     %input{:type => 'submit', :value => 'Create Event'}
+                     %input{:type => 'submit', :value => 'Save Event'}
+                  %input{:name => "authenticity_token", :value => form_authenticity_token, :type => 'hidden'}
 

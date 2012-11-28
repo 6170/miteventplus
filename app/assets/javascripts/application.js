@@ -20,6 +20,4 @@ $(document).one('ready', function () {
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
-
-	
 });

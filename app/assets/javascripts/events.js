@@ -10,8 +10,8 @@ var y = date.getFullYear();
 var current_start_date = new Date();
 
 function toFormattedDateString(x){
-	m = String(x.getMonth());
-	d = String(x.getDay());
+	m = String(x.getMonth()+1);
+	d = String(x.getDate());
         y = String(x.getFullYear());
 	if (m.length < 2){ m = '0'+m;}
 	if (d.length < 2){ d = '0'+d;}
@@ -93,7 +93,18 @@ function toFormattedDateString(x){
 		var summary_page_id = '#'+$(this).attr("id") + '_s';
 		$(summary_page_id).val($(this).val());
     });
-
+    $('.details_tab_button').click(function(){
+	$('#event_details_tab').click();
+    });
+    $('.date_tab_button').click(function(){
+	$('#event_date_tab').click();
+    });
+    $('.time_tab_button').click(function(){
+	$('#event_time_tab').click();
+    });
+    $('.finalize_tab_button').click(function(){
+	$('#event_finalize_tab').click();
+    });
     
     
 });
