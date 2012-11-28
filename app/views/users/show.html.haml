@@ -1,8 +1,8 @@
 .eight.columns.centered
-  %h1= current_user.club_name + " Dashboard"
+  %h1 Events Dashboard
   %hr
 
-  = button_to "Create New Event", "/new_event", :class => "success button"
+  = button_to "+ Create New Event", "/new_event", :class => "success button"
   .no-bullet-area
     %ul
       - if current_user.events.count == 0
@@ -87,12 +87,12 @@
   $("div[id|='checklist-item']").live({
     mouseenter:
       function() {
-        $("a", this).show();
+        $("a.delete-checklist-item", this).show();
         $(this).css("background", '#e0e0e0');
       },
     mouseleave:
       function() {
-        $("a", this).hide();
+        $("a.delete-checklist-item", this).hide();
         $(this).css("background", 'transparent');
       }
   });
