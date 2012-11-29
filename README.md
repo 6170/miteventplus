@@ -3,23 +3,17 @@ Final Project: MIT Event+
 
 ###Heroku URL
 
-Please put it here: http://eventplus.herokuapp.com
+http://eventplus.herokuapp.com (up to date as of 11/27/2012)
 
 ###Notes
 
 - To populate the database with the ASA database info, run "rake import" after rake db:migrate
 - The email account used for the mailer is miteventplus@gmail.com (pw is risd@mit)
 - A test group is included in the database: eventplus@mit.edu
-- A test group has already been created on heroku: eventplus@mit.edu with pw of risd@mit
+- A test group has already been created on heroku: 
+	Username: eventplus@mit.edu 
+	Password: please
 
-###Code Deliverables
-
-Your code should be a rails project located at the root of this repository. To
-create a new rails project, run
-
-    >> rails new .
-
-in this directory.
 
 ###PDF Deliverables
 

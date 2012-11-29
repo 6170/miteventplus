@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :user
-  has_one :time_block
-  has_many :checklist_items
+  has_one :time_block, :dependent => :delete
+  has_many :checklist_items, :dependent => :delete_all
   attr_accessible :title, :location, :description, :user_id
   validate :ensure_event_is_unique
 
