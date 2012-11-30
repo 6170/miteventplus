@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
   has_one :time_block, :dependent => :delete
   has_many :checklist_items, :dependent => :delete_all
   attr_accessible :title, :location, :description, :user_id
+  validates :title, :presence => true
   validate :ensure_event_is_unique
 
   def ensure_event_is_unique

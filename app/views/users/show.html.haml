@@ -9,7 +9,7 @@
         .panel
           %h3.subtitle You currently don't have any events - make one!
       - else
-        - current_user.events.reverse.each_with_index do |event, index|
+        - current_user.events.order("id DESC").each_with_index do |event, index|
           .panel.radius
             %li{:class => "#{index == 0 ? 'active' : ''}"}
               .title
