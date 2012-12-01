@@ -18,8 +18,10 @@ group :assets do
   gem 'foundation-icons-sass-rails'
   gem "zurb-foundation", ">= 3.2.0"
   gem "compass-rails", ">= 1.0.3"
+  gem "jquery-fileupload-rails"
 end
 gem 'jquery-rails'
+gem 'paperclip'
 gem "thin", ">= 1.5.0"
 gem "haml", ">= 3.1.7"
 gem "devise", ">= 2.1.2"

@@ -71,4 +71,8 @@ class EventsController < ApplicationController
 
     redirect_to :root
   end
+
+  def publicity
+    @event = Event.find(params[:id])
+  end
 end
