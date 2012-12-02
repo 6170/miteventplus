@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20121128033122) do
     t.string   "upload_content_type"
     t.integer  "upload_file_size"
     t.datetime "upload_updated_at"
+    t.integer  "event_id",            :null => false
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end

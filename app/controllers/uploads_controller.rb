@@ -1,8 +1,10 @@
 class UploadsController < ApplicationController
+  before_filter :load_parent, :except => :destroy
+  before_filter :check_logged_in
   # GET /uploads
   # GET /uploads.json
   def index
-    @uploads = Upload.all
+    @uploads = @event.uploads
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +15,7 @@ class UploadsController < ApplicationController
   # GET /uploads/1
   # GET /uploads/1.json
   def show
-    @upload = Upload.find(params[:id])
+    @upload = @event.uploads.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +26,7 @@ class UploadsController < ApplicationController
   # GET /uploads/new
   # GET /uploads/new.json
   def new
-    @upload = Upload.new
+    @upload = @event.uploads.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +36,13 @@ class UploadsController < ApplicationController
 
   # GET /uploads/1/edit
   def edit
-    @upload = Upload.find(params[:id])
+    @upload = @event.uploads.find(params[:id])
   end
 
   # POST /uploads
   # POST /uploads.json
   def create
-    @upload = Upload.new(params[:upload])
+    @upload = @event.uploads.new(params[:upload])
 
     respond_to do |format|
       if @upload.save
@@ -60,7 +62,7 @@ class UploadsController < ApplicationController
   # PUT /uploads/1
   # PUT /uploads/1.json
   def update
-    @upload = Upload.find(params[:id])
+    @upload = @event.uploads.find(params[:id])
 
     respond_to do |format|
       if @upload.update_attributes(params[:upload])
@@ -84,4 +86,20 @@ class UploadsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def load_parent
+    @event = current_user.events.find(params[:event_id])
+  end
+
+  def check_logged_in
+    if !current_user
+      flash[:alert] = 'Please sign in to continue'
+
+      respond_to do |format|
+        format.html { redirect_to new_user_session_path }
+        format.js { render 'sign_in' }
+      end
+    end
+  end
+
 end

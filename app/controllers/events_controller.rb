@@ -44,7 +44,8 @@ class EventsController < ApplicationController
     if @event.save
       @event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
       @event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
-      @event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "publicity")
+      @event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "copytech")
+      @event.checklist_items.create(:text => "Upload publicity files and send out publicity emails.", :tag => "publicity")
       redirect_to :root
       return
     end
@@ -70,9 +71,5 @@ class EventsController < ApplicationController
     this_event.checklist_items.where(:tag => "datetime")[0].set_checked_true
 
     redirect_to :root
-  end
-
-  def publicity
-    @event = Event.find(params[:id])
   end
 end
