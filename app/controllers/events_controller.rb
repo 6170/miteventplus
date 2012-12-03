@@ -19,9 +19,9 @@ class EventsController < ApplicationController
 	start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
     resources = []
+    resources << {:id => 'newevent', :name => 'Select a Time', :readonly => false}
     TimeBlock.where(:starttime => (start_time...end_time)).each do |t|
       e = t.event
-      resources << {:id => 'newevent', :name => 'Select a Time', :readonly => false}
       resources << {:id => e.id.to_s, :name => e.title, :readonly => true}
     end
     render :json => resources
