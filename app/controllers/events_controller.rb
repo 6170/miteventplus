@@ -50,15 +50,18 @@ class EventsController < ApplicationController
   end
 
   def create_event
-    event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
-    event.id = Event.last.id + 1
-    event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
-    event.save
-
-    event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
-    event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
-    event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "publicity")
-    redirect_to :root
+    @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
+    @event.id = Event.last.id + 1
+    @event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
+    if @event.save
+      @event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
+      @event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
+      @event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "copytech")
+      @event.checklist_items.create(:text => "Upload publicity files and send out publicity emails.", :tag => "publicity")
+      redirect_to :root
+      return
+    end
+    render :new_event
   end
 
   #Route: GET '/settime/:id'

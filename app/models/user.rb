@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   def must_be_asa_group_email
     if not AsaDb.find(:all).collect(&:email).include?(email)
       errors.add(:email, "is not a valid ASA student group officer mailing list.")
+    else
+      self.club_name = AsaDb.find_by_email(self.email).name
     end
   end
 end

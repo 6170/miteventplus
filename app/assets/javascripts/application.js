@@ -15,6 +15,7 @@
 //= require foundation
 //= require_tree .
 //= require_tree ../fullcalendar
+//= require jquery-fileupload
 
 $(document).one('ready', function () {
 	$("#loginModalButton").click(function() {

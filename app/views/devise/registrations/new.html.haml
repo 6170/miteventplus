@@ -2,8 +2,7 @@
   %h2 Sign up
   = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-vertical' }) do |f|
     = f.error_notification
-    = f.input :club_name, :placeholder => "Type your club's name"
-    = f.input :email, :required => true, :placeholder => "Your club's exec email list - this will be verified"
+    = f.input :email, :required => true, :autofocus => true, :placeholder => "Your club's exec email list - this will be verified"
     = f.input :password, :required => true, :placeholder => "Pick a good password"
     = f.input :password_confirmation, :required => true, :placeholder => "Type it again!"
     = f.button :submit, 'Sign up', :class => 'button'
