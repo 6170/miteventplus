@@ -9,6 +9,7 @@ var m = date.getMonth();
 var y = date.getFullYear();
 var current_start_date = new Date();
 
+
 function toFormattedDateString(x){
 	m = String(x.getMonth()+1);
 	d = String(x.getDate());
@@ -51,6 +52,7 @@ function toFormattedDateString(x){
 				end_date = toFormattedDateString(end);
 				$('#start_date_s').val(start_date);
 				$('#end_date_s').val(end_date);
+				$('#agenda_calendar').fullCalendar('gotoDate',current_start_date);
 			}
 			calendar.fullCalendar('destroy');
 		},
@@ -66,8 +68,7 @@ function toFormattedDateString(x){
 		defaultView: 'resourceDay',
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
-        day: current_start_date.getDay(), 
-        gotoDate: current_start_date,
+        day: current_start_date.getDay(),
 		events: '/events/1',
 		selectable: true,
 		selectHelper: true,
@@ -82,11 +83,18 @@ function toFormattedDateString(x){
 			    }
 				agenda_calendar.fullCalendar('unselect');
 			},
-		editable: false,
+		editable: true,
 		firstDay: 1,
-		minTime: 8,
-		maxTime:16,
-		resources: [{"name":"Select Time","id":"newevent"}]
+		minTime: '7am',
+		maxTime:'11:59pm',
+		resources: /*[{"name":"Select Time","id":"newevent"}, {"name": "Others","id":"resourceID"}]*/'/events/1/resources',
+		refetchResources: true,
+		refetchEvents: true,
+		columnFormat: {
+			month: 'ddd',    // Mon
+			resourceDay: 'htt'
+		}
+		//slotMinutes: 120
 	});		
     
     $('.event_input_field').focusout(function(){

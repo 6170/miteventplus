@@ -9,10 +9,22 @@ class EventsController < ApplicationController
     events = []
     TimeBlock.where(:starttime => (start_time...end_time)).each do |t|
       e = t.event
-      events << {:id => e.id, :title => e.title, :allDay => false, :start => t.starttime, :end => t.endtime}
+      events << {:id => e.id, :title => e.title, :allDay => false, :start => t.starttime, :end => t.endtime, :resource => e.id.to_s}
     end
     render :json => events
 
+  end
+  
+  def resources
+	start_time = Time.at(params[:start].to_i)
+    end_time = Time.at(params[:end].to_i)
+    resources = []
+    TimeBlock.where(:starttime => (start_time...end_time)).each do |t|
+      e = t.event
+      resources << {:id => 'newevent', :name => 'Select a Time', :readonly => false}
+      resources << {:id => e.id.to_s, :name => e.title, :readonly => true}
+    end
+    render :json => resources
   end
 
   def new
