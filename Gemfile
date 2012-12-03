@@ -20,6 +20,7 @@ group :assets do
   gem "compass-rails", ">= 1.0.3"
   gem "jquery-fileupload-rails"
 end
+
 gem 'jquery-rails'
 gem 'paperclip'
 gem "thin", ">= 1.5.0"

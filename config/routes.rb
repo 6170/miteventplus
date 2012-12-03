@@ -7,6 +7,7 @@ Risd::Application.routes.draw do
   end
   resources :uploads
   resources :checklist_items
+  resources :tags
 
   match "/create_event" => "events#create_event", :method => :post
   match "/new_event" => "events#new_event"
