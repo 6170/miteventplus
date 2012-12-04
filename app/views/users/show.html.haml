@@ -27,13 +27,13 @@
                       %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
                       %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
                         - if checklist_item.tag == 'datetime'
-                          = link_to checklist_item.text, "/settime/#{event.id}", :class => "datetime-link"
+                          = link_to checklist_item.text, "/settime/#{event.id}", :class => "checklist-link"
                         - elsif checklist_item.tag == 'filemanager'
-                          = link_to checklist_item.text, event_uploads_path(event), :class => "datetime-link"
+                          = link_to checklist_item.text, event_uploads_path(event), :class => "checklist-link"
                         - elsif checklist_item.tag == 'publicity'
-                          = link_to checklist_item.text, event_publicity_path(event), :class => "datetime-link"
+                          = link_to checklist_item.text, event_publicity_path(event), :class => "checklist-link"
                         - elsif checklist_item.tag == 'food'
-                          = link_to checklist_item.text, "/events/#{event.id}/yelp", :class => "datetime-link"
+                          = link_to checklist_item.text, "/events/#{event.id}/yelp", :class => "checklist-link"
                         - else
                           = checklist_item.text
                       %span.right-align

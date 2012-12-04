@@ -85,7 +85,7 @@ class EventsController < ApplicationController
     this_time_block.endtime = end_date
     this_time_block.save
 
-    this_event.checklist_items.where(:tag => "datetime")[0].set_checked_true
+    this_event.checklist_items.find_by_tag("datetime").set_checked_true
 
     redirect_to :root
   end
