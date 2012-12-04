@@ -1,2 +1,8 @@
-%h1 Events#publicity
-%p Find me in app/views/events/publicity.html.haml
+.eight.columns.centered
+  %h2 Send a Publicity Email
+  = simple_form_for Event.new, :url => "/create_event" do |f|
+    = f.error_notification
+    = f.input :title
+    = f.input :description, :input_html => {:class => "redactor", :id => @event.id}
+
+    = f.submit 'Send Email'

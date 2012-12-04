@@ -43,6 +43,13 @@ ActiveRecord::Schema.define(:version => 20121203175738) do
 
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
+  create_table "redactor_assets", :force => true do |t|
+    t.string   "asset_file_name"
+    t.string   "asset_content_type"
+    t.integer  "asset_file_size"
+    t.datetime "asset_updated_at"
+  end
+
   create_table "tags", :force => true do |t|
     t.string   "name",       :null => false
     t.datetime "created_at", :null => false

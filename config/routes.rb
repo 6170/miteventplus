@@ -9,7 +9,8 @@ Risd::Application.routes.draw do
   resources :checklist_items
   resources :tags
 
-  match "/events/:event_id/uploadFromRedactor" => "uploads#create_from_redactor"
+  get "/events/:id/publicity" => "events#publicity", :as => "event_publicity"
+  post "/events/:event_id/uploadFromRedactor" => "uploads#create_from_redactor"
   match "/events/:event_id/images" => "uploads#images", :as => "event_images"
   match "/create_event" => "events#create_event", :method => :post
   match "/new_event" => "events#new_event"
