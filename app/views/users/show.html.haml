@@ -28,9 +28,12 @@
                       - if checklist_item.tag == 'datetime'
                         %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
                           = link_to checklist_item.text, "/settime/#{event.id}", :class => "datetime-link"
-                      - elsif checklist_item.tag == 'publicity'
+                      - elsif checklist_item.tag == 'filemanager'
                         %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
                           = link_to checklist_item.text, event_uploads_path(event), :class => "datetime-link"
+                      - elsif checklist_item.tag == 'publicity'
+                        %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                          = link_to checklist_item.text, event_publicity_path(event), :class => "datetime-link"
                       - else
                         %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
                           = checklist_item.text

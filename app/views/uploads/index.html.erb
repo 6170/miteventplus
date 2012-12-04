@@ -1,5 +1,4 @@
 <div class="container">
-<div class = "redactor" id = <%= @event.id%>></div>
   <center>
   <h2>Upload file</h2>
   <%= form_for [@event, @event.uploads.new], :html => { :multipart => true, :id => "fileupload"  } do |f| %>
@@ -29,22 +28,10 @@
     <!-- The table listing the files available for upload/download -->
     <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
     </table>
-  </center>
   <% end %>
-  <div id="dropzone" class = "columns centered">Drop files here</div>
-
+  <div id="dropzone">Drop files here</div>
+</center>
 </div>
-
-<script>
-  var fileUploadErrors = {
-  maxFileSize: 'File is too big',
-  minFileSize: 'File is too small',
-  acceptFileTypes: 'Filetype not allowed',
-  maxNumberOfFiles: 'Max number of files exceeded',
-  uploadedBytes: 'Uploaded bytes exceed file size',
-  emptyResult: 'Empty file upload result'
-  };
-</script>
 
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
@@ -75,6 +62,7 @@
   </tr>
   {% } %}
 </script>
+
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
   {% for (var i=0, file; file=o.files[i]; i++) { %}
@@ -102,40 +90,4 @@
       </td>
     </tr>
     {% } %}
-</script>
-
-<script type="text/javascript" charset="utf-8">
-  $(function () {
-      // Initialize the jQuery File Upload widget:
-      $('#fileupload').fileupload({
-        dropZone: $('#dropzone')
-      });
-      // 
-      // Load existing files:
-      $.getJSON($('#fileupload').prop('action'), function (files) {
-        var fu = $('#fileupload').data('fileupload'), 
-          template;
-        fu._adjustMaxNumberOfFiles(-files.length);
-        console.log(files);
-        template = fu._renderDownload(files)
-          .appendTo($('#fileupload .files'));
-        // Force reflow:
-        fu._reflow = fu._transition && template.length &&
-          template[0].offsetWidth;
-        template.addClass('in');
-        $('#loading').remove();
-      });
-
-  });
-  $(document).ready(function() {
-     var event_id = $('.redactor').attr('id');
-     $('.redactor').redactor({ 
-      imageUpload: "/events/" + event_id + "/uploadFromRedactor" + "?" + $('meta[name=csrf-param]').attr('content') + "=" + encodeURIComponent($('meta[name=csrf-token]').attr('content')),
-      imageGetJson: "/events/" + event_id + "/images.json",
-      imageUploadErrorCallback: callback
-     });
-  })
-  function callback(obj, json) {
-    alert(json.error);
-  }
 </script>
