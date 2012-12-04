@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-
   def index
   end
 
@@ -91,6 +90,8 @@ class EventsController < ApplicationController
   end
 
   def yelp
-
+    client = Yelp::Client.new
+    request = Yelp::V2::Search::Request::Location.new(:term => "chinese food", :city => "Boston", :consumer_key => YELP_API['consumer_key'], :consumer_secret => YELP_API['consumer_secret'], :token => YELP_API['token'], :token_secret => YELP_API['token_secret'])
+    @response = client.search(request)
   end
 end
