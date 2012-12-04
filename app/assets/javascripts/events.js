@@ -54,7 +54,7 @@ function toFormattedDateString(x){
 				$('#end_date_s').val(end_date);
 				$('#agenda_calendar').fullCalendar('gotoDate',current_start_date);
 			}
-			calendar.fullCalendar('destroy');
+			calendar.fullCalendar('unselect');
 		},
 		events: '/events/1',
 		editable: false
@@ -95,17 +95,17 @@ function toFormattedDateString(x){
 			resourceDay: 'htt'
 		}
 		//slotMinutes: 120
-	});		
-    
+	});
+
     $('.event_input_field').focusout(function(){
 		var summary_page_id = '#'+$(this).attr("id") + '_s';
 		$(summary_page_id).val($(this).val());
     });
 
     //Hack to make time display
-	$('#event_time_tab').click();
+	/*$('#event_time_tab').click();
 	$('#agenda_calendar').fullCalendar('render');
-	$('#event_date_tab').click();
+	$('#event_date_tab').click();*/
 
     $('.date_tab_button').click(function(){
 		$('#event_date_tab').click();
@@ -118,5 +118,6 @@ function toFormattedDateString(x){
 	$('.finalize_tab_button').click(function(){
 		$('#event_finalize_tab').click();
     });
+
 
 });
