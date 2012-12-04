@@ -3,10 +3,10 @@ require 'csv'
 desc "Import ASA groups from csv file"
 task :import_asa => [:environment] do
 
-  file = "db/asa_exec_emails.csv"
+  file = "db/asa_exec_emails_and_tags.csv"
 
   CSV.foreach(file, :headers => false) do |row|
-    AsaDb.create(:name => row[0], :email => row[1])
+    AsaDb.create(:name => row[0], :email => row[1], :unprocessed_tags => row[2])
   end
 end
 
