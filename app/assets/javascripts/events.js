@@ -4,15 +4,12 @@
 
 $(document).bind('dragover', function (e) {
     var dropZone = $('#dropzone')
+    dropZone.addClass('hover');
     if (e.target === dropZone[0]) {
         dropZone.addClass('hover');
     } else {
         dropZone.removeClass('hover');
     }
-    window.dropZoneTimeout = setTimeout(function () {
-        window.dropZoneTimeout = null;
-        dropZone.removeClass('hover');
-    }, 100);
 });
 
 $(document).one('ready', function () {
