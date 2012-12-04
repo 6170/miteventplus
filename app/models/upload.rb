@@ -15,8 +15,9 @@ class Upload < ActiveRecord::Base
       "delete_type" => "DELETE" 
     }
     if self.is_image?
-      output.merge("thumbnail_url" => upload.url(:thumb))
+      output = output.merge("thumbnail_url" => upload.url(:thumb))
     end
+    output
   end
 
   def to_redactor_img
@@ -28,7 +29,7 @@ class Upload < ActiveRecord::Base
   end
 
   def is_image?
-    ["image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif"].include?(self.upload_content_type) 
+    !(self.upload_content_type =~ /^image.*/).nil?
   end
 
 end
