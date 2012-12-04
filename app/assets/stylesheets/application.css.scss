@@ -94,6 +94,10 @@ i {
   font-size:20px;
 }
 
+.foundicon-star {
+  color: #c7b300;
+}
+
 .no-bullet-area {
   ul, li {
     list-style-type: none;
@@ -103,6 +107,16 @@ i {
 .new-checklist-item {
   display:inline;
   width: 500px !important;
+}
+.new-tag {
+  width: 90% !important;
+}
+.foundicon-plus.dashboard {
+  padding-left:10px;
+}
+.foundicon-plus.tags {
+  padding-top:5px;
+  padding-left:5px;
 }
 
 .foundicon-plus {

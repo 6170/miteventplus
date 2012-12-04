@@ -25,20 +25,20 @@
                   - event.checklist_items.each do |checklist_item|
                     %div{:id => "checklist-item-" + checklist_item.id.to_s, :style => "padding-left:10px;"}
                       %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
-                      - if checklist_item.tag == 'datetime'
-                        %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                      %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                        - if checklist_item.tag == 'datetime'
                           = link_to checklist_item.text, "/settime/#{event.id}", :class => "datetime-link"
-                      - elsif checklist_item.tag == 'publicity'
-                        %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                        - elsif checklist_item.tag == 'publicity'
                           = link_to checklist_item.text, event_uploads_path(event), :class => "datetime-link"
-                      - else
-                        %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
+                        - elsif checklist_item.tag == 'food'
+                          = link_to checklist_item.text, "/events/#{event.id}/yelp", :class => "datetime-link"
+                        - else
                           = checklist_item.text
                       %span.right-align
                         = link_to "Delete", "#", :id => checklist_item.id.to_s, :class => "delete-checklist-item", data: {confirm: "Are you sure you want to delete this checklist item?"}
                       %br
                 = form_tag do
-                  %i{:class => "general foundicon-plus add", :style => "padding-left:10px;"}
+                  %i{:class => "general foundicon-plus add dashboard"}
                   = text_field_tag(event.id, nil, :placeholder => 'Type in a new checklist item for this event.', :class => "new-checklist-item")
               .footer
                 %hr

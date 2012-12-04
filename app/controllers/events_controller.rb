@@ -84,4 +84,8 @@ class EventsController < ApplicationController
 
     redirect_to :root
   end
+
+  def yelp
+
+  end
 end

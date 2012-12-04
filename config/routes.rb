@@ -17,4 +17,5 @@ Risd::Application.routes.draw do
   get "/settime/:id" => "events#new_time"
   post "/settime/:id" => "events#set_time"
   get "/events/:id/resources" => "events#resources", :as => "resources"
+  get "/events/:id/yelp" => "events#yelp"
 end
