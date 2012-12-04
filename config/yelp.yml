@@ -1,0 +1,20 @@
+development:
+  consumer_key: UG1p12dVw741zJv4Ep1qKw
+  consumer_secret: OMiburbjCoJZqc4dywwD6V6N0NY
+  token: KUCHzDH9mHSy3ecp3V7BGcnvBStCXMh7
+  token_secret: Mbhl0yE1WwaoosILOQ4on3XPfpM
+  ywsid: p4fgErDVbDgYUJunW5CPbQ
+
+test:
+  consumer_key: UG1p12dVw741zJv4Ep1qKw
+  consumer_secret: OMiburbjCoJZqc4dywwD6V6N0NY
+  token: KUCHzDH9mHSy3ecp3V7BGcnvBStCXMh7
+  token_secret: Mbhl0yE1WwaoosILOQ4on3XPfpM
+  ywsid: p4fgErDVbDgYUJunW5CPbQ
+
+production:
+  consumer_key: UG1p12dVw741zJv4Ep1qKw
+  consumer_secret: OMiburbjCoJZqc4dywwD6V6N0NY
+  token: KUCHzDH9mHSy3ecp3V7BGcnvBStCXMh7
+  token_secret: Mbhl0yE1WwaoosILOQ4on3XPfpM
+  ywsid: p4fgErDVbDgYUJunW5CPbQ
