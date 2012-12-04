@@ -47,9 +47,31 @@
 :javascript
   $(".new-tag").keypress(function(e) {
     if (e.which == 13) {
+      var text = $(this).val();
       e.preventDefault();
-      alert("hi");
+      $.ajax({
+        type: "POST",
+        url: "/tags",
+        data: "",
+        success: $.proxy(function(data) {
+
+        }, this)
+      });
     }
+  });
+
+  $(".delete-tag").live('click', function() {
+    var tag_id = $(this).attr('id');
+    $.ajax({
+      type: "DELETE",
+      url: "/tags/" + tag_id,
+      success: $.proxy(function() {
+        $("#tag-" + tag_id).fadeOut(300, function() {
+          $(this).remove();
+        })
+      }, this)
+    });
+    return false;
   });
 
   $("div[id|='tag']").live({
