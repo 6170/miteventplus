@@ -1,4 +1,5 @@
 <div class="container">
+<div class = "redactor" id = <%= @event.id%>></div>
   <center>
   <h2>Upload file</h2>
   <%= form_for [@event, @event.uploads.new], :html => { :multipart => true, :id => "fileupload"  } do |f| %>
@@ -30,8 +31,10 @@
     </table>
   </center>
   <% end %>
+  <div id="dropzone" class = "columns centered">Drop files here</div>
 
 </div>
+
 <script>
   var fileUploadErrors = {
   maxFileSize: 'File is too big',
@@ -104,7 +107,9 @@
 <script type="text/javascript" charset="utf-8">
   $(function () {
       // Initialize the jQuery File Upload widget:
-      $('#fileupload').fileupload();
+      $('#fileupload').fileupload({
+        dropZone: $('#dropzone')
+      });
       // 
       // Load existing files:
       $.getJSON($('#fileupload').prop('action'), function (files) {
@@ -122,4 +127,15 @@
       });
 
   });
+  $(document).ready(function() {
+     var event_id = $('.redactor').attr('id');
+     $('.redactor').redactor({ 
+      imageUpload: "/events/" + event_id + "/uploadFromRedactor" + "?" + $('meta[name=csrf-param]').attr('content') + "=" + encodeURIComponent($('meta[name=csrf-token]').attr('content')),
+      imageGetJson: "/events/" + event_id + "/images.json",
+      imageUploadErrorCallback: callback
+     });
+  })
+  function callback(obj, json) {
+    alert(json.error);
+  }
 </script>

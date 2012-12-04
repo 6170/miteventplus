@@ -1,19 +1,19 @@
 source 'https://rubygems.org'
-gem 'rails', '3.2.1'
+gem 'rails'
 group :development, :test do
   gem 'sqlite3'
   gem "haml-rails", ">= 0.3.5"
   gem "hpricot", ">= 0.8.6"
   gem "ruby_parser", ">= 3.0.1"
   gem "quiet_assets", ">= 1.0.1"
-  gem 'sexp_processor', '~> 4.1'
+  gem 'sexp_processor'
 end
 group :production do
   gem 'pg'
 end
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
   gem 'foundation-icons-sass-rails'
   gem "zurb-foundation", ">= 3.2.0"
@@ -27,3 +27,4 @@ gem "haml", ">= 3.1.7"
 gem "devise", ">= 2.1.2"
 gem "simple_form", ">= 2.0.4"
 gem 'savon'
+

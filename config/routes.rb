@@ -8,6 +8,8 @@ Risd::Application.routes.draw do
   resources :uploads
   resources :checklist_items
 
+  match "/events/:event_id/uploadFromRedactor" => "uploads#create_from_redactor"
+  match "/events/:event_id/images" => "uploads#images", :as => "event_images"
   match "/create_event" => "events#create_event", :method => :post
   match "/new_event" => "events#new_event"
   match "/checklist_item/:id/toggle_checked" => "checklist_items#toggle_checked", :method => :post

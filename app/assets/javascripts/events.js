@@ -2,6 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/*/
 
+$(document).bind('dragover', function (e) {
+    var dropZone = $('#dropzone')
+    if (e.target === dropZone[0]) {
+        dropZone.addClass('hover');
+    } else {
+        dropZone.removeClass('hover');
+    }
+    window.dropZoneTimeout = setTimeout(function () {
+        window.dropZoneTimeout = null;
+        dropZone.removeClass('hover');
+    }, 100);
+});
+
 $(document).one('ready', function () {
 var date = new Date();
 var d = date.getDate();
