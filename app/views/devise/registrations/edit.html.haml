@@ -22,16 +22,18 @@
 .four.columns
   %h2 Edit Your Tags
   %hr
-    - @user.tags.each do |tag|
-      %div{:id => "tag-" + tag.id.to_s, :style => "padding:5px;"}
-        %i{:class => "general foundicon-star"}
-        %span.bold
-          = tag.name
-        %span.right-align
-          = link_to "Delete", "#", :id => tag.id.to_s, :class => "delete-tag", data: {confirm: "Are you sure you want to delete this tag?"}
-        %br
+    #existing-tags
+      - @user.tags.each do |tag|
+        %div{:id => "tag-" + tag.id.to_s, :style => "padding:5px;"}
+          %i{:class => "general foundicon-star"}
+          %span.bold
+            = tag.name
+          %span.right-align
+            = link_to "Delete", "#", :id => tag.id.to_s, :class => "delete-tag", data: {confirm: "Are you sure you want to delete this tag?"}
+          %br
     = form_tag do
-      = text_field_tag(@user.id, nil, :placeholder => 'Type in a new tag for your club and press enter.', :class => "new-tag", :size => 40)
+      %i{:class => "general foundicon-plus add tags"}
+      = text_field_tag(@user.id, nil, :placeholder => 'Type in a new tag for your club.', :class => "new-tag")
 
 .four.columns
   %h2 Cancel my account
@@ -47,9 +49,38 @@
 :javascript
   $(".new-tag").keypress(function(e) {
     if (e.which == 13) {
+      var text = $(this).val();
       e.preventDefault();
-      alert("hi");
+      $.ajax({
+        type: "POST",
+        url: "/tags",
+        data: "name=" + text,
+        success: $.proxy(function(data) {
+          $(this).val('');
+          var div_start = '<div id="tag-' + data.id + '"" style="padding:5px;">';
+          var icon_code = '<i class="general foundicon-star"></i>';
+          var text_code = '<span class="bold">&nbsp;' + text + '</span>';
+          var delete_button = '<span class="right-align"><a href="#" class="delete-tag" id="' + data.id + '" data-confirm="Are you sure you want to delete this tag?">Delete</a></span>';
+          var ending = '<br></div>';
+
+          $(div_start + icon_code + text_code + delete_button + ending).hide().appendTo("#existing-tags").fadeIn(800);
+        }, this)
+      });
     }
+  });
+
+  $(".delete-tag").live('click', function() {
+    var tag_id = $(this).attr('id');
+    $.ajax({
+      type: "DELETE",
+      url: "/tags/" + tag_id,
+      success: $.proxy(function() {
+        $("#tag-" + tag_id).fadeOut(300, function() {
+          $(this).remove();
+        })
+      }, this)
+    });
+    return false;
   });
 
   $("div[id|='tag']").live({
