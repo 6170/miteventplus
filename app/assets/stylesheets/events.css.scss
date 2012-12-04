@@ -11,3 +11,17 @@ visibility:'hidden';
 #event_finalize_tab{
 visibility:'hidden';
 }
+
+#dropzone {
+	border: 1px solid grey;
+    background: #F3F3F3;
+    width: 50%;
+    height: 50%;
+    line-height: 200px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#dropzone.hover {
+    background: grey;
+}
