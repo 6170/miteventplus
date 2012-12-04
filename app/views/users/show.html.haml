@@ -39,7 +39,7 @@
                       %br
                 = form_tag do
                   %i{:class => "general foundicon-plus add dashboard"}
-                  = text_field_tag(event.id, nil, :placeholder => 'Type in a new checklist item for this event.', :class => "new-checklist-item")
+                  = text_field_tag(event.id, nil, :placeholder => 'Type in a new checklist item for ' + event.title + ".", :class => "new-checklist-item")
               .footer
                 %hr
                 = link_to "Delete Event", event, method: :delete, data: {confirm: 'Are you sure?' }
