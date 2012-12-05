@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_tree ../fullcalendar
  *= require foundation_and_overrides
-
+ *= require redactor
 */
 
 @import 'foundation-icons';
@@ -69,10 +69,10 @@ ul.nav li {
   padding-top:5px;
   padding-right:8px;
 }
-.delete-checklist-item {
+.delete-checklist-item, .delete-tag {
   display:none;
 }
-.datetime-link {
+.checklist-link {
   font-weight:bold;
 }
 
@@ -85,16 +85,23 @@ i {
 
 .checked {
   color: #88cf4f;
-  font-size:20px;
 }
 
 .unchecked {
   color: #ff7578;
-  font-size: 20px;
+}
+.foundicon-star, .foundicon-checkmark, .foundicon-remove, .add {
+  font-size:20px;
+}
+.foundicon-settings {
+  font-size:20px;
+}
+.foundicon-checkmark.home {
+  font-size:30px;
 }
 
-.add {
-  font-size: 20px;
+.foundicon-star {
+  color: #c7b300;
 }
 
 .no-bullet-area {
@@ -106,6 +113,16 @@ i {
 .new-checklist-item {
   display:inline;
   width: 500px !important;
+}
+.new-tag {
+  width: 90% !important;
+}
+.foundicon-plus.dashboard {
+  padding-left:10px;
+}
+.foundicon-plus.tags {
+  padding-top:5px;
+  padding-left:5px;
 }
 
 .foundicon-plus {

@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-
   def index
   end
 
@@ -57,16 +56,21 @@ class EventsController < ApplicationController
       @event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
       @event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
       @event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "copytech")
-      @event.checklist_items.create(:text => "Upload publicity files and send out publicity emails.", :tag => "publicity")
+      @event.checklist_items.create(:text => "Upload files to your event", :tag => "filemanager")
+      @event.checklist_items.create(:text => "Send publicity emails", :tag => "publicity")
       redirect_to :root
       return
     end
     render :new_event
   end
 
+  def publicity
+    @event = current_user.events.find(params[:id])
+  end
+
   #Route: GET '/settime/:id'
   def new_time
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
   end
 
   #Route: POST '/settime/:id'
@@ -80,8 +84,14 @@ class EventsController < ApplicationController
     this_time_block.endtime = end_date
     this_time_block.save
 
-    this_event.checklist_items.where(:tag => "datetime")[0].set_checked_true
+    this_event.checklist_items.find_by_tag("datetime").set_checked_true
 
     redirect_to :root
+  end
+
+  def yelp
+    client = Yelp::Client.new
+    request = Yelp::V2::Search::Request::Location.new(:term => "chinese", :city => "Cambridge", :state => "MA", :consumer_key => YELP_API['consumer_key'], :consumer_secret => YELP_API['consumer_secret'], :token => YELP_API['token'], :token_secret => YELP_API['token_secret'])
+    @yelp_response = client.search(request)
   end
 end

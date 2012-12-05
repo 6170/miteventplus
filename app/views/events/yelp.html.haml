@@ -1,0 +1,12 @@
+.eight.columns.centered
+  %h1 Pick a Restaurant to Provide Food
+
+
+  - @yelp_response["businesses"].each do |business|
+    = image_tag(business["image_url"])
+    = business["name"]
+    = business["display_phone"]
+    = image_tag(business["rating_img_url"])
+    = "(" + business["review_count"].to_s + ")"
+    = business["rating"].to_s + "/5.0"
+    %br

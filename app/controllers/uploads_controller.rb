@@ -87,6 +87,31 @@ class UploadsController < ApplicationController
     end
   end
 
+  def images
+    @images = @event.uploads.where(:upload_content_type => ["image/png", "image/gif", "image/jpe", "image/jpeg"])
+
+    respond_to do |format|
+      format.html # images.html.erb
+      format.json { render json: @images.map{|image| image.to_redactor_img } }
+    end
+
+  end
+
+  def create_from_redactor
+    @image = @event.uploads.new
+    @image.upload = params[:file]    
+    if @image.is_image?
+      if @image.upload
+        @image.save 
+      end
+      render :text => { :filelink => @image.upload.url }.to_json
+    else
+      render :text => {"error" => "Only image uploads allowed here"}.to_json
+    end
+  end
+
+  private
+
   def load_parent
     @event = current_user.events.find(params[:event_id])
   end

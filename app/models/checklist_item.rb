@@ -1,5 +1,7 @@
 class ChecklistItem < ActiveRecord::Base
   attr_accessible :event_id, :text, :checked, :tag
+  validates_uniqueness_of :tag
+
   belongs_to :event
 
   def set_checked_true

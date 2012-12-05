@@ -16,9 +16,12 @@
 //= require_tree .
 //= require_tree ../fullcalendar
 //= require jquery-fileupload
+//= require redactor
 
 $(document).one('ready', function () {
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
 });
+
+
