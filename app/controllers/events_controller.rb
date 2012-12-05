@@ -90,8 +90,17 @@ class EventsController < ApplicationController
   end
 
   def yelp
+    matched_tags = current_user.cross_reference_tags
+    @sampled_tag = matched_tags.sample
     client = Yelp::Client.new
-    request = Yelp::V2::Search::Request::Location.new(:term => "chinese", :city => "Cambridge", :state => "MA", :consumer_key => YELP_API['consumer_key'], :consumer_secret => YELP_API['consumer_secret'], :token => YELP_API['token'], :token_secret => YELP_API['token_secret'])
-    @yelp_response = client.search(request)
+    suggested_request = Yelp::V2::Search::Request::Location.new(
+      :term => @sampled_tag, 
+      :city => "Cambridge", :state => "MA", :zip => "02139", 
+      :consumer_key => YELP_API['consumer_key'], 
+      :consumer_secret => YELP_API['consumer_secret'], 
+      :token => YELP_API['token'], 
+      :token_secret => YELP_API['token_secret'],
+      :limit => 10)
+    @suggested_restaraunts = client.search(suggested_request)
   end
 end

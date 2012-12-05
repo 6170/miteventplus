@@ -8,6 +8,7 @@ Risd::Application.routes.draw do
   resources :uploads
   resources :checklist_items
   resources :tags
+  resources :budget_items
 
   get "/events/:id/publicity" => "events#publicity", :as => "event_publicity"
   post "/events/:event_id/uploadFromRedactor" => "uploads#create_from_redactor"

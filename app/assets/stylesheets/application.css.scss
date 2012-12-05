@@ -57,6 +57,9 @@ ul.nav li {
   font-size:20px;
   font-weight:bold;
 }
+.grey {
+  color: #616161;
+}
 .bold {
   font-weight:bold;
 }
@@ -74,6 +77,16 @@ ul.nav li {
 }
 .checklist-link {
   font-weight:bold;
+}
+
+.yelp_search_term {
+  width: 100% !important;
+  display:inline;
+}
+.yelp_search_zip {
+  width: 100% !important;
+  float:left;
+  display:inline;
 }
 
 i {
@@ -102,6 +115,10 @@ i {
 
 .foundicon-star {
   color: #c7b300;
+}
+
+.center {
+  text-align:center;
 }
 
 .no-bullet-area {

@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
   has_many :checklist_items, :dependent => :delete_all
   has_many :uploads, :dependent => :delete_all
   has_many :publicity_emails, :dependent => :delete_all
+  has_many :budget_items, :dependent => :delete_all
   attr_accessible :title, :location, :description, :user_id
   validates :title, :presence => true
   validate :ensure_event_is_unique
