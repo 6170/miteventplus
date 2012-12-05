@@ -1,6 +1,6 @@
 class ChecklistItem < ActiveRecord::Base
   attr_accessible :event_id, :text, :checked, :tag
-  validates_uniqueness_of :tag
+  validates_uniqueness_of :tag, :scope => :event_id
 
   belongs_to :event
 
