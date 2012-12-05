@@ -6,12 +6,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :club_name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :club_name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
   
   # Validation that email is in ASA student group exec DB
   validate :must_be_asa_group_email
 
-  before_create :prepopulate_tags
+  after_create :prepopulate_tags
   
   has_many :events
   has_and_belongs_to_many :tags
@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
 
   def prepopulate_tags
-    preprocessed_tags = AsaDb.find_by_name(self.name).unprocessed_tags
+    preprocessed_tags = AsaDb.find_by_name(self.club_name).unprocessed_tags
     preprocessed_tags.split(",").each do |tag|
       self.tags.create(:name => tag)
     end
