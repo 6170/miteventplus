@@ -100,7 +100,7 @@ class EventsController < ApplicationController
       :consumer_secret => YELP_API['consumer_secret'], 
       :token => YELP_API['token'], 
       :token_secret => YELP_API['token_secret'],
-      :limit => 5)
+      :limit => 10)
     @suggested_restaraunts = client.search(suggested_request)
   end
 end

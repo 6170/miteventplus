@@ -3,16 +3,25 @@
 
 
 .five.columns
-  %h4 Suggested Restaraunts
-  %h6
+  %h3 Suggested Restaraunts
+  %h6.grey
     = "Based on your tag which matched the category '" + @sampled_tag + "', we think you may be interested in:"
-  - @suggested_restaraunts["businesses"].each do |business|
-    = link_to business["name"], business["url"], :class => "iframe"
-    = business["display_phone"]
-    = image_tag(business["rating_img_url"])
-    = "(" + business["review_count"].to_s + ")"
-    = business["rating"].to_s + "/5.0"
-    %br
+  - if @suggested_restaraunts["businesses"].nil?
+    We're sorry, but Yelp doesn't seem to be responding right now.
+  - else
+    - @suggested_restaraunts["businesses"].each do |business|
+      = link_to business["name"], business["url"], :class => "iframe"
+      = business["display_phone"]
+      = image_tag(business["rating_img_url"])
+      = "(" + business["review_count"].to_s + ")"
+      %br
 
 .seven.columns
-  hi
+  %h3 Search
+  = form_tag do
+    .eight.columns
+      = text_field_tag(nil, nil, :placeholder => 'Search Yelp for a restaraunt for your event', :class => "yelp_search_term")
+    .three.columns
+      = text_field_tag(nil, nil, :placeholder => 'Near ZIP Code...', :class => "yelp_search_zip")
+    .one.column
+      = link_to "Search!", "#", :class => "success button"
