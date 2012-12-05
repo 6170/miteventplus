@@ -87,7 +87,7 @@ function toFormattedDateString(x){
 		firstDay: 1,
 		minTime: '7am',
 		maxTime:'11:59pm',
-		resources: /*[{"name":"Select Time","id":"newevent"}, {"name": "Others","id":"resourceID"}]*/'/events/1/resources',
+		resources: '/events/1/resources',
 		refetchResources: true,
 		refetchEvents: true,
 		columnFormat: {
