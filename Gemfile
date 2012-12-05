@@ -29,4 +29,5 @@ gem "devise", ">= 2.1.2"
 gem "simple_form", ">= 2.0.4"
 gem 'savon'
 gem 'yelpster'
+gem 'fuzzy-string-match'
 

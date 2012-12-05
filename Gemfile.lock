@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RubyInline (3.11.4)
+      ZenTest (~> 4.3)
+    ZenTest (4.8.2)
     actionmailer (3.2.9)
       actionpack (= 3.2.9)
       mail (~> 2.4.4)
@@ -65,6 +68,9 @@ GEM
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
     fssm (0.2.9)
+    fuzzy-string-match (0.9.4)
+      RubyInline (>= 3.8.6)
+      RubyInline (>= 3.8.6)
     gyoku (0.4.6)
       builder (>= 2.1.2)
     haml (3.1.7)
@@ -200,6 +206,7 @@ DEPENDENCIES
   compass-rails (>= 1.0.3)
   devise (>= 2.1.2)
   foundation-icons-sass-rails
+  fuzzy-string-match
   haml (>= 3.1.7)
   haml-rails (>= 0.3.5)
   hpricot (>= 0.8.6)

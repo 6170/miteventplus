@@ -30,4 +30,17 @@ class User < ActiveRecord::Base
       self.tags.create(:name => tag)
     end
   end
+
+  def cross_reference_tags
+    jarow = FuzzyStringMatch::JaroWinkler.create(:native)
+    matched_tags = []
+    self.tags.each do |tag|
+      YELP_API_CATEGORIES.map{|category| jarow.getDistance(tag.name, category)}.each_with_index do |score, index|
+        if score >= 0.9
+          matched_tags << YELP_API_CATEGORIES[index]
+        end
+      end
+    end
+    matched_tags
+  end
 end

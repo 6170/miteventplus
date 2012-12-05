@@ -1,12 +1,18 @@
-.eight.columns.centered
-  %h1 Pick a Restaurant to Provide Food
+.twelve.columns.centered
+  %h1.center Pick a Restaurant to Provide Food
 
 
-  - @yelp_response["businesses"].each do |business|
-    = image_tag(business["image_url"])
+.five.columns
+  %h4 Suggested Restaraunts
+  %h6
+    = "Based on your tag which matched the category " + @sampled_tag
+  - @suggested_restaraunts["businesses"].each do |business|
     = business["name"]
     = business["display_phone"]
     = image_tag(business["rating_img_url"])
     = "(" + business["review_count"].to_s + ")"
     = business["rating"].to_s + "/5.0"
     %br
+
+.seven.columns
+  hi
