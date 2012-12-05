@@ -9,6 +9,26 @@
  *
  */
 
+/* EDITS */
+
+.resourceNameInfo {
+    background-color: #2E88FA;
+    border-radius: 10px;
+    display: none;
+    opacity: 0.9;
+    padding: 5px;
+    z-index: 100;
+    width: 200px;
+}
+
+.resourceNameLink:hover + span {
+    display: block;
+    min-width: 200px;
+}
+
+/* END EDITS */
+
+
 
 .fc {
 	direction: ltr;
