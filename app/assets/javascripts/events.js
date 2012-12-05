@@ -58,7 +58,6 @@ function toFormattedDateString(x){
 			//fix for resourceView times
 			htmls = $('.fc-view-resourceDay .fc-widget-header');
 			for (var i = 0; i < htmls.length; i++) {
-				console.log(htmls[i]);
 				if ($(htmls[i]).html().search("\:") != -1) {
 					$(htmls[i]).html("   ");
 				}
