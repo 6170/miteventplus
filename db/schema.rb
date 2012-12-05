@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203175738) do
+ActiveRecord::Schema.define(:version => 20121205015155) do
 
   create_table "asa_dbs", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(:version => 20121203175738) do
   end
 
   add_index "asa_dbs", ["email"], :name => "index_asa_dbs_on_email"
+
+  create_table "budget_items", :force => true do |t|
+    t.string   "title"
+    t.float    "value"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "checklist_items", :force => true do |t|
     t.text     "text"
@@ -42,13 +50,6 @@ ActiveRecord::Schema.define(:version => 20121203175738) do
   end
 
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
-
-  create_table "redactor_assets", :force => true do |t|
-    t.string   "asset_file_name"
-    t.string   "asset_content_type"
-    t.integer  "asset_file_size"
-    t.datetime "asset_updated_at"
-  end
 
   create_table "tags", :force => true do |t|
     t.string   "name",       :null => false
