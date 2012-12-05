@@ -22,6 +22,7 @@ $(document).one('ready', function () {
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
+  $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 });
 
 

@@ -5,9 +5,9 @@
 .five.columns
   %h4 Suggested Restaraunts
   %h6
-    = "Based on your tag which matched the category " + @sampled_tag
+    = "Based on your tag which matched the category '" + @sampled_tag + "', we think you may be interested in:"
   - @suggested_restaraunts["businesses"].each do |business|
-    = business["name"]
+    = link_to business["name"], business["url"], :class => "iframe"
     = business["display_phone"]
     = image_tag(business["rating_img_url"])
     = "(" + business["review_count"].to_s + ")"
