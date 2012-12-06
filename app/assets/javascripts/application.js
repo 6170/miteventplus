@@ -22,7 +22,9 @@ $(document).one('ready', function () {
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
-  $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+  $(".iframe").live('click', function() {
+    $.fn.colorbox({iframe:true, width:"80%", height:"80%", href:$(this).attr('href'), open:false});
+  });
 });
 
 

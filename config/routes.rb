@@ -20,4 +20,5 @@ Risd::Application.routes.draw do
   post "/settime/:id" => "events#set_time"
   get "/events/:id/resources" => "events#resources", :as => "resources"
   get "/events/:id/yelp" => "events#yelp"
+  match "/events/yelp_search" => "events#yelp_search", :method => :post
 end

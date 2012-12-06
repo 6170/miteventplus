@@ -1,0 +1,46 @@
+var content = ""
+
+<% @search_results["businesses"].each do |business|%>
+  content += "<div class='three columns business-image'>";
+  <% if business['image_url'].nil? %>
+    content += "<a href='<%= business['url']%>' class='iframe'><img src='/assets/no_image.png'></a>";
+  <% else %>
+    content += "<a href='<%= business['url']%>' class='iframe'><img src='<%= business['image_url'] %>'></a>";
+  <% end %>
+  content += "</div>";
+  content += "<div class='nine columns business-info'>";
+  content += "  <span class='business-name'>";
+  content += "    <a href='<%= business['url'] %>' class='iframe'><%= business['name'] %></a>";
+  content += "  </span>";
+  content += "  <span class='business-rating'>";
+  content += "    <img class='business-rating-image' src='<%= business['rating_img_url']%>' />";
+  content += "    <span class='business-rating-count'>";
+  content += "      (<%= business['review_count'].to_s%> reviews)";
+  content += "    </span>";
+  content += "  </span>";
+  content += "  <br>";
+  content += "  <span class='business-address'>";
+  <% if business['location']['display_address'].nil? %>
+    content += "No business address listed for this restaraunt.";
+    content += "<br>";
+  <% else %>
+    <% business['location']['display_address'].each do |address_part| %>
+      content += "<%= address_part %>";
+      content += "<br>";
+    <% end %>
+  <% end %>
+  content += "  </span>";
+  content += "  <span class='business-phone'>";
+  <% if business['phone'].nil? %>
+    content += "    No phone number listed."
+  <% else %>
+    content += "    <%= business['phone']%>";
+  <% end %>
+  content += "  </span>";
+  content += "</div>";
+  content += "<hr>";
+<% end %>
+
+
+$(".yelp-search-results").append(content);
+

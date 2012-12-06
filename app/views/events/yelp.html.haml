@@ -1,27 +1,71 @@
 .twelve.columns.centered
   %h1.center Pick a Restaurant to Provide Food
+.twelve.columns.center
+  %span.subtitle powered by 
+  = link_to image_tag("yelp_logo.png", :class => "yelp_logo"), "http://www.yelp.com"
 
+%hr
 
-.five.columns
-  %h3 Suggested Restaraunts
-  %h6.grey
-    = "Based on your tag which matched the category '" + @sampled_tag + "', we think you may be interested in:"
-  - if @suggested_restaraunts["businesses"].nil?
+.six.columns
+  %h3 Suggested Restaurants
+  - if @suggested_restaurants["businesses"].nil?
     We're sorry, but Yelp doesn't seem to be responding right now.
   - else
-    - @suggested_restaraunts["businesses"].each do |business|
-      = link_to business["name"], business["url"], :class => "iframe"
-      = business["display_phone"]
-      = image_tag(business["rating_img_url"])
-      = "(" + business["review_count"].to_s + ")"
-      %br
+    - if @sampled_tag.nil?
+      %h6.grey
+        None of your tags could be matched to a Yelp category, so here are some most popular restaraunts in the area:
+    - else
+      %h6.grey
+        = "Based on your tag which matched the category '" + @sampled_tag + "', we think you may be interested in:"
+    - @suggested_restaurants["businesses"].each do |business|
+      .three.columns.business-image
+        = link_to (business["image_url"].nil? ? image_tag("no_image.png") : image_tag(business["image_url"])), business["url"], :class => "iframe"
+      .nine.columns.business-info
+        %span.business-name
+          = link_to business["name"], business["url"], :class => "iframe"
+        %span.business-rating
+          = image_tag(business["rating_img_url"], :class => "business-rating-image")
+          %span.business-rating-count
+            = "(" + business["review_count"].to_s + " reviews)"
+        %br
+        %span.business-address
+          - if business["location"]["display_address"].nil?
+            No business address listed for this restaurant.
+            %br
+          - else
+            - business["location"]["display_address"].each do |address_part|
+              = address_part
+              %br
+        %span.business-phone
+          - if business["phone"].nil?
+            No phone number listed.
+          - else
+            = number_to_phone business["phone"], :area_code => true
+      %hr
 
-.seven.columns
+.six.columns
   %h3 Search
   = form_tag do
     .eight.columns
-      = text_field_tag(nil, nil, :placeholder => "Search Yelp for a restaraunt (e.g. burritos, chinese, Flour)", :class => "yelp_search_term")
+      = text_field_tag(nil, nil, :placeholder => "Search Yelp for a restaurant (e.g. burritos, chinese, Flour)", :class => "yelp_search_term")
     .three.columns
       = text_field_tag(nil, nil, :placeholder => 'Near ZIP Code...', :class => "yelp_search_zip")
     .one.column
-      = link_to "Search!", "#", :class => "success button"
+      = link_to "Search!", "#", :class => "alert button radius yelp-search"
+
+  .yelp-search-results
+
+:javascript
+  $(".yelp-search").live('click', function() {
+    var search_term = $(".yelp_search_term").val();
+    var search_zip = $(".yelp_search_zip").val();
+    $.ajax({
+      type: "POST",
+      url: "/events/yelp_search",
+      data: "search_term=" + search_term + "&search_zip=" + search_zip,
+      success: $.proxy(function(data) {
+      }, this)
+    });
+
+    return false;
+  });

@@ -93,14 +93,44 @@ class EventsController < ApplicationController
     matched_tags = current_user.cross_reference_tags
     @sampled_tag = matched_tags.sample
     client = Yelp::Client.new
-    suggested_request = Yelp::V2::Search::Request::Location.new(
-      :term => @sampled_tag, 
-      :city => "Cambridge", :state => "MA", :zip => "02139", 
+    if @sampled_tag.nil?
+      suggested_request = Yelp::V2::Search::Request::Location.new(
+        :term => "food",
+        :city => "Cambridge", :state => "MA", :zip => "02139",
+        :consumer_key => YELP_API['consumer_key'], 
+        :consumer_secret => YELP_API['consumer_secret'], 
+        :token => YELP_API['token'], 
+        :token_secret => YELP_API['token_secret'],
+        :limit => 10)
+    else
+      suggested_request = Yelp::V2::Search::Request::Location.new(
+        :term => @sampled_tag, 
+        :city => "Cambridge", :state => "MA", :zip => "02139", 
+        :consumer_key => YELP_API['consumer_key'], 
+        :consumer_secret => YELP_API['consumer_secret'], 
+        :token => YELP_API['token'], 
+        :token_secret => YELP_API['token_secret'],
+        :limit => 10)
+    end
+    @suggested_restaurants = client.search(suggested_request)
+  end
+
+  def yelp_search
+    client = Yelp::Client.new
+    search_request = Yelp::V2::Search::Request::Location.new(
+      :term => params[:search_term],
+      :zip => params[:search_zip],
+      :state => "MA",
       :consumer_key => YELP_API['consumer_key'], 
       :consumer_secret => YELP_API['consumer_secret'], 
       :token => YELP_API['token'], 
       :token_secret => YELP_API['token_secret'],
       :limit => 10)
-    @suggested_restaraunts = client.search(suggested_request)
+
+    @search_results = client.search(search_request)
+
+    respond_to do |format|
+      format.js
+    end
   end
 end

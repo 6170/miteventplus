@@ -88,6 +88,32 @@ ul.nav li {
   float:left;
   display:inline;
 }
+.yelp_logo {
+  display:inline;
+  vertical-align:middle;
+  padding-bottom:10px;
+}
+.business-image {
+  float:left;
+  display:inline;
+  margin-bottom:10px;
+}
+.business-name {
+  font-size: 17px;
+  font-weight:bold;
+}
+.business-rating-image {
+  vertical-align:middle;
+  padding-left:5px;
+}
+.business-rating-count {
+  font-style:italic;
+}
+.business-address {
+}
+.business-phone {
+  font-weight:bold;
+}
 
 i {
   font-size: 30px;
