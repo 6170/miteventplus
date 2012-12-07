@@ -17,7 +17,7 @@
     - else
       %h6.grey
         = "Based on your tag which matched the category '" + @sampled_tag + "', we think you may be interested in:"
-    - @suggested_restaurants["businesses"].each do |business|
+    - @suggested_restaurants["businesses"].each_with_index do |business, index|
       .three.columns.business-image
         = link_to (business["image_url"].nil? ? image_tag("no_image.png") : image_tag(business["image_url"])), business["url"], :class => "iframe"
       .nine.columns.business-info
@@ -36,12 +36,17 @@
             - business["location"]["display_address"].each do |address_part|
               = address_part
               %br
+      .three.columns
+      .eight.columns  
         %span.business-phone
           - if business["phone"].nil?
             No phone number listed.
           - else
             = number_to_phone business["phone"], :area_code => true
-      %hr
+      .one.column
+        %i{:class => "general foundicon-checkmark select-restaurant"}
+      - if index != @suggested_restaurants["businesses"].size - 1
+        %hr.restaurant-divider
 
 .six.columns
   %h3 Search For a Restaurant
@@ -89,3 +94,7 @@
 
   $(".yelp_search_term").keypress(yelp_search_enter);
   $(".yelp_search_zip").keypress(yelp_search_enter);
+
+  $(".select-restaurant").live('click', function() {
+    
+  }); 
