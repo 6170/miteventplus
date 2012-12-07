@@ -6,7 +6,7 @@
 
 %hr
 
-.six.columns
+.six.columns.panel
   %h3 Suggested Restaurants
   - if @suggested_restaurants["businesses"].nil?
     We're sorry, but Yelp doesn't seem to be responding right now.
@@ -44,7 +44,7 @@
       %hr
 
 .six.columns
-  %h3 Search
+  %h3 Search For a Restaurant
   = form_tag do
     .eight.columns
       = text_field_tag(nil, nil, :placeholder => "Search Yelp for a restaurant (e.g. burritos, chinese, Flour)", :class => "yelp_search_term")
@@ -59,13 +59,33 @@
   $(".yelp-search").live('click', function() {
     var search_term = $(".yelp_search_term").val();
     var search_zip = $(".yelp_search_zip").val();
+    $(".yelp-search-results").empty();
     $.ajax({
       type: "POST",
       url: "/events/yelp_search",
-      data: "search_term=" + search_term + "&search_zip=" + search_zip,
+      data: "search_term=" + search_term + "&search_zip=" + search_zip + "&page=1",
       success: $.proxy(function(data) {
       }, this)
     });
 
     return false;
   });
+
+  var yelp_search_enter = function (e) {
+    if (e.which == 13) {
+      e.preventDefault();
+      var search_term = $(".yelp_search_term").val();
+      var search_zip = $(".yelp_search_zip").val();
+      $(".yelp-search-results").empty();
+      $.ajax({
+        type: "POST",
+        url: "/events/yelp_search",
+        data: "search_term=" + search_term + "&search_zip=" + search_zip + "&page=1",
+        success: $.proxy(function(data) {
+        }, this)
+      });
+    }
+  }
+
+  $(".yelp_search_term").keypress(yelp_search_enter);
+  $(".yelp_search_zip").keypress(yelp_search_enter);

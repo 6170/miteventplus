@@ -1,4 +1,13 @@
-var content = ""
+var content = "";
+var max_pages = parseInt("<%= @search_results['total']%>");
+<% max_pages = (@search_results['total']/10.0).ceil %>
+content += "<div class='twelve columns page-nav'>";
+content += "<a href='#' class='small button radius previous'><< Previous</a>";
+content += "<span class='page-count'>";
+content += "Page <%= @page.to_s %> of <%= max_pages %>";
+content += "</span>";
+content += "<a href='#' class='small button radius next'>Next >></a>";
+content += "</div>";
 
 <% @search_results["businesses"].each do |business|%>
   content += "<div class='three columns business-image'>";
@@ -34,13 +43,40 @@ var content = ""
   <% if business['phone'].nil? %>
     content += "    No phone number listed."
   <% else %>
-    content += "    <%= business['phone']%>";
+    var phone_number = "<%= business['phone']%>";
+    content += "(" + phone_number.slice(0, 3) + ") " + phone_number.slice(3, 6) + "-" + phone_number.slice(6,10);
   <% end %>
   content += "  </span>";
   content += "</div>";
   content += "<hr>";
 <% end %>
 
+content += "<div class='twelve columns next-button'>";
+content += "<a href='#' class='small button radius next'>Next >></a>";
+content += "</div>";
+
 
 $(".yelp-search-results").append(content);
+$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 
+<% if @page < max_pages %>
+  $(".next").click(function() {
+    $(".yelp-search-results").empty();
+    $.ajax({
+      type: "POST",
+      url: "/events/yelp_search",
+      data: "search_term=<%= @search_term %>&search_zip=<%= @search_zip%>&page=<%= (@page+1).to_s %>"
+    })
+  });
+<% end %>
+
+<% if @page > 1 %>
+  $(".previous").click(function() {
+    $(".yelp-search-results").empty();
+    $.ajax({
+      type: "POST",
+      url: "/events/yelp_search",
+      data: "search_term=<%= @search_term %>&search_zip=<%= @search_zip%>&page=<%= (@page-1).to_s %>"
+    })
+  });
+<% end %>

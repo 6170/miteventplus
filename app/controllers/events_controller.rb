@@ -95,7 +95,7 @@ class EventsController < ApplicationController
     client = Yelp::Client.new
     if @sampled_tag.nil?
       suggested_request = Yelp::V2::Search::Request::Location.new(
-        :term => "food",
+        :term => "food delivery",
         :city => "Cambridge", :state => "MA", :zip => "02139",
         :consumer_key => YELP_API['consumer_key'], 
         :consumer_secret => YELP_API['consumer_secret'], 
@@ -116,15 +116,19 @@ class EventsController < ApplicationController
   end
 
   def yelp_search
+    @page = params[:page].to_i
+    @search_term = params[:search_term]
+    @search_zip = params[:search_zip]
     client = Yelp::Client.new
     search_request = Yelp::V2::Search::Request::Location.new(
-      :term => params[:search_term],
-      :zip => params[:search_zip],
+      :term => @search_term,
+      :zip => @search_zip,
       :state => "MA",
       :consumer_key => YELP_API['consumer_key'], 
       :consumer_secret => YELP_API['consumer_secret'], 
       :token => YELP_API['token'], 
       :token_secret => YELP_API['token_secret'],
+      :offset => 10 * (@page - 1),
       :limit => 10)
 
     @search_results = client.search(search_request)
