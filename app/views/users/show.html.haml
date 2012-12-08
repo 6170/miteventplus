@@ -37,7 +37,8 @@
                         - elsif checklist_item.tag == 'copytech'
                           = link_to checklist_item.text, "http://copytech-print.mit.edu/fulfillment/login", :class => "checklist-link", :target => "_blank"
                         - else
-                          = checklist_item.text
+                          %span.edit
+                            = checklist_item.text
                       %span.right-align
                         = link_to "Delete", "#", :id => checklist_item.id.to_s, :class => "delete-checklist-item", data: {confirm: "Are you sure you want to delete this checklist item?"}
                       %br
@@ -110,3 +111,5 @@
         $(this).css("background", 'transparent');
       }
   });
+
+  $(".edit").editable("");

@@ -3,8 +3,6 @@
     .alert-box.secondary
       You have already chosen a restaurant! Previously, you chose to get food from
       - @event.event_restaurants.each_with_index do |restaurant, index|
-        - if index == @event.event_restaurants.size - 1
-          = "and "
         = link_to restaurant.yelp_restaurant_name, restaurant.yelp_restaurant_url, :class => "iframe"
         - unless index == @event.event_restaurants.size - 1
           = ", "
@@ -120,7 +118,7 @@
     var restaurant_div = $("." + id);
     var name = restaurant_div.find(".business-info").find(".business-name").find("a").text();
     var url = restaurant_div.find(".business-info").find(".business-name").find("a").attr("href");
-    var pre_phone = restaurant_div.find(".business-phone").text().replace(/\s+|\(|\)|-/g, '');
+    var pre_phone = restaurant_div.find(".business-phone").text().trim();
     if (confirm("Are you sure you want to select " + name + "?")) {
       if (pre_phone.indexOf("phone") != -1) {
         var phone = "";
