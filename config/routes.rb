@@ -25,4 +25,5 @@ Risd::Application.routes.draw do
   match "/events/:id/select_restaurant" => "events#select_restaurant", :method => :post
   match "/events/:id/deselect_restaurant" => "events#deselect_restaurant", :method => :post
   match "/events/:id/clear_restaurants" => "events#clear_restaurants"
+  match "/checklist_items/edit_text" => "checklist_items#edit_text", :method => :post
 end
