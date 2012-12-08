@@ -84,7 +84,7 @@ $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
     $(".yelp-search-results").empty();
     $.ajax({
       type: "POST",
-      url: "/events/yelp_search",
+      url: "/events/<%= @event.id.to_s %>/yelp_search",
       data: "search_term=<%= @search_term %>&search_zip=<%= @search_zip%>&page=<%= (@page+1).to_s %>"
     });
     return false;
@@ -100,7 +100,7 @@ $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
     $(".yelp-search-results").empty();
     $.ajax({
       type: "POST",
-      url: "/events/yelp_search",
+      url: "/events/<%= @event.id.to_s %>/yelp_search",
       data: "search_term=<%= @search_term %>&search_zip=<%= @search_zip%>&page=<%= (@page-1).to_s %>"
     });
     return false;
