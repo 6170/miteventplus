@@ -127,33 +127,31 @@ ul.nav li {
   padding-right:10px;
 }
 
-i {
-  .general {
-    font-size: 30px;
-    color: #616161;
-    vertical-align:middle !important;
-    margin-right: 8px;
-  }
+i.general {
+  font-size: 30px;
+  color: #616161;
+  vertical-align:middle !important;
+  margin-right: 8px;
 }
 
-.checked {
+i.checked {
   color: #88cf4f;
 }
 
-.unchecked {
+i.unchecked {
   color: #ff7578;
 }
-.foundicon-star, .foundicon-checkmark, .foundicon-remove, .add {
+i.foundicon-star, i.foundicon-checkmark, i.foundicon-remove, i.add {
   font-size:20px;
 }
-.foundicon-settings {
+i.foundicon-settings {
   font-size:20px;
 }
-.foundicon-checkmark.home {
+i.foundicon-checkmark.home {
   font-size:30px;
 }
 
-.foundicon-star {
+i.foundicon-star {
   color: #c7b300;
 }
 
