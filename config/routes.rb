@@ -4,6 +4,7 @@ Risd::Application.routes.draw do
   resources :users, :only => [:index, :update, :destroy, :show]
   resources :events do
     resources :uploads
+    resources :publicity_emails
   end
   resources :uploads
   resources :checklist_items

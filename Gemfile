@@ -30,4 +30,4 @@ gem "simple_form", ">= 2.0.4"
 gem 'savon'
 gem 'yelpster'
 gem 'fuzzy-string-match'
-
+gem 'mail_form'

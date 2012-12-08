@@ -1,8 +1,8 @@
 .eight.columns.centered
   %h2 Send a Publicity Email
-  = simple_form_for Event.new, :url => "/create_event" do |f|
+  = simple_form_for [@event, @event.publicity_emails.new] do |f|
     = f.error_notification
-    = f.input :title
-    = f.input :description, :input_html => {:class => "redactor", :id => @event.id}
+    = f.input :subject
+    = f.input :content, :input_html => {:class => "redactor", :id => @event.id}
 
     = f.submit 'Send Email'

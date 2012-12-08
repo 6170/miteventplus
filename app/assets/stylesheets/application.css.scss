@@ -123,10 +123,12 @@ ul.nav li {
 }
 
 i {
-  font-size: 30px;
-  color: #616161;
-  vertical-align:middle !important;
-  margin-right: 8px;
+  .general {
+    font-size: 30px;
+    color: #616161;
+    vertical-align:middle !important;
+    margin-right: 8px;
+  }
 }
 
 .checked {
