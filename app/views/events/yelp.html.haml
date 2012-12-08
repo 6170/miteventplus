@@ -6,7 +6,7 @@
 
 %hr
 
-.six.columns.panel
+.six.columns.panel.radius
   %h3 Suggested Restaurants
   - if @suggested_restaurants["businesses"].nil?
     We're sorry, but Yelp doesn't seem to be responding right now.
@@ -96,5 +96,10 @@
   $(".yelp_search_zip").keypress(yelp_search_enter);
 
   $(".select-restaurant").live('click', function() {
-    
+    $.ajax({
+      type: "POST",
+      url: "/events/:id/restaurant",
+      data: 
+    });
+    $(this).addClass('checked');
   }); 
