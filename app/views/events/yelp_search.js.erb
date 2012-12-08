@@ -1,60 +1,71 @@
 var content = "";
-var max_pages = parseInt("<%= @search_results['total']%>");
 <% max_pages = (@search_results['total']/10.0).ceil %>
-content += "<div class='twelve columns page-nav'>";
-content += "<a href='#' class='small button radius previous'><< Previous</a>";
-content += "<span class='page-count'>";
-content += "Page <%= @page.to_s %> of <%= max_pages %>";
-content += "</span>";
-content += "<a href='#' class='small button radius next'>Next >></a>";
-content += "</div>";
-
-<% @search_results["businesses"].each do |business|%>
-  content += "<div class='three columns business-image'>";
-  <% if business['image_url'].nil? %>
-    content += "<a href='<%= business['url']%>' class='iframe'><img src='/assets/no_image.png'></a>";
-  <% else %>
-    content += "<a href='<%= business['url']%>' class='iframe'><img src='<%= business['image_url'] %>'></a>";
-  <% end %>
+<% if @search_results['total'] == 0 %>
+  content += "<div class='twelve columns'>";
+  content += "We're sorry, but your search returned 0 results. Please try again with different search parameters.";
   content += "</div>";
-  content += "<div class='nine columns business-info'>";
-  content += "  <span class='business-name'>";
-  content += "    <a href='<%= business['url'] %>' class='iframe'><%= business['name'] %></a>";
-  content += "  </span>";
-  content += "  <span class='business-rating'>";
-  content += "    <img class='business-rating-image' src='<%= business['rating_img_url']%>' />";
-  content += "    <span class='business-rating-count'>";
-  content += "      (<%= business['review_count'].to_s%> reviews)";
-  content += "    </span>";
-  content += "  </span>";
-  content += "  <br>";
-  content += "  <span class='business-address'>";
-  <% if business['location']['display_address'].nil? %>
-    content += "No business address listed for this restaraunt.";
-    content += "<br>";
-  <% else %>
-    <% business['location']['display_address'].each do |address_part| %>
-      content += "<%= address_part %>";
+<% else %>
+  content += "<div class='twelve columns page-nav'>";
+  content += "<a href='#' class='small button radius previous'><< Prev</a>";
+  content += "<span class='page-count'>";
+  content += "Page <%= @page.to_s %> of <%= max_pages %>";
+  content += "</span>";
+  content += "<a href='#' class='small button radius next'>Next >></a>";
+  content += "</div>";
+
+  <% @search_results["businesses"].each_with_index do |business, index|%>
+    content += "<div class='three columns business-image'>";
+    <% if business['image_url'].nil? %>
+      content += "<a href='<%= business['url']%>' class='iframe'><img src='/assets/no_image.png'></a>";
+    <% else %>
+      content += "<a href='<%= business['url']%>' class='iframe'><img src='<%= business['image_url'] %>'></a>";
+    <% end %>
+    content += "</div>";
+    content += "<div class='nine columns business-info'>";
+    content += "  <span class='business-name'>";
+    content += "    <a href='<%= business['url'] %>' class='iframe'><%= business['name'] %></a>";
+    content += "  </span>";
+    content += "  <span class='business-rating'>";
+    content += "    <img class='business-rating-image' src='<%= business['rating_img_url']%>' />";
+    content += "    <span class='business-rating-count'>";
+    content += "      (<%= business['review_count'].to_s%> reviews)";
+    content += "    </span>";
+    content += "  </span>";
+    content += "  <br>";
+    content += "  <span class='business-address'>";
+    <% if business['location']['display_address'].nil? %>
+      content += "No business address listed for this restaraunt.";
       content += "<br>";
+    <% else %>
+      <% business['location']['display_address'].each do |address_part| %>
+        content += "<%= address_part %>";
+        content += "<br>";
+      <% end %>
+    <% end %>
+    content += "  </span>";
+    content += "  <span class='business-phone'>";
+    <% if business['phone'].nil? %>
+      content += "    No phone number listed."
+    <% else %>
+      var phone_number = "<%= business['phone']%>";
+      content += "(" + phone_number.slice(0, 3) + ") " + phone_number.slice(3, 6) + "-" + phone_number.slice(6,10);
+    <% end %>
+    content += "  </span>";
+    content += "</div>";
+
+    <% if index != @search_results['businesses'].size - 1 %>
+      content += "<hr class='restaurant-divider'>";
     <% end %>
   <% end %>
-  content += "  </span>";
-  content += "  <span class='business-phone'>";
-  <% if business['phone'].nil? %>
-    content += "    No phone number listed."
-  <% else %>
-    var phone_number = "<%= business['phone']%>";
-    content += "(" + phone_number.slice(0, 3) + ") " + phone_number.slice(3, 6) + "-" + phone_number.slice(6,10);
-  <% end %>
-  content += "  </span>";
+
+  content += "<div class='twelve columns page-nav'>";
+  content += "<a href='#' class='small button radius previous'><< Prev</a>";
+  content += "<span class='page-count'>";
+  content += "Page <%= @page.to_s %> of <%= max_pages %>";
+  content += "</span>";
+  content += "<a href='#' class='small button radius next'>Next >></a>";
   content += "</div>";
-  content += "<hr>";
 <% end %>
-
-content += "<div class='twelve columns next-button'>";
-content += "<a href='#' class='small button radius next'>Next >></a>";
-content += "</div>";
-
 
 $(".yelp-search-results").append(content);
 $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
@@ -66,7 +77,12 @@ $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
       type: "POST",
       url: "/events/yelp_search",
       data: "search_term=<%= @search_term %>&search_zip=<%= @search_zip%>&page=<%= (@page+1).to_s %>"
-    })
+    });
+    return false;
+  });
+<% else %>
+  $(".next").click(function() {
+    return false;
   });
 <% end %>
 
@@ -77,6 +93,12 @@ $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
       type: "POST",
       url: "/events/yelp_search",
       data: "search_term=<%= @search_term %>&search_zip=<%= @search_zip%>&page=<%= (@page-1).to_s %>"
-    })
+    });
+    return false;
+  });
+<% else %>
+  $(".previous").click(function() {
+    return false;
   });
 <% end %>
+
