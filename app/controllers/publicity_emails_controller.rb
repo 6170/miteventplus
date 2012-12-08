@@ -5,9 +5,8 @@ class PublicityEmailsController < ApplicationController
   end
 
   def create
-    @publicity_email = @event.publicity_emails.create(params[:publicity_email])
-    @publicity_email.content.gsub!('<img src = "http://system', '<img src = "http://eventplus.herokuapp.com/system')
-    Email.new(:title => @publicity_email.subject, :email => @event.user.email, :message => @publicity_email.content).deliver
+    @publicity_email = @event.publicity_emails.new(params[:publicity_email])
+    Email.new(:title => @publicity_email.subject, :email => @event.user.email, :message => @publicity_email.content.gsub('<img src = "http://system', '<img src = "http://eventplus.herokuapp.com/system')).deliver
     redirect_to :root
   end
 
