@@ -96,7 +96,7 @@ class EventsController < ApplicationController
     client = Yelp::Client.new
     if @sampled_tag.nil?
       suggested_request = Yelp::V2::Search::Request::Location.new(
-        :term => "food delivery",
+        :term => "restaurants delivery",
         :city => "Cambridge", :state => "MA", :zip => "02139",
         :consumer_key => YELP_API['consumer_key'], 
         :consumer_secret => YELP_API['consumer_secret'], 

@@ -29,5 +29,6 @@ gem "devise", ">= 2.1.2"
 gem "simple_form", ">= 2.0.4"
 gem 'savon'
 gem 'yelpster'
+gem 'ZenTest', '4.6.0'
 gem 'fuzzy-string-match'
 gem 'mail_form'

@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   after_create :prepopulate_tags
   
   has_many :events
-  has_and_belongs_to_many :tags
+  has_many :tags
 
   def must_be_asa_group_email
     if not AsaDb.find(:all).collect(&:email).include?(email)

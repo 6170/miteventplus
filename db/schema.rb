@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121208065452) do
+ActiveRecord::Schema.define(:version => 20121208202628) do
 
   create_table "asa_dbs", :force => true do |t|
     t.string   "name"
@@ -75,11 +75,7 @@ ActiveRecord::Schema.define(:version => 20121208065452) do
     t.string   "name",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "tags_users", :force => true do |t|
-    t.integer "user_id"
-    t.integer "tag_id"
+    t.integer  "user_id"
   end
 
   create_table "time_blocks", :force => true do |t|

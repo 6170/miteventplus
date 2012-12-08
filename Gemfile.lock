@@ -3,7 +3,7 @@ GEM
   specs:
     RubyInline (3.11.4)
       ZenTest (~> 4.3)
-    ZenTest (4.8.2)
+    ZenTest (4.6.0)
     actionmailer (3.2.9)
       actionpack (= 3.2.9)
       mail (~> 2.4.4)
@@ -203,6 +203,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  ZenTest (= 4.6.0)
   coffee-rails
   compass-rails (>= 1.0.3)
   devise (>= 2.1.2)
