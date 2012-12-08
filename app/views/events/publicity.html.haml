@@ -1,8 +1,44 @@
-.eight.columns.centered
-  %h2 Send a Publicity Email
-  = simple_form_for Event.new, :url => "/create_event" do |f|
-    = f.error_notification
-    = f.input :title
-    = f.input :description, :input_html => {:class => "redactor", :id => @event.id}
+.twelve.columns.centered
+  .alert-box.secondary
+    %center 
+      *Optional: Get started by copying over another of your publicity emails! 
+      = collection_select(:publicity_email, :id, @publicity_emails, :id, :describe, {:prompt => "Select Email..."}, {:style => "width: 120px;margin-left: 10px"})
 
-    = f.submit 'Send Email'
+.eleven.columns.centered
+  %center 
+    %h2 Publicity Email
+    %h3.subtitle Write a publicity email to publicize your event
+
+  = simple_form_for [@event, @event.publicity_emails.new], :html => {:class => 'publicity_email_form', :id => @event.id.to_s} do |f|
+    = f.error_notification
+    .twelve.columns
+      .three.columns
+        = f.label :subject, :class => "inline right"
+      .six.columns
+        = f.text_field :subject
+      .three.columns
+    .twelve.columns
+      .three.columns
+        = f.label :content, "Message", :class => "inline right"
+      .six.columns
+        = f.text_area :content, :class => "redactor"
+      .three.columns
+    .twelve.columns
+      .three.columns
+      .six.columns
+        = f.submit 'Send Email To My Group', :class => "small button right", :style => "margin-top: 15px;"
+      .three.columns
+
+:javascript
+  $("#publicity_email_id").on("change", function(){
+    var selected = $(this).val();
+    $.ajax({
+      type: "GET",
+      url: "/events/" + $('.publicity_email_form').attr("id") + "/publicity_emails/" + selected,
+      success: function(data) {
+        $('#publicity_email_subject').val(data["subject"]);
+        $('#publicity_email_content').val(data["content"]);
+        $('.redactor_editor').children().first().html(data["content"]);
+      }
+    });
+  });

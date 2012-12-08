@@ -4,6 +4,7 @@ Risd::Application.routes.draw do
   resources :users, :only => [:index, :update, :destroy, :show]
   resources :events do
     resources :uploads
+    resources :publicity_emails
   end
   resources :uploads
   resources :checklist_items
@@ -20,4 +21,9 @@ Risd::Application.routes.draw do
   post "/settime/:id" => "events#set_time"
   get "/events/:id/resources" => "events#resources", :as => "resources"
   get "/events/:id/yelp" => "events#yelp"
+  match "/events/:id/yelp_search" => "events#yelp_search", :method => :post
+  match "/events/:id/select_restaurant" => "events#select_restaurant", :method => :post
+  match "/events/:id/deselect_restaurant" => "events#deselect_restaurant", :method => :post
+  match "/events/:id/clear_restaurants" => "events#clear_restaurants"
+  match "/checklist_items/edit_text" => "checklist_items#edit_text", :method => :post
 end

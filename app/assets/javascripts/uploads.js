@@ -35,7 +35,7 @@ $(function () {
 
   });
   $(document).ready(function() {
-     var event_id = $('.redactor').attr('id');
+     var event_id = $(".publicity_email_form").attr('id');
      $('.redactor').redactor({ 
       imageUpload: "/events/" + event_id + "/uploadFromRedactor" + "?" + $('meta[name=csrf-param]').attr('content') + "=" + encodeURIComponent($('meta[name=csrf-token]').attr('content')),
       imageGetJson: "/events/" + event_id + "/images.json",

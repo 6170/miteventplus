@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121205015155) do
+ActiveRecord::Schema.define(:version => 20121208202628) do
 
   create_table "asa_dbs", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(:version => 20121205015155) do
     t.string   "tag"
   end
 
+  create_table "event_restaurants", :force => true do |t|
+    t.integer  "event_id",              :null => false
+    t.string   "yelp_restaurant_id",    :null => false
+    t.string   "yelp_restaurant_name",  :null => false
+    t.string   "yelp_restaurant_url",   :null => false
+    t.string   "yelp_restaurant_phone"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.string   "title"
     t.string   "location"
@@ -51,15 +61,21 @@ ActiveRecord::Schema.define(:version => 20121205015155) do
 
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
-  create_table "tags", :force => true do |t|
-    t.string   "name",       :null => false
+  create_table "publicity_emails", :force => true do |t|
+    t.text     "content"
+    t.integer  "event_id"
+    t.string   "subject"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "tags_users", :force => true do |t|
-    t.integer "user_id"
-    t.integer "tag_id"
+  add_index "publicity_emails", ["event_id"], :name => "index_publicity_emails_on_event_id"
+
+  create_table "tags", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "time_blocks", :force => true do |t|

@@ -66,6 +66,12 @@ class EventsController < ApplicationController
 
   def publicity
     @event = current_user.events.find(params[:id])
+    @publicity_emails = []
+    current_user.events.each do |event|
+      event.publicity_emails.each do |email|
+        @publicity_emails << email
+      end
+    end
   end
 
   #Route: GET '/settime/:id'
@@ -90,17 +96,76 @@ class EventsController < ApplicationController
   end
 
   def yelp
+    @event = Event.find(params[:id])
     matched_tags = current_user.cross_reference_tags
     @sampled_tag = matched_tags.sample
     client = Yelp::Client.new
-    suggested_request = Yelp::V2::Search::Request::Location.new(
-      :term => @sampled_tag, 
-      :city => "Cambridge", :state => "MA", :zip => "02139", 
+    if @sampled_tag.nil?
+      suggested_request = Yelp::V2::Search::Request::Location.new(
+        :term => "restaurants delivery",
+        :city => "Cambridge", :state => "MA", :zip => "02139",
+        :consumer_key => YELP_API['consumer_key'], 
+        :consumer_secret => YELP_API['consumer_secret'], 
+        :token => YELP_API['token'], 
+        :token_secret => YELP_API['token_secret'],
+        :limit => 10)
+    else
+      suggested_request = Yelp::V2::Search::Request::Location.new(
+        :term => @sampled_tag, 
+        :city => "Cambridge", :state => "MA", :zip => "02139", 
+        :consumer_key => YELP_API['consumer_key'], 
+        :consumer_secret => YELP_API['consumer_secret'], 
+        :token => YELP_API['token'], 
+        :token_secret => YELP_API['token_secret'],
+        :limit => 10)
+    end
+    @suggested_restaurants = client.search(suggested_request)
+  end
+
+  def yelp_search
+    @event = Event.find(params[:id])
+    @page = params[:page].to_i
+    @search_term = params[:search_term]
+    @search_zip = params[:search_zip]
+    client = Yelp::Client.new
+    search_request = Yelp::V2::Search::Request::Location.new(
+      :term => @search_term,
+      :zip => @search_zip,
+      :state => "MA",
       :consumer_key => YELP_API['consumer_key'], 
       :consumer_secret => YELP_API['consumer_secret'], 
       :token => YELP_API['token'], 
       :token_secret => YELP_API['token_secret'],
+      :offset => 10 * (@page - 1),
       :limit => 10)
-    @suggested_restaraunts = client.search(suggested_request)
+
+    @search_results = client.search(search_request)
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def select_restaurant
+    event = Event.find(params[:id])
+    event.event_restaurants.create(:yelp_restaurant_id => params[:yelp_id],
+      :yelp_restaurant_name => params[:yelp_name],
+      :yelp_restaurant_url => params[:yelp_url],
+      :yelp_restaurant_phone => (params[:yelp_phone].blank? ? nil : params[:yelp_phone]))
+
+    render :text => "Success!"
+  end
+
+  def deselect_restaurant
+    event = Event.find(params[:id])
+    event.event_restaurants.find_by_yelp_restaurant_id(params[:yelp_id]).delete
+
+    render :text => "Success!"
+  end
+
+  def clear_restaurants
+    event = Event.find(params[:id])
+    event.event_restaurants.delete_all
+    redirect_to :back
   end
 end

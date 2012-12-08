@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   has_many :uploads, :dependent => :delete_all
   has_many :publicity_emails, :dependent => :delete_all
   has_many :budget_items, :dependent => :delete_all
+  has_many :event_restaurants, :dependent => :delete_all
   attr_accessible :title, :location, :description, :user_id
   validates :title, :presence => true
   validate :ensure_event_is_unique
@@ -25,5 +26,15 @@ class Event < ActiveRecord::Base
   	else
   		errors[:base] << "This event does not have a time"
   	end
+  end
+
+  def has_restaurant(yelp_id)
+    self.event_restaurants.each do |restaurant|
+      if restaurant.yelp_restaurant_id == yelp_id
+        return true
+      end
+    end
+
+    return false
   end
 end

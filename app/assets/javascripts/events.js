@@ -54,6 +54,14 @@ function toFormattedDateString(x){
 				$('#end_date_s').val(end_date);
 				$('#agenda_calendar').fullCalendar('gotoDate',current_start_date);
 			}
+			
+			//fix for resourceView times
+			htmls = $('.fc-view-resourceDay .fc-widget-header');
+			for (var i = 0; i < htmls.length; i++) {
+				if ($(htmls[i]).html().search("\:") != -1) {
+					$(htmls[i]).html("   ");
+				}
+			}
 			calendar.fullCalendar('unselect');
 		},
 		events: '/events/1',
@@ -73,7 +81,7 @@ function toFormattedDateString(x){
 		selectable: true,
 		selectHelper: true,
 		select: function(start, end, allDay) { //do something here
-			var correct_time = confirm('Are you sure you want your event to start at ' + start.toLocaleTimeString() + '?');
+			var correct_time = confirm('Are you sure you want your event to \n\nstart at ' + start.toLocaleTimeString() + '\nand end at ' + end.toLocaleTimeString() + '?');
 				if (correct_time) {
 					$('#event_finalize_tab').click();
 				    start_time = toFormattedTimeString(start);
@@ -92,7 +100,7 @@ function toFormattedDateString(x){
 		refetchEvents: true,
 		columnFormat: {
 			month: 'ddd',    // Mon
-			resourceDay: 'htt'
+			resourceDay: 'h(:mm)t'
 		}
 		//slotMinutes: 120
 	});
@@ -119,5 +127,6 @@ function toFormattedDateString(x){
 		$('#event_finalize_tab').click();
     });
 
+	
 
 });

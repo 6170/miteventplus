@@ -1,7 +1,8 @@
 class Tag < ActiveRecord::Base
+  validates :name, :length => {:maximum => 30}
   attr_accessible :name
 
-  has_and_belongs_to_many :users
+  belongs_to :users
 
 
 end

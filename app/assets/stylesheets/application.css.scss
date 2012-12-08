@@ -63,6 +63,13 @@ ul.nav li {
 .bold {
   font-weight:bold;
 }
+.dashboard-title {
+  vertical-align:top;
+}
+h1.dashboard-title {
+  margin-top:0px !important;
+  margin-bottom:0px !important;
+}
 .strikethrough {
   text-decoration:line-through;
   font-weight:bold;
@@ -88,32 +95,70 @@ ul.nav li {
   float:left;
   display:inline;
 }
+.yelp_logo {
+  display:inline;
+  vertical-align:middle;
+  padding-bottom:10px;
+}
+.business-image {
+  float:left;
+  display:inline;
+  margin-bottom:10px;
+}
+.business-name {
+  font-size: 17px;
+  font-weight:bold;
+}
+.business-rating-image {
+  vertical-align:middle;
+  padding-left:5px;
+}
+.business-rating-count {
+  font-style:italic;
+}
+.business-address {
+}
+.business-phone {
+  font-weight:bold;
+}
+.restaurant-divider {
+  margin-top:10px;
+}
 
-i {
+.page-nav {
+  padding-bottom:10px !important;
+  text-align:center;
+}
+.page-count {
+  padding-left:10px;
+  padding-right:10px;
+}
+
+i.general {
   font-size: 30px;
   color: #616161;
   vertical-align:middle !important;
   margin-right: 8px;
 }
 
-.checked {
+i.checked {
   color: #88cf4f;
 }
 
-.unchecked {
+i.unchecked {
   color: #ff7578;
 }
-.foundicon-star, .foundicon-checkmark, .foundicon-remove, .add {
+i.foundicon-star, i.foundicon-checkmark, i.foundicon-remove, i.add {
   font-size:20px;
 }
-.foundicon-settings {
+i.foundicon-settings {
   font-size:20px;
 }
-.foundicon-checkmark.home {
+i.foundicon-checkmark.home {
   font-size:30px;
 }
 
-.foundicon-star {
+i.foundicon-star {
   color: #c7b300;
 }
 
@@ -129,7 +174,7 @@ i {
 
 .new-checklist-item {
   display:inline;
-  width: 500px !important;
+  width: 90% !important;
 }
 .new-tag {
   width: 90% !important;
@@ -142,6 +187,9 @@ i {
   padding-left:5px;
 }
 
+i.foundicon-graph {
+  font-size:50px;
+}
 .foundicon-plus {
   float:left;
   vertical-align:top !important;
