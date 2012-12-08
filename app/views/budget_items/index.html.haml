@@ -93,20 +93,24 @@
                url: "/budget_items/" + $(this).attr('id')
              });
        id = $(this).attr('id');
-       var deleted_title = "";
+       /*var deleted_title = "";
        $('.b_item_title').each(function(){
           if ($(this).attr('id') == id){
             deleted_title = $(this).text();
           }
         });
        console.log(deleted_title);
-       for ( i = 0; i < pie_chart.series[0].data.length(); i++){
+       for ( i = 0; i < pie_chart.series[0].data.length; i++){
         p_slice = pie_chart.series[0].data[i];
         console.log(p_slice);
         if (p_slice.x == deleted_title){ p_slice.remove();}
-       }
+       }*/
        x = '#budget-item-' + $(this).attr('id');
-       $(x).remove();
+       $(x).fadeOut(300, function() {
+                 $(this).remove();
+               });
+       setup_pie_chart_data();
+       pie_chart.series[0].setData(pie_chart_array);
        recompute_numbers(b_map[$(this).attr('id')],false);
        delete b_map[$(this).attr('id')];
       }
