@@ -22,6 +22,7 @@
 .four.columns
   %h2 Edit Your Tags
   %hr
+    %h6.grey Tags are words that describe your club. They will be used to suggest restaurants for your events.
     #existing-tags
       - @user.tags.each do |tag|
         %div{:id => "tag-" + tag.id.to_s, :style => "padding:5px;"}
