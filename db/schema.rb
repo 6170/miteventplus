@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(:version => 20121208065452) do
     t.string   "tag"
   end
 
+  create_table "event_restaurants", :force => true do |t|
+    t.integer  "event_id",              :null => false
+    t.string   "yelp_restaurant_id",    :null => false
+    t.string   "yelp_restaurant_name",  :null => false
+    t.string   "yelp_restaurant_url",   :null => false
+    t.string   "yelp_restaurant_phone"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.string   "title"
     t.string   "location"
@@ -60,13 +70,6 @@ ActiveRecord::Schema.define(:version => 20121208065452) do
   end
 
   add_index "publicity_emails", ["event_id"], :name => "index_publicity_emails_on_event_id"
-
-  create_table "redactor_assets", :force => true do |t|
-    t.string   "asset_file_name"
-    t.string   "asset_content_type"
-    t.integer  "asset_file_size"
-    t.datetime "asset_updated_at"
-  end
 
   create_table "tags", :force => true do |t|
     t.string   "name",       :null => false

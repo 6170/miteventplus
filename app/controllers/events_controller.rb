@@ -90,6 +90,7 @@ class EventsController < ApplicationController
   end
 
   def yelp
+    @event = Event.find(params[:id])
     matched_tags = current_user.cross_reference_tags
     @sampled_tag = matched_tags.sample
     client = Yelp::Client.new
@@ -116,6 +117,7 @@ class EventsController < ApplicationController
   end
 
   def yelp_search
+    @event = Event.find(params[:id])
     @page = params[:page].to_i
     @search_term = params[:search_term]
     @search_zip = params[:search_zip]
@@ -136,5 +138,28 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def select_restaurant
+    event = Event.find(params[:id])
+    event.event_restaurants.create(:yelp_restaurant_id => params[:yelp_id],
+      :yelp_restaurant_name => params[:yelp_name],
+      :yelp_restaurant_url => params[:yelp_url],
+      :yelp_restaurant_phone => (params[:yelp_phone].blank? ? nil : params[:yelp_phone]))
+
+    render :text => "Success!"
+  end
+
+  def deselect_restaurant
+    event = Event.find(params[:id])
+    event.event_restaurants.find_by_yelp_restaurant_id(params[:yelp_id]).delete
+
+    render :text => "Success!"
+  end
+
+  def clear_restaurants
+    event = Event.find(params[:id])
+    event.event_restaurants.delete_all
+    redirect_to :back
   end
 end
