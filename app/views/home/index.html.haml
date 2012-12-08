@@ -9,30 +9,32 @@
         %span.description  
           %span.bold
             Event planning checklist.
-          Streamline the event planning process with an easy to use and customizable checklist.
+          Streamline the event planning process with an easy to use and customizable checklist, complete with auto-generated suggested checklist items.
       %li
         %i.general.foundicon-calendar
         %span.description
           %span.bold
             MIT Event Calendar Integration. 
-          Quickly see when other events are planned so yours is at the optimal time.
+          Quickly see when other events are planned through the MIT Events Calendar and choose a time for your event so that it is at the optimal time.
       %li
         %i.general.foundicon-cart
         %span.description
           %span.bold
             Yelp Integration.
-        Search Yelp to quickly choose a restaurant for your event. Filter by location, price, and more!
+        Choose a restaurant for your event from a list of suggested places, or search Yelp for one that better fits your event's needs.
       %li
         %i.general.foundicon-page
         %span.description
           %span.bold
-            MIT CopyTech Integration.
-        Easily send poster orders to CopyTech to help publicize your event.
+            Publicity Emailing
+        Upload your publicity posters and send a nicely formatted publicity email to mailing lists all from within MIT Event+.
       %li
+        %br
         = "... and more! All in one easy to use web application."
 .four.columns
   .panel.radius
     %h2 Sign up now!
+    %hr
     = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-vertical' }) do |f|
       = f.error_notification
       = f.input :email, :required => true, :placeholder => "Your club's exec email list - this will be verified"

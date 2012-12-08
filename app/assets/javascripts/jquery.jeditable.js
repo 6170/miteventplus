@@ -237,7 +237,7 @@
                 } else {
                     input_content = self.revert; 
                 }
-                input_content = input_content.trim();
+                input_content = input_content.trim().replace("&nbsp;", "");
                 content.apply(form, [input_content, settings, self]);
 
                 input.attr('name', settings.name);
