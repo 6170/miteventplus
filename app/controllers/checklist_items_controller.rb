@@ -27,4 +27,10 @@ class ChecklistItemsController < ApplicationController
     checklist_item.update_attributes(:checked => !checklist_item.checked?)
     render :text => "Success!"
   end
+
+  def edit_text
+    checklist_item = ChecklistItem.find(params[:id])
+    checklist_item.update_attributes(:text => params[:value])
+    render :text => params[:value]
+  end
 end

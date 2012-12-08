@@ -464,6 +464,7 @@
                     //input[0].setAttribute('autocomplete','off');
                     input.attr('autocomplete','off');
                     input.attr('class', 'edit-box');
+                    input.width("80%");
                     $(this).append(input);
                     return(input);
                 }
