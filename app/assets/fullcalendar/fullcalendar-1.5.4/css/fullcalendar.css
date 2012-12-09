@@ -97,6 +97,19 @@ html .fc,
 	vertical-align: top;
 	}
 	
+.fc-weeknewevent {
+	font-weight: bold;
+}
+
+.fc-view-month .fc-event-inner {
+	overflow: hidden;
+}
+
+.fc-widget-content {
+	overflow: hidden;
+}
+
+	
 /* buttons edges butting together */
 
 .fc-header .fc-button {
@@ -156,10 +169,32 @@ html .fc,
 	}
 	
 .fc-cell-overlay { /* semi-transparent rectangle while dragging */
-	background: #9cf;
+	background: #36c;
 	opacity: .2;
 	filter: alpha(opacity=20); /* for IE */
 	}
+	
+#timeTab .fc-cell-overlay { /* semi-transparent rectangle while dragging */
+	opacity: 1;
+	filter: alpha(opacity=100); /* for IE */
+	}
+
+#timeTab tr {
+	height: 25px;
+}
+
+#dateTab tr {
+	height: 50px;
+}
+
+.fc-resourceName {
+	white-space: nowrap;
+	width: 150px;
+	height: 25px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+}
 	
 
 
@@ -311,6 +346,7 @@ a.fc-event {
 	/*overflow-y: hidden;*/
 	height: 25px;
 	overflow: visible;
+	padding-right: 2px;
 	}
 	
 .fc-event-inner {
@@ -321,6 +357,7 @@ a.fc-event {
 	border-width: 0;
 	/*overflow-y: hidden;*/
 	overflow: visible;
+	padding-right: 2px;
 	}
 	
 .fc-event-time,
