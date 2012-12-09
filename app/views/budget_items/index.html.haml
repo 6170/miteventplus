@@ -1,9 +1,8 @@
-.content.panel
+.content.panel{:style => 'padding-bottom:30px;'}
+  .four.columns.centered
+    %h2.center Create A Budget
   .row
-    .four.columns.centered
-      %h3 Create A Budget
-  .row
-    .eight.columns.offset-by-two
+    .eight.columns.offset-by-two.end
       = form_tag do
         .row
           .one.column
@@ -16,13 +15,13 @@
                 %span{:class => 'prefix', :id => 'new-budget-item-prefix'} $$
               .eight.columns.end
                 = text_field_tag(@event.id, nil, :class => 'new-budget-item-value')
-  #budget-item-container.eight.columns.offset-by-two
+  #budget-item-container.eight.columns.centered
     - @b_items.each do |b|
       .row{:id => "budget-item-#{b.id}"}
         .one.column
           %i{:class => "general foundicon-minus add dashboard delete_budget", :id=> "#{b.id}", :style => "cursor: hand; cursor: pointer;"}
         .four.columns
-          %p{:class => 'b_item_title'}= b.title
+          %p{:class => 'b_item_title', :id => "#{b.id}"}= b.title
         .one.column
           %p +
         .three.columns
@@ -30,7 +29,7 @@
         .one.column.end
           %p{:class => 'b_item_percentage', :id => "#{b.id}"}
   %hr
-  #budget-summary.eight.columns.offset-by-two
+  #budget-summary.eight.columns.centered.end
     .row
       .five.columns.offset-by-one
         %p Event Total Cost:
@@ -39,6 +38,8 @@
       .one.column.end
         %p 100.00%
     %br
+  .eight.columns.centered.pie-chart
+    #pie_chart
 
 :javascript
   function submit_new_budget_item(e) {
@@ -52,11 +53,11 @@
           url: "/budget_items",
           data: "title=" + title + "&id=" + event_id + "&value="+ value,
           success: function(data) {
-            $(this).val('');
+            $('.new-budget-item').val('');
             $('.new-budget-item-value').val('');
             var div_start = '<div class="row" id="budget-item-' + data.id + '">'
             var icon_code = '<div class="one column"><i class="general foundicon-minus add dashboard delete_budget" id="' + data.id + '" style="cursor: hand; cursor: pointer;"></i></div>'
-            var text_code = '<div class="four columns"><p class="b_item_title">' + title + '</p></div><div class="one column"><p>+</p></div>'
+            var text_code = '<div class="four columns"><p class="b_item_title" id="' + data.id + '">' + title + '</p></div><div class="one column"><p>+</p></div>'
             var value_code = '<div class="three columns"><p class="b_item_value" id="' + data.id + '">' + accounting.formatMoney(value) + '</p></div>'
             var percentage_code = '<div class= "one column end"><p class="b_item_percentage" id="' + data.id + '"></p></div>'
             var ending = '</div>'
@@ -64,6 +65,7 @@
             bind_delete_button();
             b_map[data.id] = parseFloat(value);
             recompute_numbers(parseFloat(value),true);
+            pie_chart.series[0].addPoint([title,parseFloat(value)],true);
           }
         });
       }
@@ -89,10 +91,28 @@
                type: "DELETE",
                url: "/budget_items/" + $(this).attr('id')
              });
-             x = '#budget-item-' + $(this).attr('id');
-             $(x).remove();
-             recompute_numbers(b_map[$(this).attr('id')],false);
-             delete b_map[$(this).attr('id')];
+       id = $(this).attr('id');
+       /*var deleted_title = "";
+       $('.b_item_title').each(function(){
+          if ($(this).attr('id') == id){
+            deleted_title = $(this).text();
+          }
+        });
+       console.log(deleted_title);
+       for ( i = 0; i < pie_chart.series[0].data.length; i++){
+        p_slice = pie_chart.series[0].data[i];
+        console.log(p_slice);
+        if (p_slice.x == deleted_title){ p_slice.remove();}
+       }*/
+       x = '#budget-item-' + $(this).attr('id');
+       $(x).fadeOut(300, function() {
+                 $(this).remove();
+                 setup_pie_chart_data();
+                 pie_chart.series[0].setData(pie_chart_array);
+               });
+       console.log(pie_chart_array);
+       recompute_numbers(b_map[$(this).attr('id')],false);
+       delete b_map[$(this).attr('id')];
       }
     });
   }
@@ -141,6 +161,59 @@
     return false
 
   }
+
+  function setup_pie_chart_data(){
+      pie_chart_array = [];
+      $('.b_item_title').each(function(){
+        pie_chart_array.push([$(this).text(),b_map[$(this).attr('id')]]);
+      });
+      console.log(pie_chart_array);
+  }
+
+  //setup pie chart
+  var pie_chart;
+  var pie_chart_array = [];
+  function setup_pie_chart(){
+    setup_pie_chart_data();
+    pie_chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'pie_chart',
+                    backgroundColor: "#F2F2F2",
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Your Budget'
+                },
+                tooltip: {
+            	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+                	percentageDecimals: 1
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function() {
+                                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: pie_chart_array
+                }]
+            });
+  }
+  $('.content.panel').ready(function(){
+    setup_pie_chart();
+  });
 
 
 

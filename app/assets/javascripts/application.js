@@ -15,6 +15,7 @@
 //= require foundation
 //= require_tree .
 //= require_tree ../fullcalendar
+//= require ../highcharts/js/highcharts.js
 //= require jquery-fileupload
 //= require redactor
 
