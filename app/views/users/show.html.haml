@@ -21,7 +21,7 @@
                   %h3
                     = event.title
                   %h6.subtitle
-                    - if event.time_block != nil
+                    - if event.time_block.starttime != DateTime.new
                       = event.time_block.starttime.strftime("%m/%d/%Y %I:%M %p") + " to " + event.time_block.endtime.strftime("%m/%d/%Y %I:%M %p")
                     - else
                       No time set for event yet.
@@ -59,7 +59,7 @@
 
 #createEventModal.reveal-modal.medium
   %h2 Create a New Event
-  = simple_form_for @event, :url => "/create_event" do |f|
+  = simple_form_for @event, :url => "/events" do |f|
     = f.error_notification
     = f.input :title
     = f.input :location
