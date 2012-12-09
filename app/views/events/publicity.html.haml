@@ -1,9 +1,8 @@
-- if @publicity_emails.size > 0
-  .twelve.columns.centered
-    .alert-box.secondary
-      %center 
-        *Optional: Get started by copying over another of your publicity emails! 
-        = collection_select(:publicity_email, :id, @publicity_emails, :id, :describe, {:prompt => "Select Email..."}, {:style => "width: 120px;margin-left: 10px"})
+.twelve.columns.centered
+  .alert-box.secondary
+    %center 
+      *Optional: Get started by copying over another of your publicity emails! 
+      = collection_select(:publicity_email, :id, @publicity_emails, :id, :describe, {:prompt => "Select Email..."}, {:style => "width: 120px;margin-left: 10px"})
 
 .eleven.columns.centered
   %center 
