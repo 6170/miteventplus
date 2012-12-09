@@ -15,6 +15,7 @@
 //= require foundation
 //= require_tree .
 //= require_tree ../fullcalendar
+//= require ../highcharts/js/highcharts.js
 //= require jquery-fileupload
 //= require redactor
 
@@ -22,6 +23,12 @@ $(document).one('ready', function () {
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
+  
+  $("#createEventModalButton").click(function() {
+    $("#createEventModal").reveal();
+    return false;
+  });
+  
   $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 });
 

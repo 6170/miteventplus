@@ -63,6 +63,13 @@ ul.nav li {
 .bold {
   font-weight:bold;
 }
+.dashboard-title {
+  vertical-align:top;
+}
+h1.dashboard-title {
+  margin-top:0px !important;
+  margin-bottom:0px !important;
+}
 .strikethrough {
   text-decoration:line-through;
   font-weight:bold;
@@ -116,6 +123,9 @@ ul.nav li {
 }
 .restaurant-divider {
   margin-top:10px;
+}
+.pie-chart {
+  float:none !important;
 }
 
 .page-nav {
@@ -181,7 +191,7 @@ i.foundicon-star {
 }
 
 i.foundicon-graph {
-  font-size:60px;
+  font-size:50px;
 }
 .foundicon-plus {
   float:left;

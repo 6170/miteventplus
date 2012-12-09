@@ -1,9 +1,8 @@
-.content.panel
+.content.panel{:style => 'padding-bottom:30px;'}
+  .four.columns.centered
+    %h2.center Create A Budget
   .row
-    .four.columns.centered
-      %h3 Create A Budget
-  .row
-    .eight.columns.offset-by-two
+    .eight.columns.offset-by-two.end
       = form_tag do
         .row
           .one.column
@@ -16,13 +15,13 @@
                 %span{:class => 'prefix', :id => 'new-budget-item-prefix'} $$
               .eight.columns.end
                 = text_field_tag(@event.id, nil, :class => 'new-budget-item-value')
-  #budget-item-container.eight.columns.offset-by-two
+  #budget-item-container.eight.columns.centered
     - @b_items.each do |b|
       .row{:id => "budget-item-#{b.id}"}
         .one.column
           %i{:class => "general foundicon-minus add dashboard delete_budget", :id=> "#{b.id}", :style => "cursor: hand; cursor: pointer;"}
         .four.columns
-          %p{:class => 'b_item_title'}= b.title
+          %p{:class => 'b_item_title', :id => "#{b.id}"}= b.title
         .one.column
           %p +
         .three.columns
@@ -30,7 +29,7 @@
         .one.column.end
           %p{:class => 'b_item_percentage', :id => "#{b.id}"}
   %hr
-  #budget-summary.eight.columns.offset-by-two
+  #budget-summary.eight.columns.centered.end
     .row
       .five.columns.offset-by-one
         %p Event Total Cost:
@@ -39,10 +38,15 @@
       .one.column.end
         %p 100.00%
     %br
+  .eight.columns.centered.pie-chart
+    #pie_chart
 
 :javascript
+  // Validates the new budget item, submits it, adds to DOM,
+  // adds to b_map and pie_chart and recomputes percentages
   function submit_new_budget_item(e) {
       if (e.which == 13 && validate_budget_input()) {
+        // get the input
         var event_id = $('.new-budget-item').attr('id');
         var title = $('.new-budget-item').val();
         var value = $('.new-budget-item-value').val();
@@ -52,23 +56,26 @@
           url: "/budget_items",
           data: "title=" + title + "&id=" + event_id + "&value="+ value,
           success: function(data) {
-            $(this).val('');
+            // clear the budget forms
+            $('.new-budget-item').val('');
             $('.new-budget-item-value').val('');
+            // build the html for the new item and add it
             var div_start = '<div class="row" id="budget-item-' + data.id + '">'
             var icon_code = '<div class="one column"><i class="general foundicon-minus add dashboard delete_budget" id="' + data.id + '" style="cursor: hand; cursor: pointer;"></i></div>'
-            var text_code = '<div class="four columns"><p class="b_item_title">' + title + '</p></div><div class="one column"><p>+</p></div>'
+            var text_code = '<div class="four columns"><p class="b_item_title" id="' + data.id + '">' + title + '</p></div><div class="one column"><p>+</p></div>'
             var value_code = '<div class="three columns"><p class="b_item_value" id="' + data.id + '">' + accounting.formatMoney(value) + '</p></div>'
             var percentage_code = '<div class= "one column end"><p class="b_item_percentage" id="' + data.id + '"></p></div>'
             var ending = '</div>'
             $(div_start + icon_code + text_code + value_code +percentage_code+ ending).hide().appendTo("#budget-item-container").fadeIn(800);
-            bind_delete_button();
+            // update b_map, recompute percentages and add point to pie_chart
             b_map[data.id] = parseFloat(value);
             recompute_numbers(parseFloat(value),true);
+            pie_chart.series[0].addPoint([title,parseFloat(value)],true);
           }
         });
       }
     };
-
+  // Bind all of the different ways to submit
   $(".new-budget-item").keypress(function(e){
     submit_new_budget_item(e);
   });
@@ -81,24 +88,28 @@
     $(".new-budget-item").trigger(event);
   })
 
-  function bind_delete_button(){
-    $('.delete_budget').click(function(e){
-      var end = confirm('Are you sure you want to delete this item?')
-      if (end){
-       $.ajax({
-               type: "DELETE",
-               url: "/budget_items/" + $(this).attr('id')
-             });
-             x = '#budget-item-' + $(this).attr('id');
-             $(x).remove();
-             recompute_numbers(b_map[$(this).attr('id')],false);
-             delete b_map[$(this).attr('id')];
-      }
-    });
-  }
-  bind_delete_button();
+  // Bind the delete button
+  $('.delete_budget').live('click',function(e){
+        if (confirm('Are you sure you want to delete this item?')){
+         // The delete AJAX call
+         $.ajax({
+                 type: "DELETE",
+                 url: "/budget_items/" + $(this).attr('id')
+               });
+         id = $(this).attr('id');
+         x = '#budget-item-' + $(this).attr('id');
+         // Remove item from DOM, update pie_chart and b_map, recompute numbers
+         $(x).fadeOut(300, function() {
+                   $(this).remove();
+                   setup_pie_chart_data();
+                   pie_chart.series[0].setData(pie_chart_array);
+                 });
+         recompute_numbers(b_map[$(this).attr('id')],false);
+         delete b_map[$(this).attr('id')];
+        }
+      });
 
-  //Load the sum and b_map variables
+  //Initialize the sum and b_map variables, b_map[budget_title_here] = budget_value
   var sum = parseFloat($('#budget_sum').text().substring(1));
   $('#budget_sum').text(accounting.formatMoney($('#budget_sum').text().substring(1)));
   var b_map = {};
@@ -129,6 +140,7 @@
   function validate_budget_input(){
     title = $(".new-budget-item").val();
     value = $(".new-budget-item-value").val();
+    // check whether value is a number
     number =  ! isNaN (value-0);
     if (number){
       $(".new-budget-item-value").removeClass("error");
@@ -141,6 +153,61 @@
     return false
 
   }
+
+  // setup the pie_chart array, the budget items info in HighCharts format ex: [['food',25],['transportation',46]]
+  function setup_pie_chart_data(){
+      pie_chart_array = [];
+      $('.b_item_title').each(function(){
+        pie_chart_array.push([$(this).text(),b_map[$(this).attr('id')]]);
+      });
+      console.log(pie_chart_array);
+  }
+
+  //setup pie chart
+  var pie_chart;
+  var pie_chart_array = [];
+  function setup_pie_chart(){
+    setup_pie_chart_data();
+    pie_chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'pie_chart',
+                    backgroundColor: "#F2F2F2",
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Your Budget'
+                },
+                tooltip: {
+            	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+                	percentageDecimals: 1
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function() {
+                                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: pie_chart_array
+                }]
+            });
+  }
+  // setup the pie chart when the center panel loads
+  $('.content.panel').ready(function(){
+    setup_pie_chart();
+  });
 
 
 

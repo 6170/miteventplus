@@ -1,7 +1,4 @@
 class EventsController < ApplicationController
-  def index
-  end
-
   def show
     start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
@@ -26,46 +23,47 @@ class EventsController < ApplicationController
     render :json => resources
   end
 
+  # creates a new event object
   def new
     @event = Event.new
   end
 
+  # creates a new event object from the params values of title and description.
+  # it also prepopulates the checklist with 6 suggested checklist items, and creates
+  # a "blank" default time block object for this event.
+  # requires that all the values passed in from params are valid.
   def create
-    parse = '%m/%d/%Y %I:%M:%S %p'
-    start_date = DateTime.strptime(params[:start_date]+' '+params[:start_time], parse)
-    end_date = DateTime.strptime(params[:end_date]+' '+params[:end_time], parse)
-    event = Event.create(:title => params[:title], :location => params[:location], :description => params[:description]).create_time_block(:starttime => start_date, :endtime => end_date)
-
-    redirect_to :root
-  end
-
-  def destroy
-    Event.find(params[:id]).destroy
-    redirect_to :back
-  end
-
-  def new_event
-    @event = Event.new
-  end
-
-  def create_event
     @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
     @event.id = Event.last.id + 1
-    @event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
+    @event.create_time_block(:starttime => DateTime.new, :endtime => DateTime.new)
     if @event.save
       @event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
       @event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
       @event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "copytech")
       @event.checklist_items.create(:text => "Upload files to your event", :tag => "filemanager")
       @event.checklist_items.create(:text => "Send publicity emails", :tag => "publicity")
+      @event.checklist_items.create(:text => "Create a budget for your event", :tag => "budget")
       redirect_to :root
       return
     end
     render :new_event
   end
 
+  # destroys an event object, and then redirects the user back
+  # requires a valid id passed in with params.
+  def destroy
+    Event.find(params[:id]).destroy
+    redirect_to :back
+  end
+
   def publicity
     @event = current_user.events.find(params[:id])
+    @publicity_emails = []
+    current_user.events.each do |event|
+      event.publicity_emails.each do |email|
+        @publicity_emails << email
+      end
+    end
   end
 
   #Route: GET '/settime/:id'
@@ -89,6 +87,14 @@ class EventsController < ApplicationController
     redirect_to :root
   end
 
+  # sets up the variables for the yelp restaurant suggestion page.
+  # passes to the view the event corresponding to the suggestion page,
+  # the sampled_tag that was used for restaurant suggestion, and a hash 
+  # that contains the response from the Yelp API call for suggested
+  # restaurants.
+
+  # requires that a valid id is passed in with params and that the Yelp
+  # API is functional (and that our consumer keys/secrets/tokens are valid)
   def yelp
     @event = Event.find(params[:id])
     matched_tags = current_user.cross_reference_tags
@@ -116,6 +122,8 @@ class EventsController < ApplicationController
     @suggested_restaurants = client.search(suggested_request)
   end
 
+  # runs a search on Yelp API based on what the user typed in as a search_term
+  # and searcH_zip
   def yelp_search
     @event = Event.find(params[:id])
     @page = params[:page].to_i
