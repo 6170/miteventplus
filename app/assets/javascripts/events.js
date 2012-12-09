@@ -30,7 +30,7 @@ function toFormattedDateString(x){
 	if (h.length < 2){ h = '0'+h;}
 	if (m.length < 2){ m = '0'+m;}
 	if (d.length < 2){ d = '0'+d;}
-	answer = h + ':'+m+':'+d+ " ";
+	answer = h + ':'+m+" ";
 	if (PM) { answer += 'PM';}
 	else    { answer += 'AM';}
 	return answer;
@@ -74,8 +74,11 @@ function toFormattedDateString(x){
 		editable: false,
 		eventClick: function(event, jsEvent, view) {
 		//shows event description on click
-			$('.new_time').append('<div id=\"'+event.id+'\" class=\"hover-end\"><span style=\"font-weight:bold\">' + event.title + '\:</span> ' + event.description+'</div>');
-		},
+			//$('body').append('<div id=\"'+event.id+'\" class=\"hover-end\"><span style=\"font-weight:bold\">' + event.title + '\:</span> ' + event.description+'</div>');
+			$('body').append('<div id=\"showEventModal\" class=\"reveal-modal\"><a class=\"close-reveal-modal\">x</a><pre><h2>' + event.title + '\:</h2> <p>' + event.description + '</p></pre></div>');
+			$("#showEventModal").reveal();
+			return false;
+			},
 
 		eventMouseout: function(event, jsEvent, view) {
 			$('#'+event.id).remove();
@@ -120,6 +123,14 @@ function toFormattedDateString(x){
 		columnFormat: {
 			month: 'ddd',    // Mon
 			resourceDay: 'h(:mm)t' // 7:30p
+		},
+		eventClick: function(event, jsEvent, view) {
+		//shows event description on click
+			$('.new_time').append('<div id=\"'+event.id+'\" class=\"hover-end\"><span style=\"font-weight:bold\">' + event.title + '\:</span> ' + event.description+'</div>');
+		},
+
+		eventMouseout: function(event, jsEvent, view) {
+			$('#'+event.id).remove();
 		}
 	});
 
