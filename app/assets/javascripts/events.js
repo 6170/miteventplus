@@ -74,7 +74,6 @@ function toFormattedDateString(x){
 		editable: false,
 		eventClick: function(event, jsEvent, view) {
 		//shows event description on click
-			//$('body').append('<div id=\"'+event.id+'\" class=\"hover-end\"><span style=\"font-weight:bold\">' + event.title + '\:</span> ' + event.description+'</div>');
 			if ($('#showEventModal').length !== 0) {
 				$('#showEventModal').remove();
 			}
@@ -125,7 +124,9 @@ function toFormattedDateString(x){
 		},
 		eventClick: function(event, jsEvent, view) {
 		//shows event description on click
-			//$('body').append('<div id=\"'+event.id+'\" class=\"hover-end\"><span style=\"font-weight:bold\">' + event.title + '\:</span> ' + event.description+'</div>');
+			if ($('#showEventModal').length !== 0) {
+				$('#showEventModal').remove();
+			}
 			$('body').append('<div id=\"showEventModal\" class=\"reveal-modal\"><a class=\"close-reveal-modal\">x</a><pre><h2>' + event.title + '\:</h2> <p>' + event.description + '</p></pre></div>');
 			$("#showEventModal").reveal();
 			return false;
