@@ -1,9 +1,0 @@
-.eight.columns.centered
-  %h2 Create a New Event
-  = simple_form_for @event, :url => "/create_event" do |f|
-    = f.error_notification
-    = f.input :title
-    = f.input :location
-    = f.input :description
-
-    = f.submit 'Create Event'

@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   has_many :publicity_emails, :dependent => :delete_all
   has_many :budget_items, :dependent => :delete_all
   has_many :event_restaurants, :dependent => :delete_all
-  attr_accessible :title, :location, :description, :user_id
+  attr_accessible :title, :description, :user_id
   validates :title, :presence => true
   validate :ensure_event_is_unique
 
