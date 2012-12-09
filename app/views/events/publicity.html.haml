@@ -1,8 +1,22 @@
-.eight.columns.centered
-  %h2 Send a Publicity Email
+.ten.columns.centered
+  %center 
+    %h2 Send a Publicity Email
   = simple_form_for [@event, @event.publicity_emails.new] do |f|
     = f.error_notification
-    = f.input :subject
-    = f.input :content, :input_html => {:class => "redactor", :id => @event.id}
-
-    = f.submit 'Send Email'
+    .twelve.columns
+      .three.columns
+        = f.label :subject, :class => "inline right"
+      .six.columns
+        = f.text_field :subject
+      .three.columns
+    .twelve.columns
+      .three.columns
+        = f.label :content, "Message", :class => "inline right"
+      .six.columns
+        = f.text_area :content, :class => "redactor", :id => @event.id
+      .three.columns
+    .twelve.columns
+      .three.columns
+      .six.columns
+        = f.submit 'Send Email', :class => "small button right", :style => "margin-top: 15px;"
+      .three.columns

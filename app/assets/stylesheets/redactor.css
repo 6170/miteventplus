@@ -2,6 +2,7 @@
 	position: relative;
 	border: 1px solid #ddd;
 	overflow: visible;
+	height: 200px;
 }
 .redactor_box, .redactor_box textarea {
 	background-color: #fff;

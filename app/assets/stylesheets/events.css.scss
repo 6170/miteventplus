@@ -20,8 +20,17 @@ visibility:'hidden';
     line-height: 200px;
     text-align: center;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
 #dropzone.hover {
     background: grey;
+}
+
+table.uploads {
+  width: 50%;
+}
+
+label.inline {
+  margin: 0 10px 12px 0 !important;
 }
