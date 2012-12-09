@@ -1,8 +1,9 @@
-.twelve.columns.centered
-  .alert-box.secondary
-    %center 
-      *Optional: Get started with your publicity email by copying over another of your publicity emails! 
-      = collection_select(:publicity_email, :id, @publicity_emails, :id, :subject, {:prompt => "Select Email..."}, {:style => "width: 120px;margin-left: 10px"})
+- if @publicity_emails.size > 0
+  .twelve.columns.centered
+    .alert-box.secondary
+      %center 
+        *Optional: Get started by copying over another of your publicity emails! 
+        = collection_select(:publicity_email, :id, @publicity_emails, :id, :describe, {:prompt => "Select Email..."}, {:style => "width: 120px;margin-left: 10px"})
 
 .eleven.columns.centered
   %center 
@@ -21,12 +22,12 @@
       .three.columns
         = f.label :content, "Message", :class => "inline right"
       .six.columns
-        = f.text_area :content, :class => "redactor", :id => @event.id
+        = f.text_area :content, :class => "redactor"
       .three.columns
     .twelve.columns
       .three.columns
       .six.columns
-        = f.submit 'Send Email', :class => "small button right", :style => "margin-top: 15px;"
+        = f.submit 'Send Email To My Group', :class => "small button right", :style => "margin-top: 15px;", :id => @event.id
       .three.columns
 
 :javascript
@@ -34,9 +35,10 @@
     var selected = $(this).val();
     $.ajax({
       type: "GET",
-      url: "/events/" + $('.publicity_email_form').attr("id") + "/publicity_emails/" + selected,
+      url: "/events/" + $('.small.button.right').attr("id") + "/publicity_emails/" + selected,
       success: function(data) {
         $('#publicity_email_subject').val(data["subject"]);
+        $('#publicity_email_content').val(data["content"]);
         $('.redactor_editor').children().first().html(data["content"]);
       }
     });
