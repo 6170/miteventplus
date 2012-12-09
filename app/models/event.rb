@@ -10,6 +10,7 @@ class Event < ActiveRecord::Base
   validates :title, :presence => true
   validate :ensure_event_is_unique
 
+  # before an event is inserted, we have to make sure that it is a unique event
   def ensure_event_is_unique
     # check if event is already in database
   	if self.time_block
@@ -28,6 +29,8 @@ class Event < ActiveRecord::Base
   	end
   end
 
+  # checks to see if this event is associated with a restaurant with 
+  # a certain yelp_id
   def has_restaurant(yelp_id)
     self.event_restaurants.each do |restaurant|
       if restaurant.yelp_restaurant_id == yelp_id
