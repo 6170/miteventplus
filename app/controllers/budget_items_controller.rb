@@ -1,15 +1,10 @@
 class BudgetItemsController < ApplicationController
 
-# effects: Grabs all budget items for an event and
-#    loads @b_map which maps budget titles to their percentage value
+# effects: Grabs all budget items for an event and computes their sum
 def index
   @event = Event.find(params[:id])
   @b_items = @event.budget_items.all
   @sum = BudgetItem.where(:event_id => params[:id]).sum('value')
-  @b_map = {}
-  @b_items.each do |b|
-    @b_map[b.title]=(100 * b.value/@sum).round(2)
-  end
 end
 
 # effects: Creates a new budget item and sends it back in json format
