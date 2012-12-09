@@ -9,7 +9,7 @@
       = "."
       %br
       %br
-      To clear all your selections, click #{link_to "here", "/events/#{@event.id}/clear_restaurants", data: {confirm: "Are you sure you want to clear all selected restaurants?"} }.
+      To clear all your selections, click #{link_to "here", "/events/#{@event.id}/clear_restaurants", :method => :delete, data: {confirm: "Are you sure you want to clear all selected restaurants?"} }.
       = link_to "x", "", :class => "close"
 
 
