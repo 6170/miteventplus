@@ -92,20 +92,20 @@
   $('.delete_budget').live('click',function(e){
         if (confirm('Are you sure you want to delete this item?')){
          // The delete AJAX call
+         id = $(this).attr('id');
          $.ajax({
                  type: "DELETE",
-                 url: "/budget_items/" + $(this).attr('id')
+                 url: "/budget_items/" + id
                });
-         id = $(this).attr('id');
-         x = '#budget-item-' + $(this).attr('id');
+         x = '#budget-item-' + id;
          // Remove item from DOM, update pie_chart and b_map, recompute numbers
          $(x).fadeOut(300, function() {
                    $(this).remove();
                    setup_pie_chart_data();
                    pie_chart.series[0].setData(pie_chart_array);
                  });
-         recompute_numbers(b_map[$(this).attr('id')],false);
-         delete b_map[$(this).attr('id')];
+         recompute_numbers(b_map[id],false);
+         delete b_map[id];
         }
       });
 
@@ -160,12 +160,12 @@
       $('.b_item_title').each(function(){
         pie_chart_array.push([$(this).text(),b_map[$(this).attr('id')]]);
       });
-      console.log(pie_chart_array);
   }
 
-  //setup pie chart
+  //setup pie chart variables
   var pie_chart;
   var pie_chart_array = [];
+  // sets up the pie chart and its data
   function setup_pie_chart(){
     setup_pie_chart_data();
     pie_chart = new Highcharts.Chart({

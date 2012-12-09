@@ -37,7 +37,7 @@
                           - elsif checklist_item.tag == 'filemanager'
                             = link_to checklist_item.text, event_uploads_path(event), :class => "checklist-link"
                           - elsif checklist_item.tag == 'publicity'
-                            = link_to checklist_item.text, event_publicity_path(event), :class => "checklist-link"
+                            = link_to checklist_item.text, publicity_event_path(event), :class => "checklist-link"
                           - elsif checklist_item.tag == 'food'
                             = link_to checklist_item.text, "/events/#{event.id}/yelp", :class => "checklist-link"
                           - elsif checklist_item.tag == 'copytech'
