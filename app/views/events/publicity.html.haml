@@ -26,7 +26,7 @@
     .twelve.columns
       .three.columns
       .six.columns
-        = f.submit 'Send Email To My Group', :class => "small button right", :style => "margin-top: 15px;", :id => @event.id
+        = f.submit 'Send Email To My Group', :class => "small button right", :style => "margin-top: 15px;"
       .three.columns
 
 :javascript
@@ -34,7 +34,7 @@
     var selected = $(this).val();
     $.ajax({
       type: "GET",
-      url: "/events/" + $('.small.button.right').attr("id") + "/publicity_emails/" + selected,
+      url: "/events/" + $('.publicity_email_form').attr("id") + "/publicity_emails/" + selected,
       success: function(data) {
         $('#publicity_email_subject').val(data["subject"]);
         $('#publicity_email_content').val(data["content"]);
