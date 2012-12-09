@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     events = []
     TimeBlock.where(:starttime => (start_time...end_time)).each do |t|
       e = t.event
-      events << {:id => e.id, :title => e.title, :allDay => false, :start => t.starttime, :end => t.endtime, :resource => e.id.to_s}
+      events << {:id => e.id, :description => e.description, :title => e.title, :allDay => false, :start => t.starttime, :end => t.endtime, :resource => e.id.to_s}
     end
     render :json => events
 
@@ -30,7 +30,7 @@ class EventsController < ApplicationController
 
   # creates a new event object from the params values of title and description.
   # it also prepopulates the checklist with 6 suggested checklist items, and creates
-  # a time block object for this event.
+  # a "blank" default time block object for this event.
   # requires that all the values passed in from params are valid.
   def create
     @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
@@ -50,7 +50,7 @@ class EventsController < ApplicationController
   end
 
   # destroys an event object, and then redirects the user back
-  # requires that 
+  # requires a valid id passed in with params.
   def destroy
     Event.find(params[:id]).destroy
     redirect_to :back
@@ -87,6 +87,14 @@ class EventsController < ApplicationController
     redirect_to :root
   end
 
+  # sets up the variables for the yelp restaurant suggestion page.
+  # passes to the view the event corresponding to the suggestion page,
+  # the sampled_tag that was used for restaurant suggestion, and a hash 
+  # that contains the response from the Yelp API call for suggested
+  # restaurants.
+
+  # requires that a valid id is passed in with params and that the Yelp
+  # API is functional (and that our consumer keys/secrets/tokens are valid)
   def yelp
     @event = Event.find(params[:id])
     matched_tags = current_user.cross_reference_tags
@@ -114,11 +122,18 @@ class EventsController < ApplicationController
     @suggested_restaurants = client.search(suggested_request)
   end
 
+  # runs a search on Yelp API based on what the user typed in as a search_term
+  # and search_zip. It always runs the search in MA because we assume that all clubs
+  # using this will be at MIT (and hence in MA). Depending on the page of search results
+  # we are asked to return, the yelp results will be offset by that amount.
+
+  # requires that valid id, page, search_term, and search_zip be passed in with params.
+  # also requires that the Yelp API is functional and that our authentication credentials are valid.
   def yelp_search
-    @event = Event.find(params[:id])
+    @event = current_user.find(params[:id])
     @page = params[:page].to_i
-    @search_term = params[:search_term]
-    @search_zip = params[:search_zip]
+    search_term = params[:search_term]
+    search_zip = params[:search_zip]
     client = Yelp::Client.new
     search_request = Yelp::V2::Search::Request::Location.new(
       :term => @search_term,
@@ -138,8 +153,12 @@ class EventsController < ApplicationController
     end
   end
 
+  # adds a restaurant to be associated with an event (effectively choosing
+  # a restaurant for an event) and then renders text.
+  # requires that valid id, yelp_id, yelp_name, yelp_url, yelp_phone are passed
+  # in with params.
   def select_restaurant
-    event = Event.find(params[:id])
+    event = current_user.events.find(params[:id])
     event.event_restaurants.create(:yelp_restaurant_id => params[:yelp_id],
       :yelp_restaurant_name => params[:yelp_name],
       :yelp_restaurant_url => params[:yelp_url],
@@ -148,15 +167,20 @@ class EventsController < ApplicationController
     render :text => "Success!"
   end
 
+  # removes a certain restaurant association with an event and then renders text.
+  # requires that valid id and yelp_id are passed in with params.
   def deselect_restaurant
-    event = Event.find(params[:id])
+    event = current_user.events.find(params[:id])
     event.event_restaurants.find_by_yelp_restaurant_id(params[:yelp_id]).delete
 
     render :text => "Success!"
   end
 
+  # removes all restaurant associations with a given event, resetting it back
+  # to how it was before any restaurant selection
+  # requires that valid id for an event is passed in with params.
   def clear_restaurants
-    event = Event.find(params[:id])
+    event = current_user.events.find(params[:id])
     event.event_restaurants.delete_all
     redirect_to :back
   end

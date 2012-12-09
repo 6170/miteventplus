@@ -11,6 +11,22 @@
 
 /* EDITS */
 
+.hover-end{
+	background-color: #fff;
+	color: black;
+	padding:20px;
+	margin:auto;
+	position: fixed;
+	font-size:75%;
+	text-align:center;
+	top:75px;
+	width: 40%;
+	z-index: 10000;
+	border-style: solid;
+	border-width: 1px 0;
+	border-color: #555;
+	}
+
 .resourceNameInfo {
 	color: black;
     border-radius: 10px;
