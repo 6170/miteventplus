@@ -123,12 +123,17 @@ class EventsController < ApplicationController
   end
 
   # runs a search on Yelp API based on what the user typed in as a search_term
-  # and searcH_zip
+  # and search_zip. It always runs the search in MA because we assume that all clubs
+  # using this will be at MIT (and hence in MA). Depending on the page of search results
+  # we are asked to return, the yelp results will be offset by that amount.
+
+  # requires that valid id, page, search_term, and search_zip be passed in with params.
+  # also requires that the Yelp API is functional and that our authentication credentials are valid.
   def yelp_search
-    @event = Event.find(params[:id])
+    @event = current_user.find(params[:id])
     @page = params[:page].to_i
-    @search_term = params[:search_term]
-    @search_zip = params[:search_zip]
+    search_term = params[:search_term]
+    search_zip = params[:search_zip]
     client = Yelp::Client.new
     search_request = Yelp::V2::Search::Request::Location.new(
       :term => @search_term,
@@ -148,8 +153,12 @@ class EventsController < ApplicationController
     end
   end
 
+  # adds a restaurant to be associated with an event (effectively choosing
+  # a restaurant for an event) and then renders text.
+  # requires that valid id, yelp_id, yelp_name, yelp_url, yelp_phone are passed
+  # in with params.
   def select_restaurant
-    event = Event.find(params[:id])
+    event = current_user.events.find(params[:id])
     event.event_restaurants.create(:yelp_restaurant_id => params[:yelp_id],
       :yelp_restaurant_name => params[:yelp_name],
       :yelp_restaurant_url => params[:yelp_url],
@@ -158,15 +167,20 @@ class EventsController < ApplicationController
     render :text => "Success!"
   end
 
+  # removes a certain restaurant association with an event and then renders text.
+  # requires that valid id and yelp_id are passed in with params.
   def deselect_restaurant
-    event = Event.find(params[:id])
+    event = current_user.events.find(params[:id])
     event.event_restaurants.find_by_yelp_restaurant_id(params[:yelp_id]).delete
 
     render :text => "Success!"
   end
 
+  # removes all restaurant associations with a given event, resetting it back
+  # to how it was before any restaurant selection
+  # requires that valid id for an event is passed in with params.
   def clear_restaurants
-    event = Event.find(params[:id])
+    event = current_user.events.find(params[:id])
     event.event_restaurants.delete_all
     redirect_to :back
   end
