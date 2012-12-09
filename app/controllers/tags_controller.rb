@@ -1,14 +1,8 @@
 class TagsController < ApplicationController
-  def index
-  end
 
-  def show
-  end
-
-  def new
-    @tag = Tag.new
-  end
-
+  # creates a new tag object, and responds with that tag
+  # as a json object
+  # requires that a valid name is passed in with params
   def create
     @new_tag = current_user.tags.create(:name => params[:name])
     respond_to do |format|
@@ -16,9 +10,10 @@ class TagsController < ApplicationController
     end 
   end
 
+  # destroys a tag with a given id, and then renders text
+  # requires that a valid id of a tag is passed in with params.
   def destroy
-    Tag.find(params[:id]).delete
+    current_user.tags.find(params[:id]).delete
     render :text => "Success!"
   end
-
 end
