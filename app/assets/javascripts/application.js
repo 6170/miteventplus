@@ -22,6 +22,12 @@ $(document).one('ready', function () {
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
+  
+  $("#createEventModalButton").click(function() {
+    $("#createEventModal").reveal();
+    return false;
+  });
+  
   $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 });
 
