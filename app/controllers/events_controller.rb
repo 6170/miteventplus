@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     events = []
     TimeBlock.where(:starttime => (start_time...end_time)).each do |t|
       e = t.event
-      events << {:id => e.id, :title => e.title, :allDay => false, :start => t.starttime, :end => t.endtime, :resource => e.id.to_s}
+      events << {:id => e.id, :description => e.description, :title => e.title, :allDay => false, :start => t.starttime, :end => t.endtime, :resource => e.id.to_s}
     end
     render :json => events
 

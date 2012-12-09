@@ -9,7 +9,8 @@ var m = date.getMonth();
 var y = date.getFullYear();
 var current_start_date = new Date();
 
-
+//formats date to enter into start and end time fields
+//takes in date, returns formatted date
 function toFormattedDateString(x){
 	m = String(x.getMonth()+1);
 	d = String(x.getDate());
@@ -35,6 +36,8 @@ function toFormattedDateString(x){
 	return answer;
     }
 
+	//month view calendar instance
+	//goes to next tab on success
 	var calendar = $('#event_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -43,9 +46,11 @@ function toFormattedDateString(x){
 		},
 		selectable: true,
 		selectHelper: true,
-		select: function(start, end, allDay) { //do something here
-			var correct_date = confirm('Are you sure you want your event to start on ' + start.toLocaleDateString() + '?');
-			if (correct_date) {
+		select: function(start, end, allDay) { 
+			//when a date is selected timeView is opened
+			//start and end dates are added to appropriate fields
+			//var correct_date = confirm('Are you sure you want your event to start on ' + start.toLocaleDateString() + '?');
+			if (true) {
 				$('#event_time_tab').click();
 				current_start_date = start;
 				start_date = toFormattedDateString(start);
@@ -56,6 +61,7 @@ function toFormattedDateString(x){
 			}
 			
 			//fix for resourceView times
+			//so only displays whole numbers not ":30"
 			htmls = $('.fc-view-resourceDay .fc-widget-header');
 			for (var i = 0; i < htmls.length; i++) {
 				if ($(htmls[i]).html().search("\:") != -1) {
@@ -65,8 +71,18 @@ function toFormattedDateString(x){
 			calendar.fullCalendar('unselect');
 		},
 		events: '/events/1',
-		editable: false
+		editable: false,
+		eventClick: function(event, jsEvent, view) {
+			$('.fc-event-inner', this).append('<div id=\"'+event.id+'\" class=\"hover-end\">'+event.description+'</div>');
+		},
+
+		eventMouseout: function(event, jsEvent, view) {
+			$('#'+event.id).remove();
+		}
 	});
+	
+	//time view "resourceDay" calendar instance
+	//goes to next tab on success
     var agenda_calendar = $('#agenda_calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -80,9 +96,11 @@ function toFormattedDateString(x){
 		events: '/events/1',
 		selectable: true,
 		selectHelper: true,
-		select: function(start, end, allDay) { //do something here
-			var correct_time = confirm('Are you sure you want your event to \n\nstart at ' + start.toLocaleTimeString() + '\nand end at ' + end.toLocaleTimeString() + '?');
-				if (correct_time) {
+		select: function(start, end, allDay) { 
+			//when a time is selected last tab is opened
+			//start and end dates are added to appropriate fields
+			//var correct_time = confirm('Are you sure you want your event to \n\nstart at ' + start.toLocaleTimeString() + '\nand end at ' + end.toLocaleTimeString() + '?');
+				if (true) {
 					$('#event_finalize_tab').click();
 				    start_time = toFormattedTimeString(start);
 				    end_time = toFormattedTimeString(end);
@@ -100,9 +118,8 @@ function toFormattedDateString(x){
 		refetchEvents: true,
 		columnFormat: {
 			month: 'ddd',    // Mon
-			resourceDay: 'h(:mm)t'
+			resourceDay: 'h(:mm)t' // 7:30p
 		}
-		//slotMinutes: 120
 	});
 
     $('.event_input_field').focusout(function(){
@@ -110,10 +127,6 @@ function toFormattedDateString(x){
 		$(summary_page_id).val($(this).val());
     });
 
-    //Hack to make time display
-	/*$('#event_time_tab').click();
-	$('#agenda_calendar').fullCalendar('render');
-	$('#event_date_tab').click();*/
 
     $('.date_tab_button').click(function(){
 		$('#event_date_tab').click();
@@ -126,7 +139,7 @@ function toFormattedDateString(x){
 	$('.finalize_tab_button').click(function(){
 		$('#event_finalize_tab').click();
     });
-
-	
-
+    
+    
 });
+
