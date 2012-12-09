@@ -108,9 +108,10 @@
        x = '#budget-item-' + $(this).attr('id');
        $(x).fadeOut(300, function() {
                  $(this).remove();
+                 setup_pie_chart_data();
+                 pie_chart.series[0].setData(pie_chart_array);
                });
-       setup_pie_chart_data();
-       pie_chart.series[0].setData(pie_chart_array);
+       console.log(pie_chart_array);
        recompute_numbers(b_map[$(this).attr('id')],false);
        delete b_map[$(this).attr('id')];
       }
