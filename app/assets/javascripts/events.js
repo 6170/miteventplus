@@ -30,7 +30,7 @@ function toFormattedDateString(x){
 	if (h.length < 2){ h = '0'+h;}
 	if (m.length < 2){ m = '0'+m;}
 	if (d.length < 2){ d = '0'+d;}
-	answer = h + ':'+m+':'+d+ " ";
+	answer = h + ':'+m+":00 ";
 	if (PM) { answer += 'PM';}
 	else    { answer += 'AM';}
 	return answer;
@@ -73,12 +73,14 @@ function toFormattedDateString(x){
 		events: '/events/1',
 		editable: false,
 		eventClick: function(event, jsEvent, view) {
-			$('.new_time').append('<div id=\"'+event.id+'\" class=\"hover-end\">'+event.description+'</div>');
-		},
-
-		eventMouseout: function(event, jsEvent, view) {
-			$('#'+event.id).remove();
-		}
+		//shows event description on click
+			if ($('#showEventModal').length !== 0) {
+				$('#showEventModal').remove();
+			}
+			$('body').append('<div id=\"showEventModal\" class=\"reveal-modal\"><a class=\"close-reveal-modal\">x</a><pre><h2>' + event.title + '\:</h2> <p>' + event.description + '</p></pre></div>');
+			$("#showEventModal").reveal();
+			return false;
+			}
 	});
 	
 	//time view "resourceDay" calendar instance
@@ -119,7 +121,17 @@ function toFormattedDateString(x){
 		columnFormat: {
 			month: 'ddd',    // Mon
 			resourceDay: 'h(:mm)t' // 7:30p
-		}
+		},
+		eventClick: function(event, jsEvent, view) {
+		//shows event description on click
+			if ($('#showEventModal').length !== 0) {
+				$('#showEventModal').remove();
+			}
+			$('body').append('<div id=\"showEventModal\" class=\"reveal-modal\"><a class=\"close-reveal-modal\">x</a><pre><h2>' + event.title + '\:</h2> <p>' + event.description + '</p></pre></div>');
+			$("#showEventModal").reveal();
+			return false;
+			}
+
 	});
 
     $('.event_input_field').focusout(function(){
@@ -139,7 +151,7 @@ function toFormattedDateString(x){
 	$('.finalize_tab_button').click(function(){
 		$('#event_finalize_tab').click();
     });
-    
+   
     
 });
 

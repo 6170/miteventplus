@@ -3,7 +3,6 @@
   = simple_form_for @event, :url => "/create_event" do |f|
     = f.error_notification
     = f.input :title
-    = f.input :location
     = f.input :description
 
-    = f.submit 'Create Event'
+    = f.submit 'Create Event', :class => "button"

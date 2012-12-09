@@ -29,11 +29,6 @@ $(document).one('ready', function () {
     return false;
   });
   
-  $("#showEventModalButton").click(function() {
-    $("#showEventModal").reveal();
-    return false;
-  });
-  
   $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 });
 

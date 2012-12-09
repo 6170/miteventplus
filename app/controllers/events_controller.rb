@@ -1,4 +1,7 @@
 class EventsController < ApplicationController
+  
+  # returns json event objects for the events that fall between a given start and end time.
+  # requires valid start and end dateTime object in params.
   def show
     start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
@@ -11,6 +14,8 @@ class EventsController < ApplicationController
 
   end
   
+  # returns json resource objects for the events that fall between a given start and end time.
+  # requires valid start and end dateTime object in params.
   def resources
 	start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
@@ -35,7 +40,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
     @event.id = Event.last.id + 1
-    @event.create_time_block(:starttime => DateTime.new, :endtime => DateTime.new)
+    @event.create_time_block(:starttime => DateTime.new(1,1,1,1,1), :endtime => DateTime.new(1,1,1,1,1))
     if @event.save
       @event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
       @event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
@@ -164,6 +169,7 @@ class EventsController < ApplicationController
       :yelp_restaurant_url => params[:yelp_url],
       :yelp_restaurant_phone => (params[:yelp_phone].blank? ? nil : params[:yelp_phone]))
 
+    event.checklist_items.find_by_tag("food").set_checked_true
     render :text => "Success!"
   end
 
@@ -172,6 +178,10 @@ class EventsController < ApplicationController
   def deselect_restaurant
     event = current_user.events.find(params[:id])
     event.event_restaurants.find_by_yelp_restaurant_id(params[:yelp_id]).delete
+
+    if event.event_restaurants.size == 0
+      event.checklist_items.find_by_tag("food").set_checked_false
+    end
 
     render :text => "Success!"
   end

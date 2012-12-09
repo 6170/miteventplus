@@ -19,10 +19,10 @@
       / The loading indicator is shown during image processing
       .fileupload-loading
       %br
-        #dropzone Drop files here
-        / The table listing the files available for upload/download
-        %table.table.table-striped.uploads
-          %tbody.files{"data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
+      #dropzone Drop files here
+      / The table listing the files available for upload/download
+      %table.table.table-striped.uploads
+        %tbody.files{"data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
 
 <!-- The template to display files available for upload -->
 %script#template-upload{:type => "text/x-tmpl"}
