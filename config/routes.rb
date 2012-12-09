@@ -5,23 +5,26 @@ Risd::Application.routes.draw do
   resources :events do
     resources :uploads
     resources :publicity_emails
+    member do
+      get 'publicity'
+      get 'yelp'
+      post 'yelp_search'
+      post 'select_restaurant'
+      post 'deselect_restaurant'
+      delete 'clear_restaurants'
+      get 'resources'
+    end
   end
   resources :uploads
-  resources :checklist_items
+  resources :checklist_items do
+    post 'edit_text', :on => :collection
+    post 'toggle_checked', :on => :member
+  end
   resources :tags
   resources :budget_items
 
-  get "/events/:id/publicity" => "events#publicity", :as => "event_publicity"
   post "/events/:event_id/uploadFromRedactor" => "uploads#create_from_redactor"
   match "/events/:event_id/images" => "uploads#images", :as => "event_images"
-  post "/checklist_item/:id/toggle_checked" => "checklist_items#toggle_checked"
   get "/settime/:id" => "events#new_time"
   post "/settime/:id" => "events#set_time"
-  get "/events/:id/resources" => "events#resources", :as => "resources"
-  get "/events/:id/yelp" => "events#yelp"
-  post "/events/:id/yelp_search" => "events#yelp_search"
-  post "/events/:id/select_restaurant" => "events#select_restaurant"
-  post "/events/:id/deselect_restaurant" => "events#deselect_restaurant"
-  match "/events/:id/clear_restaurants" => "events#clear_restaurants"
-  post "/checklist_items/edit_text" => "checklist_items#edit_text"
 end

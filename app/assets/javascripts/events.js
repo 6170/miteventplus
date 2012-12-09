@@ -73,7 +73,7 @@ function toFormattedDateString(x){
 		events: '/events/1',
 		editable: false,
 		eventClick: function(event, jsEvent, view) {
-			$('.fc-event-inner', this).append('<div id=\"'+event.id+'\" class=\"hover-end\">'+event.description+'</div>');
+			$('.new_time').append('<div id=\"'+event.id+'\" class=\"hover-end\">'+event.description+'</div>');
 		},
 
 		eventMouseout: function(event, jsEvent, view) {
