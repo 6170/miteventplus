@@ -1,4 +1,7 @@
 class EventsController < ApplicationController
+  
+  # returns json event objects for the events that fall between a given start and end time.
+  # requires valid start and end dateTime object in params.
   def show
     start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
@@ -10,7 +13,9 @@ class EventsController < ApplicationController
     render :json => events
 
   end
-
+  
+  # returns json resource objects for the events that fall between a given start and end time.
+  # requires valid start and end dateTime object in params.
   def resources
 	start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
