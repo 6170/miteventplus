@@ -19,6 +19,15 @@ pre {
  white-space: -o-pre-wrap;    /* Opera 7 */
  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
+
+.fc-event-inner {
+	cursor: pointer;
+}
+
+#dateTab .fc-first {
+	height: 25px;
+}
+
 .resourceNameInfo {
 	color: black;
     border-radius: 10px;
