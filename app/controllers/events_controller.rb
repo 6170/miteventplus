@@ -55,6 +55,7 @@ class EventsController < ApplicationController
       @event.checklist_items.create(:text => "Send posters to CopyTech to print and publicize your event.", :tag => "copytech")
       @event.checklist_items.create(:text => "Upload files to your event", :tag => "filemanager")
       @event.checklist_items.create(:text => "Send publicity emails", :tag => "publicity")
+      @event.checklist_items.create(:text => "Create a budget for your event", :tag => "budget")
       redirect_to :root
       return
     end

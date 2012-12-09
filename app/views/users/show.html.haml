@@ -42,6 +42,8 @@
                             = link_to checklist_item.text, "/events/#{event.id}/yelp", :class => "checklist-link"
                           - elsif checklist_item.tag == 'copytech'
                             = link_to checklist_item.text, "http://copytech-print.mit.edu/fulfillment/login", :class => "checklist-link", :target => "_blank"
+                          - elsif checklist_item.tag == 'budget'
+                            = link_to checklist_item.text, "/budget_items?id=" + event.id.to_s, :class => "checklist-link"
                           - else
                             %span{:class => "edit", :id => checklist_item.id.to_s}
                               = checklist_item.text
