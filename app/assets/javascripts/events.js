@@ -30,7 +30,7 @@ function toFormattedDateString(x){
 	if (h.length < 2){ h = '0'+h;}
 	if (m.length < 2){ m = '0'+m;}
 	if (d.length < 2){ d = '0'+d;}
-	answer = h + ':'+m+" ";
+	answer = h + ':'+m+":00 ";
 	if (PM) { answer += 'PM';}
 	else    { answer += 'AM';}
 	return answer;
