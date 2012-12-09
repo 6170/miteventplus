@@ -14,14 +14,14 @@ Risd::Application.routes.draw do
   get "/events/:id/publicity" => "events#publicity", :as => "event_publicity"
   post "/events/:event_id/uploadFromRedactor" => "uploads#create_from_redactor"
   match "/events/:event_id/images" => "uploads#images", :as => "event_images"
-  match "/checklist_item/:id/toggle_checked" => "checklist_items#toggle_checked", :method => :post
+  post "/checklist_item/:id/toggle_checked" => "checklist_items#toggle_checked"
   get "/settime/:id" => "events#new_time"
   post "/settime/:id" => "events#set_time"
   get "/events/:id/resources" => "events#resources", :as => "resources"
   get "/events/:id/yelp" => "events#yelp"
-  match "/events/:id/yelp_search" => "events#yelp_search", :method => :post
-  match "/events/:id/select_restaurant" => "events#select_restaurant", :method => :post
-  match "/events/:id/deselect_restaurant" => "events#deselect_restaurant", :method => :post
+  post "/events/:id/yelp_search" => "events#yelp_search"
+  post "/events/:id/select_restaurant" => "events#select_restaurant"
+  post "/events/:id/deselect_restaurant" => "events#deselect_restaurant"
   match "/events/:id/clear_restaurants" => "events#clear_restaurants"
-  match "/checklist_items/edit_text" => "checklist_items#edit_text", :method => :post
+  post "/checklist_items/edit_text" => "checklist_items#edit_text"
 end

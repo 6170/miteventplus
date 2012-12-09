@@ -28,14 +28,14 @@ class EventsController < ApplicationController
     @event = Event.new
   end
 
-  # creates a new event object from the params values
-  # requires that all the values passed in from params are valid, including
-  # start_date, start_time, end_date, end_time, title, location, and description
-  # it will also create a timeblock object for this newly created event. 
+  # creates a new event object from the params values of title and description.
+  # it also prepopulates the checklist with 6 suggested checklist items, and creates
+  # a time block object for this event.
+  # requires that all the values passed in from params are valid.
   def create
     @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
     @event.id = Event.last.id + 1
-    @event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
+    @event.create_time_block(:starttime => DateTime.new, :endtime => DateTime.new)
     if @event.save
       @event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
       @event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
