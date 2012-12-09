@@ -1,7 +1,15 @@
-.ten.columns.centered
+.twelve.columns.centered
+  .alert-box.secondary
+    %center 
+      *Optional: Get started with your publicity email by copying over another of your publicity emails! 
+      = collection_select(:publicity_email, :id, @publicity_emails, :id, :subject, {:prompt => "Select Email..."}, {:style => "width: 120px;margin-left: 10px"})
+
+.eleven.columns.centered
   %center 
-    %h2 Send a Publicity Email
-  = simple_form_for [@event, @event.publicity_emails.new] do |f|
+    %h2 Publicity Email
+    %h3.subtitle Write a publicity email to publicize your event
+
+  = simple_form_for [@event, @event.publicity_emails.new], :html => {:class => 'publicity_email_form', :id => @event.id.to_s} do |f|
     = f.error_notification
     .twelve.columns
       .three.columns
@@ -20,3 +28,16 @@
       .six.columns
         = f.submit 'Send Email', :class => "small button right", :style => "margin-top: 15px;"
       .three.columns
+
+:javascript
+  $("#publicity_email_id").on("change", function(){
+    var selected = $(this).val();
+    $.ajax({
+      type: "GET",
+      url: "/events/" + $('.publicity_email_form').attr("id") + "/publicity_emails/" + selected,
+      success: function(data) {
+        $('#publicity_email_subject').val(data["subject"]);
+        $('.redactor_editor').children().first().html(data["content"]);
+      }
+    });
+  });

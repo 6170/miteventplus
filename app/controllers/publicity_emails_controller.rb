@@ -1,11 +1,18 @@
 class PublicityEmailsController < ApplicationController
   before_filter :load_parent
   
+  def show
+    @publicity_email = PublicityEmail.find(params[:id])
+    respond_to do |format|
+      format.json{ render :json => @publicity_email}
+    end
+  end
+
   def new
   end
 
   def create
-    @publicity_email = @event.publicity_emails.new(params[:publicity_email])
+    @publicity_email = @event.publicity_emails.create(params[:publicity_email])
     Email.new(:title => @publicity_email.subject, :email => @event.user.email, :message => @publicity_email.content.gsub('<img src="/system', '<img src="eventplus.herokuapp.com/system')).deliver
     redirect_to :root
   end

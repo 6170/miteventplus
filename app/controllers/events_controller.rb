@@ -66,6 +66,12 @@ class EventsController < ApplicationController
 
   def publicity
     @event = current_user.events.find(params[:id])
+    @publicity_emails = []
+    current_user.events.each do |event|
+      event.publicity_emails.each do |email|
+        @publicity_emails << email
+      end
+    end
   end
 
   #Route: GET '/settime/:id'
