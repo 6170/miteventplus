@@ -6,6 +6,14 @@ class PublicityEmail < ActiveRecord::Base
   # renders string that describes this publicity email method
   # (essentially a to_string method)
   def describe
-  	self.event.title.to_s + " (" + self.event.time_block.starttime.to_date.to_s + ") - " + self.subject 
+  	starttime = self.event.time_block.starttime
+  	dateString = ""
+  	
+  	if starttime == DateTime.new
+  	  dateString = "No Date" 
+  	else dateString = starttime.to_date.to_s
+  	end
+
+  	self.event.title.to_s + " (" + dateString + ") - " + self.subject 
   end
 end

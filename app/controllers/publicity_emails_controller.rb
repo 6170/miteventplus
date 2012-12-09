@@ -1,29 +1,22 @@
 class PublicityEmailsController < ApplicationController
   before_filter :load_parent
   
+  # AJAX query queries for this to set the mail form fields to a previous email's contents
   def show
-    @publicity_email = PublicityEmail.find(params[:id])
+    @publicity_email = @event.publicity_emails.find(params[:id])
     respond_to do |format|
       format.json{ render :json => @publicity_email}
     end
   end
 
-  def new
-  end
-
+  # called when publicity email is sent. Stores a copy of the email's contents under the event.
   def create
     @publicity_email = @event.publicity_emails.create(params[:publicity_email])
     Email.new(:title => @publicity_email.subject, :email => @event.user.email, :message => @publicity_email.content.gsub('<img src="/system', '<img src="eventplus.herokuapp.com/system')).deliver
     redirect_to :back
   end
 
-  def destroy
-    Event.find(params[:id]).destroy
-    redirect_to :back
-  end
-
   private
-
   def load_parent
     @event = current_user.events.find(params[:event_id])
   end
