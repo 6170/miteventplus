@@ -143,6 +143,12 @@
     // check whether value is a number
     number =  ! isNaN (value-0);
     if (number){
+      if (parseInt(value) == 0){
+         $(".new-budget-item").focus();
+          $(".new-budget-item-value").addClass("error");
+          $("#new-budget-item-prefix").addClass("error");
+          return false
+      }
       $(".new-budget-item-value").removeClass("error");
       $("#new-budget-item-prefix").removeClass("error");
       return true
