@@ -30,7 +30,7 @@ class EventsController < ApplicationController
 
   # creates a new event object from the params values of title and description.
   # it also prepopulates the checklist with 6 suggested checklist items, and creates
-  # a time block object for this event.
+  # a "blank" default time block object for this event.
   # requires that all the values passed in from params are valid.
   def create
     @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
@@ -50,7 +50,7 @@ class EventsController < ApplicationController
   end
 
   # destroys an event object, and then redirects the user back
-  # requires that 
+  # requires a valid id passed in with params.
   def destroy
     Event.find(params[:id]).destroy
     redirect_to :back
@@ -87,6 +87,14 @@ class EventsController < ApplicationController
     redirect_to :root
   end
 
+  # sets up the variables for the yelp restaurant suggestion page.
+  # passes to the view the event corresponding to the suggestion page,
+  # the sampled_tag that was used for restaurant suggestion, and a hash 
+  # that contains the response from the Yelp API call for suggested
+  # restaurants.
+
+  # requires that a valid id is passed in with params and that the Yelp
+  # API is functional (and that our consumer keys/secrets/tokens are valid)
   def yelp
     @event = Event.find(params[:id])
     matched_tags = current_user.cross_reference_tags
@@ -114,6 +122,8 @@ class EventsController < ApplicationController
     @suggested_restaurants = client.search(suggested_request)
   end
 
+  # runs a search on Yelp API based on what the user typed in as a search_term
+  # and searcH_zip
   def yelp_search
     @event = Event.find(params[:id])
     @page = params[:page].to_i
