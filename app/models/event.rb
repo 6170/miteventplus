@@ -16,8 +16,7 @@ class Event < ActiveRecord::Base
   	if self.time_block
       tb = self.time_block
       if Event.joins(:time_block).where(
-        :title => self.title, 
-        :location => self.location).where('time_blocks.starttime > ? AND
+        :title => self.title).where('time_blocks.starttime > ? AND
           time_blocks.starttime < ? AND 
           time_blocks.endtime > ? AND
           time_blocks.endtime < ?', tb.starttime - 1, tb.starttime + 1, tb.endtime - 1, tb.endtime + 1).size > 0
