@@ -59,7 +59,7 @@
 
 #createEventModal.reveal-modal.medium
   %h2 Create a New Event
-  = simple_form_for @event, :url => "/create_event" do |f|
+  = simple_form_for @event, :url => "/events" do |f|
     = f.error_notification
     = f.input :title
     = f.input :location

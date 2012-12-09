@@ -23,29 +23,16 @@ class EventsController < ApplicationController
     render :json => resources
   end
 
+  # creates a new event object
   def new
     @event = Event.new
   end
 
+  # creates a new event object from the params values
+  # requires that all the values passed in from params are valid, including
+  # start_date, start_time, end_date, end_time, title, location, and description
+  # it will also create a timeblock object for this newly created event. 
   def create
-    parse = '%m/%d/%Y %I:%M:%S %p'
-    start_date = DateTime.strptime(params[:start_date]+' '+params[:start_time], parse)
-    end_date = DateTime.strptime(params[:end_date]+' '+params[:end_time], parse)
-    event = Event.create(:title => params[:title], :location => params[:location], :description => params[:description]).create_time_block(:starttime => start_date, :endtime => end_date)
-
-    redirect_to :root
-  end
-
-  def destroy
-    Event.find(params[:id]).destroy
-    redirect_to :back
-  end
-
-  def new_event
-    @event = Event.new
-  end
-
-  def create_event
     @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
     @event.id = Event.last.id + 1
     @event.create_time_block(:starttime => DateTime.now, :endtime => DateTime.now)
@@ -60,6 +47,13 @@ class EventsController < ApplicationController
       return
     end
     render :new_event
+  end
+
+  # destroys an event object, and then redirects the user back
+  # requires that 
+  def destroy
+    Event.find(params[:id]).destroy
+    redirect_to :back
   end
 
   def publicity
