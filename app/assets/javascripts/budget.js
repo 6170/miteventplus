@@ -99,7 +99,7 @@ $(function(){
     value = $(".new-budget-item-value").val();
     // check whether value is a number
     number =  ! isNaN (value-0);
-    if (number){
+    if (number && value != ''){
       if (parseInt(value) == 0){
           $(".new-budget-item").focus();
           $(".new-budget-item-value").addClass("error");
