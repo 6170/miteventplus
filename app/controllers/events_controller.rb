@@ -10,7 +10,7 @@ class EventsController < ApplicationController
     render :json => events
 
   end
-  
+
   def resources
 	start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
@@ -35,7 +35,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(:title => params[:event][:title], :description => params[:event][:description], :user_id => current_user.id)
     @event.id = Event.last.id + 1
-    @event.create_time_block(:starttime => DateTime.new, :endtime => DateTime.new)
+    @event.create_time_block(:starttime => DateTime.new(1,1,1,1,1), :endtime => DateTime.new(1,1,1,1,1))
     if @event.save
       @event.checklist_items.create(:text => "Pick the date and time of your event.", :tag => "datetime")
       @event.checklist_items.create(:text => "Pick a restaurant to cater food for your event.", :tag => "food")
