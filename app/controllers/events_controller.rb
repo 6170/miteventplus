@@ -1,7 +1,4 @@
 class EventsController < ApplicationController
-  def index
-  end
-
   def show
     start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)

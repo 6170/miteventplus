@@ -1,7 +1,6 @@
 .content.panel{:style => 'padding-bottom:30px;'}
-  .row
-    .four.columns.centered
-      %h3 Create A Budget
+  .four.columns.centered
+    %h2.center Create A Budget
   .row
     .eight.columns.offset-by-two.end
       = form_tag do
@@ -16,7 +15,7 @@
                 %span{:class => 'prefix', :id => 'new-budget-item-prefix'} $$
               .eight.columns.end
                 = text_field_tag(@event.id, nil, :class => 'new-budget-item-value')
-  #budget-item-container.eight.columns.offset-by-two
+  #budget-item-container.eight.columns.centered
     - @b_items.each do |b|
       .row{:id => "budget-item-#{b.id}"}
         .one.column
@@ -30,7 +29,7 @@
         .one.column.end
           %p{:class => 'b_item_percentage', :id => "#{b.id}"}
   %hr
-  #budget-summary.eight.columns.offset-by-two.end
+  #budget-summary.eight.columns.centered.end
     .row
       .five.columns.offset-by-one
         %p Event Total Cost:
@@ -39,7 +38,7 @@
       .one.column.end
         %p 100.00%
     %br
-  .eight.columns.centered
+  .eight.columns.centered.pie-chart
     #pie_chart
 
 :javascript
@@ -179,6 +178,7 @@
     pie_chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'pie_chart',
+                    backgroundColor: "#F2F2F2",
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false
