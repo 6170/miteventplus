@@ -5,7 +5,7 @@ class PublicityEmailsController < ApplicationController
   
   # AJAX query queries for this to set the mail form fields to a previous email's contents
   def show
-    @publicity_email = @event.publicity_emails.find(params[:id])
+    @publicity_email = {PublicityEmail.find(params[:id])
     respond_to do |format|
       format.json{ render :json => @publicity_email}
     end
