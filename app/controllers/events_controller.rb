@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
+
   # returns json event objects for the events that fall between a given start and end time.
   # requires valid start and end dateTime object in params.
   def show

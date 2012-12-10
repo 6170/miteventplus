@@ -1,4 +1,5 @@
 class BudgetItemsController < ApplicationController
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
 
 # effects: Grabs all budget items for an event and computes their sum
 # requires: a valid Event id

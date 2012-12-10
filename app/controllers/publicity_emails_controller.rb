@@ -1,5 +1,7 @@
 class PublicityEmailsController < ApplicationController
-  before_filter :load_parent
+  before_filter :load_parent # for all below methods, requires user to own the event
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
+
   
   # AJAX query queries for this to set the mail form fields to a previous email's contents
   def show

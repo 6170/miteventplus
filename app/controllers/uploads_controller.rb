@@ -1,6 +1,6 @@
   class UploadsController < ApplicationController
-  before_filter :load_parent
-  before_filter :check_logged_in
+  before_filter :load_parent #for all below methods, require that user must own the event
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
 
   # gives list of all event uploads in json
   def index
@@ -80,17 +80,6 @@
 
   def load_parent
     @event = current_user.events.find(params[:event_id])
-  end
-
-  def check_logged_in
-    if !current_user
-      flash[:alert] = 'Please sign in to continue'
-
-      respond_to do |format|
-        format.html { redirect_to new_user_session_path }
-        format.js { render 'sign_in' }
-      end
-    end
   end
 
 end
