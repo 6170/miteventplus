@@ -17,7 +17,7 @@ class EventsController < ApplicationController
   # returns json resource objects for the events that fall between a given start and end time.
   # requires valid start and end dateTime object in params.
   def resources
-	start_time = Time.at(params[:start].to_i)
+	  start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
     resources = []
     resources << {:id => 'newevent', :name => 'Select a Time', :readonly => false}
