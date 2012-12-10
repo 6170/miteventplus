@@ -3,7 +3,7 @@ Risd::Application.routes.draw do
   devise_for :users
   resources :users, :only => [:show]
   resources :events do
-    resources :uploads
+    resources :uploads, :only => [:index, :show, :create, :destroy]
     resources :publicity_emails
     member do
       get 'publicity'
@@ -15,7 +15,6 @@ Risd::Application.routes.draw do
       get 'resources'
     end
   end
-  resources :uploads
   resources :checklist_items do
     post 'edit_text', :on => :collection
     post 'toggle_checked', :on => :member
