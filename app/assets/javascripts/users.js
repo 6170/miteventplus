@@ -1,6 +1,6 @@
 $(function(){
   $(".foundicon-checkmark, .foundicon-remove").live('click', function() {
-    if ($(this).parent().attr('class') === null) {
+    if ($(this).attr('id') != "home-check") {
       $.ajax({
         type: "POST",
         url: "/checklist_items/" + $(this).attr("id") + "/toggle_checked",
