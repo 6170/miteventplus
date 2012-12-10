@@ -24,7 +24,7 @@ $(function(){
         success: $.proxy(function(data) {
           $(this).val('');
           var div_start = '<div id="checklist-item-' + data.id + '" style="padding-left:10px;">';
-          var icon_code = '<i class="general foundicon-remove unchecked" id="' + data.id + '"></i> type = "checklist"';
+          var icon_code = '<i class="general foundicon-remove unchecked" id="' + data.id + '" type = "checklist"></i>';
           var text_code = '<span class="bold"><span class="editableitem" id="' + data.id + '">&nbsp;' + text + '</span></span>';
           var delete_button = '<span class="right-align"><a href="#" class="delete-checklist-item" id="' + data.id + '" data-confirm="Are you sure you want to delete this checklist item?">Delete</a></span>';
           var ending = '<br></div>';
