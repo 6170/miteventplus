@@ -13,6 +13,7 @@ end
 def create
   @event = Event.find(params[:id])
   budget_item = @event.budget_items.create(:title => params[:title], :value => params[:value])
+
   respond_to do |format|
     format.json{ render :json => budget_item}
   end

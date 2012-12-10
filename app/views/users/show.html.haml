@@ -45,7 +45,7 @@
                           - elsif checklist_item.tag == 'budget'
                             = link_to checklist_item.text, "/budget_items?id=" + event.id.to_s, :class => "checklist-link"
                           - else
-                            %span{:class => "edit", :id => checklist_item.id.to_s}
+                            %span{:class => "editableitem", :id => checklist_item.id.to_s}
                               = checklist_item.text
                         %span.right-align
                           = link_to "Delete", "#", :id => checklist_item.id.to_s, :class => "delete-checklist-item", data: {confirm: "Are you sure you want to delete this checklist item?"}

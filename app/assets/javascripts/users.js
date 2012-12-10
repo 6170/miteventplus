@@ -27,7 +27,7 @@ $(function(){
           var delete_button = '<span class="right-align"><a href="#" class="delete-checklist-item" id="' + data.id + '" data-confirm="Are you sure you want to delete this checklist item?">Delete</a></span>';
           var ending = '<br></div>';
           $(div_start + icon_code + text_code + delete_button + ending).hide().appendTo("#existing-checklist-items-" + event_id).fadeIn(800);
-          $(".edit").editable("/checklist_items/edit_text");
+          $(".editableitem").editable("/checklist_items/edit_text");
         }, this)
       });
     }
@@ -61,5 +61,6 @@ $(function(){
       }
   });
 
-  $(".edit").editable("/checklist_items/edit_text");
+  if ($('.editableitem').length != 0)
+    $(".editableitem").editable("/checklist_items/edit_text");
 });

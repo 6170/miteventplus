@@ -169,6 +169,7 @@ class EventsController < ApplicationController
       :yelp_restaurant_url => params[:yelp_url],
       :yelp_restaurant_phone => (params[:yelp_phone].blank? ? nil : params[:yelp_phone]))
 
+    event.checklist_items.find_by_tag("food").set_checked_true
     render :text => "Success!"
   end
 
@@ -177,6 +178,10 @@ class EventsController < ApplicationController
   def deselect_restaurant
     event = current_user.events.find(params[:id])
     event.event_restaurants.find_by_yelp_restaurant_id(params[:yelp_id]).delete
+
+    if event.event_restaurants.size == 0
+      event.checklist_items.find_by_tag("food").set_checked_false
+    end
 
     render :text => "Success!"
   end

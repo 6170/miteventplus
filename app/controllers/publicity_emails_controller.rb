@@ -13,7 +13,9 @@ class PublicityEmailsController < ApplicationController
   def create
     @publicity_email = @event.publicity_emails.create(params[:publicity_email])
     Email.new(:title => @publicity_email.subject, :email => @event.user.email, :message => @publicity_email.content.gsub('<img src="/system', '<img src="eventplus.herokuapp.com/system')).deliver
-    redirect_to :back
+    
+    @event.checklist_items.find_by_tag("publicity").set_checked_true
+    redirect_to :root, :notice => "Publicity email sent to your exec mailing list."
   end
 
   private

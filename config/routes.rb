@@ -1,7 +1,7 @@
 Risd::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
-  resources :users, :only => [:index, :update, :destroy, :show]
+  resources :users, :only => [:show]
   resources :events do
     resources :uploads
     resources :publicity_emails
