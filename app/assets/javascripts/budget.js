@@ -161,10 +161,12 @@ $(function(){
                 }]
             });
   }
-  // setup the pie chart when the center panel loads
-  $('.content.panel').ready(function(){
-    setup_pie_chart();
-  });
+  if ($('.content.panel').length != 0) {
+    // setup the pie chart when the center panel loads
+    $('.content.panel').ready(function(){
+      setup_pie_chart();
+    });
+  }
 });
 
 
