@@ -70,7 +70,7 @@ function toFormattedDateString(x){
 			}
 			calendar.fullCalendar('unselect');
 		},
-		events: '/events/1',
+		events: '/getevents',
 		editable: false,
 		eventClick: function(event, jsEvent, view) {
 		//shows event description on click
@@ -95,7 +95,7 @@ function toFormattedDateString(x){
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
         day: current_start_date.getDay(),
-		events: '/events/1',
+		events: '/getevents',
 		selectable: true,
 		selectHelper: true,
 		select: function(start, end, allDay) { 
@@ -115,7 +115,7 @@ function toFormattedDateString(x){
 		firstDay: 1,
 		minTime: '7am',
 		maxTime:'11:59pm',
-		resources: '/events/1/resources',
+		resources: '/getresources',
 		refetchResources: true,
 		refetchEvents: true,
 		columnFormat: {
@@ -152,6 +152,77 @@ function toFormattedDateString(x){
 		$('#event_finalize_tab').click();
     });
    
+  var event_id = $("h1.center").attr("id");
+  $(".yelp-search").live('click', function() {
+    var search_term = $(".yelp_search_term").val();
+    var search_zip = $(".yelp_search_zip").val();
+    $(".yelp-search-results").empty();
+    $.ajax({
+      type: "POST",
+      url: "/events/" + event_id + "/yelp_search",
+      data: "search_term=" + search_term + "&search_zip=" + search_zip + "&page=1",
+      success: $.proxy(function(data) {
+      }, this)
+    });
+
+    return false;
+  });
+
+  var yelp_search_enter = function (e) {
+    if (e.which == 13) {
+      e.preventDefault();
+      var search_term = $(".yelp_search_term").val();
+      var search_zip = $(".yelp_search_zip").val();
+      $(".yelp-search-results").empty();
+      $.ajax({
+        type: "POST",
+        url: "/events/" + event_id + "/yelp_search",
+        data: "search_term=" + search_term + "&search_zip=" + search_zip + "&page=1",
+        success: $.proxy(function(data) {
+        }, this)
+      });
+    }
+  }
+
+  $(".yelp_search_term").keypress(yelp_search_enter);
+  $(".yelp_search_zip").keypress(yelp_search_enter);
+
+  $(".select-restaurant.not-checked").live('click', function() {
+    var event_id = $("h1.center").attr("id");
+    var id = $(this).attr("id");
+    var restaurant_div = $("." + id);
+    var name = restaurant_div.find(".business-info").find(".business-name").find("a").text();
+    var url = restaurant_div.find(".business-info").find(".business-name").find("a").attr("href");
+    var pre_phone = restaurant_div.find(".business-phone").text().trim();
+    if (pre_phone.indexOf("phone") != -1) {
+      var phone = "";
+    } else {
+      var phone = pre_phone;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "/events/" + event_id + "/select_restaurant",
+      data: "yelp_id=" + id + "&yelp_name=" + name + "&yelp_url=" + url + "&yelp_phone=" + phone,
+      success: $.proxy(function(data) {
+        $(this).toggleClass('not-checked checked');
+      }, this)
+    });
+  }); 
+
+  $(".select-restaurant.checked").live('click', function() {
+    var event_id = $("h1.center").attr("id");
+    var id = $(this).attr("id");
+    $.ajax({
+      type: "POST",
+      url: "/events/" + event_id + "/deselect_restaurant",
+      data: "yelp_id=" + id,
+      success: $.proxy(function(data) {
+        $(this).toggleClass('not-checked checked');
+      }, this)
+    });
+  });
+
     
 });
 

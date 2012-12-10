@@ -1,7 +1,12 @@
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  
+  ###event without start and end cannot be saved
+  test " should not save event missing title" do
+	event = Event.new
+	assert !event.save
+  end
+  
+  
 end

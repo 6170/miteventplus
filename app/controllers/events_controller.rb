@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   # returns json event objects for the events that fall between a given start and end time.
   # requires valid start and end dateTime object in params.
-  def show
+  def getevents
     start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
     events = []
@@ -17,8 +17,8 @@ class EventsController < ApplicationController
   
   # returns json resource objects for the events that fall between a given start and end time.
   # requires valid start and end dateTime object in params.
-  def resources
-	  start_time = Time.at(params[:start].to_i)
+  def getresources
+	start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
     resources = []
     resources << {:id => 'newevent', :name => 'Select a Time', :readonly => false}
@@ -105,30 +105,9 @@ class EventsController < ApplicationController
   # requires that a valid id is passed in with params and that the Yelp
   # API is functional (and that our consumer keys/secrets/tokens are valid)
   def yelp
-    @event = Event.find(params[:id])
-    matched_tags = current_user.cross_reference_tags
-    @sampled_tag = matched_tags.sample
-    client = Yelp::Client.new
-    if @sampled_tag.nil?
-      suggested_request = Yelp::V2::Search::Request::Location.new(
-        :term => "restaurants delivery",
-        :city => "Cambridge", :state => "MA", :zip => "02139",
-        :consumer_key => YELP_API['consumer_key'], 
-        :consumer_secret => YELP_API['consumer_secret'], 
-        :token => YELP_API['token'], 
-        :token_secret => YELP_API['token_secret'],
-        :limit => 10)
-    else
-      suggested_request = Yelp::V2::Search::Request::Location.new(
-        :term => @sampled_tag, 
-        :city => "Cambridge", :state => "MA", :zip => "02139", 
-        :consumer_key => YELP_API['consumer_key'], 
-        :consumer_secret => YELP_API['consumer_secret'], 
-        :token => YELP_API['token'], 
-        :token_secret => YELP_API['token_secret'],
-        :limit => 10)
-    end
-    @suggested_restaurants = client.search(suggested_request)
+    @event = current_user.events.find(params[:id])
+    @sampled_tag = current_user.cross_reference_tags_and_sample
+    @suggested_restaurants = @event.yelp_suggestion(@sampled_tag)
   end
 
   # runs a search on Yelp API based on what the user typed in as a search_term
@@ -139,23 +118,11 @@ class EventsController < ApplicationController
   # requires that valid id, page, search_term, and search_zip be passed in with params.
   # also requires that the Yelp API is functional and that our authentication credentials are valid.
   def yelp_search
-    @event = current_user.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @page = params[:page].to_i
-    search_term = params[:search_term]
-    search_zip = params[:search_zip]
-    client = Yelp::Client.new
-    search_request = Yelp::V2::Search::Request::Location.new(
-      :term => @search_term,
-      :zip => @search_zip,
-      :state => "MA",
-      :consumer_key => YELP_API['consumer_key'], 
-      :consumer_secret => YELP_API['consumer_secret'], 
-      :token => YELP_API['token'], 
-      :token_secret => YELP_API['token_secret'],
-      :offset => 10 * (@page - 1),
-      :limit => 10)
-
-    @search_results = client.search(search_request)
+    @search_term = params[:search_term]
+    @search_zip = params[:search_zip]
+    @search_results = @event.yelp_search(@search_term, @search_zip, @page)
 
     respond_to do |format|
       format.js

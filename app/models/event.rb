@@ -41,4 +41,46 @@ class Event < ActiveRecord::Base
 
     return false
   end
+
+  # performs a search on the Yelp API given a search term, zip and 
+  # a page to offset results
+  def yelp_search(search_term, search_zip, page)
+    client = Yelp::Client.new
+    search_request = Yelp::V2::Search::Request::Location.new(
+      :term => search_term,
+      :zip => search_zip,
+      :state => "MA",
+      :consumer_key => YELP_API['consumer_key'], 
+      :consumer_secret => YELP_API['consumer_secret'], 
+      :token => YELP_API['token'], 
+      :token_secret => YELP_API['token_secret'],
+      :offset => 10 * (page - 1),
+      :limit => 10)
+
+    client.search(search_request)
+  end
+
+  # performs a search on the Yelp API to suggest restaurants for an event 
+  # given a sampled tag that is used to suggest.
+  # if the sampled_tag is nil, then it does a default search for good restaurants
+  # in the area.
+  def yelp_suggestion(sampled_tag)
+    if sampled_tag.nil?
+      search_term = "restaurants delivery"
+    else
+      search_term = sampled_tag
+    end
+
+    client = Yelp::Client.new
+    search_request = Yelp::V2::Search::Request::Location.new(
+      :term => search_term,
+      :city => "Cambridge", :state => "MA", :zip => "02139",
+      :consumer_key => YELP_API['consumer_key'], 
+      :consumer_secret => YELP_API['consumer_secret'], 
+      :token => YELP_API['token'], 
+      :token_secret => YELP_API['token_secret'],
+      :limit => 10)
+
+    client.search(search_request)
+  end
 end

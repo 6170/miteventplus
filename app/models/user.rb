@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   # find which tags of this user match "fuzzily" with yelp restaurant categories.
-  def cross_reference_tags
+  def cross_reference_tags_and_sample
     jarow = FuzzyStringMatch::JaroWinkler.create(:native)
     matched_tags = []
     self.tags.each do |tag|
@@ -48,6 +48,6 @@ class User < ActiveRecord::Base
         end
       end
     end
-    matched_tags
+    matched_tags.sample
   end
 end

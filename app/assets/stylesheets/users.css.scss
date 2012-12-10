@@ -2,6 +2,72 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
 input.readonly {
   background-color: #F5F5F5 !important;
 }
+
+// dashboard styling
+.dashboard-title {
+  vertical-align:top;
+}
+h1.dashboard-title {
+  margin-top:0px !important;
+  margin-bottom:0px !important;
+}
+.strikethrough {
+  text-decoration:line-through;
+  font-weight:bold;
+}
+.checklist-link {
+  font-weight:bold;
+}
+.delete-checklist-item, .delete-tag {
+  display:none;
+}
+.new-checklist-item {
+  display:inline;
+  width: 90% !important;
+}
+
+
+// account settings styling
+.new-tag {
+  width: 90% !important;
+}
+
+// icon and foundicon styling
+i.checked {
+  color: #88cf4f;
+  cursor: hand; 
+  cursor: pointer;
+}
+i.unchecked {
+  color: #ff7578;
+  cursor: hand; 
+  cursor: pointer;
+}
+i.foundicon-star, i.foundicon-checkmark, i.foundicon-remove, i.add {
+  font-size:20px;
+}
+i.foundicon-checkmark#home-check {
+  font-size:30px;
+}
+.foundicon-plus.dashboard {
+  padding-left:10px;
+}
+.foundicon-plus.tags {
+  padding-top:5px;
+  padding-left:5px;
+}
+i.foundicon-graph {
+  font-size:50px;
+}
+.foundicon-plus {
+  float:left;
+  vertical-align:top !important;
+}
+i.foundicon-star {
+  color: #c7b300;
+}
+
