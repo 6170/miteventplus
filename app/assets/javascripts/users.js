@@ -1,6 +1,6 @@
 $(function(){
   $(".checked, .unchecked").live('click', function() {
-    if ($(this).attr('id') != "home-check") {
+    if ($(this).attr('type') === "checklist") {
       $.ajax({
         type: "POST",
         url: "/checklist_items/" + $(this).attr("id") + "/toggle_checked",
