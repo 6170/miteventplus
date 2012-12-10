@@ -1,13 +1,15 @@
 $(function(){
   $(".foundicon-checkmark, .foundicon-remove").live('click', function() {
-    $.ajax({
-      type: "POST",
-      url: "/checklist_items/" + $(this).attr("id") + "/toggle_checked",
-      success: $.proxy(function() {
-        $(this).toggleClass("foundicon-checkmark foundicon-remove").toggleClass("checked unchecked");
-        $(this).next().toggleClass("strikethrough bold");
-      }, this)
-    });
+    if ($(this).parent().attr('class') === null) {
+      $.ajax({
+        type: "POST",
+        url: "/checklist_items/" + $(this).attr("id") + "/toggle_checked",
+        success: $.proxy(function() {
+          $(this).toggleClass("foundicon-checkmark foundicon-remove").toggleClass("checked unchecked");
+          $(this).next().toggleClass("strikethrough bold");
+        }, this)
+      });
+    }
   });
 
   $(".new-checklist-item").keypress(function(e) {

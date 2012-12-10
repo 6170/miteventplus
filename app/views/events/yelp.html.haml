@@ -119,22 +119,20 @@
     var name = restaurant_div.find(".business-info").find(".business-name").find("a").text();
     var url = restaurant_div.find(".business-info").find(".business-name").find("a").attr("href");
     var pre_phone = restaurant_div.find(".business-phone").text().trim();
-    if (confirm("Are you sure you want to select " + name + "?")) {
-      if (pre_phone.indexOf("phone") != -1) {
-        var phone = "";
-      } else {
-        var phone = pre_phone;
-      }
-
-      $.ajax({
-        type: "POST",
-        url: "/events/" + event_id + "/select_restaurant",
-        data: "yelp_id=" + id + "&yelp_name=" + name + "&yelp_url=" + url + "&yelp_phone=" + phone,
-        success: $.proxy(function(data) {
-          $(this).toggleClass('not-checked checked');
-        }, this)
-      });
+    if (pre_phone.indexOf("phone") != -1) {
+      var phone = "";
+    } else {
+      var phone = pre_phone;
     }
+
+    $.ajax({
+      type: "POST",
+      url: "/events/" + event_id + "/select_restaurant",
+      data: "yelp_id=" + id + "&yelp_name=" + name + "&yelp_url=" + url + "&yelp_phone=" + phone,
+      success: $.proxy(function(data) {
+        $(this).toggleClass('not-checked checked');
+      }, this)
+    });
   }); 
 
   $(".select-restaurant.checked").live('click', function() {

@@ -3,7 +3,7 @@ Final Project: MIT Event+
 
 ###Heroku URL
 
-http://eventplus.herokuapp.com (up to date as of 11/27/2012)
+http://eventplus.herokuapp.com (up to date as of 12/9/2012)
 
 ###Notes
 
