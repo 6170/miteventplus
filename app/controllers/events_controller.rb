@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
+
   # returns json event objects for the events that fall between a given start and end time.
   # requires valid start and end dateTime object in params.
   def getevents
@@ -61,6 +62,9 @@ class EventsController < ApplicationController
     redirect_to :back
   end
 
+  # gets all publicity emails associated with current user
+  # renders publicity email page associated with an event.
+  # requires user owns the event.
   def publicity
     @event = current_user.events.find(params[:id])
     @publicity_emails = []
@@ -169,6 +173,7 @@ class EventsController < ApplicationController
       :yelp_restaurant_url => params[:yelp_url],
       :yelp_restaurant_phone => (params[:yelp_phone].blank? ? nil : params[:yelp_phone]))
 
+    event.checklist_items.find_by_tag("food").set_checked_true
     render :text => "Success!"
   end
 
@@ -177,6 +182,10 @@ class EventsController < ApplicationController
   def deselect_restaurant
     event = current_user.events.find(params[:id])
     event.event_restaurants.find_by_yelp_restaurant_id(params[:yelp_id]).delete
+
+    if event.event_restaurants.size == 0
+      event.checklist_items.find_by_tag("food").set_checked_false
+    end
 
     render :text => "Success!"
   end

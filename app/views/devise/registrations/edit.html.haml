@@ -42,7 +42,7 @@
   %p
     Unhappy? 
   %p
-    #{link_to "Cancel your account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete}.
+    = link_to "Cancel your account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete
 
 .twelve.columns
   = link_to "Back", :back

@@ -11,7 +11,7 @@ class Upload < ActiveRecord::Base
       "name" => read_attribute(:upload_file_name),
       "size" => read_attribute(:upload_file_size),
       "url" => upload.url(:original),
-      "delete_url" => upload_path(self), 
+      "delete_url" => event_upload_path(self.event, self), 
       "delete_type" => "DELETE" 
     }
     if self.is_image?

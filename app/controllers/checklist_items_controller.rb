@@ -1,10 +1,12 @@
 class ChecklistItemsController < ApplicationController
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
 
   # creates a new checklist_item object for a given event, and
   # then responds with the created object in json format.
   # requires that a valid event_id and checklist text are passed in as params.
   def create
-    @new_item = ChecklistItem.create(:text => params[:text], :event_id => params[:event_id])
+    @event = current_user.events.find(params[:event_id])
+    @new_item = @event.checklist_items.create(:text => params[:text])
     respond_to do |format|
       format.json{ render :json => @new_item}
     end

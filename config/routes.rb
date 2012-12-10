@@ -1,10 +1,10 @@
 Risd::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
-  resources :users, :only => [:index, :update, :destroy, :show]
-  resources :events do
-    resources :uploads
-    resources :publicity_emails
+  resources :users, :only => [:show]
+  resources :events, :only => [:show, :new, :create, :destroy] do
+    resources :uploads, :only => [:index, :show, :create, :destroy]
+    resources :publicity_emails, :only => [:show, :create]
     member do
       get 'publicity'
       get 'yelp'
@@ -14,13 +14,12 @@ Risd::Application.routes.draw do
       delete 'clear_restaurants'
     end
   end
-  resources :uploads
-  resources :checklist_items do
+  resources :checklist_items, :only => [:create, :destroy] do
     post 'edit_text', :on => :collection
     post 'toggle_checked', :on => :member
   end
-  resources :tags
-  resources :budget_items
+  resources :tags, :only => [:create, :destroy]
+  resources :budget_items, :only => [:index, :create, :destroy]
 
   post "/events/:event_id/uploadFromRedactor" => "uploads#create_from_redactor"
   match "/events/:event_id/images" => "uploads#images", :as => "event_images"

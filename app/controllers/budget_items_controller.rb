@@ -1,4 +1,5 @@
 class BudgetItemsController < ApplicationController
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
 
 # effects: Grabs all budget items for an event and computes their sum
 # requires: a valid Event id
@@ -13,6 +14,7 @@ end
 def create
   @event = Event.find(params[:id])
   budget_item = @event.budget_items.create(:title => params[:title], :value => params[:value])
+
   respond_to do |format|
     format.json{ render :json => budget_item}
   end

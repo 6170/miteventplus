@@ -1,46 +1,27 @@
-class UploadsController < ApplicationController
-  before_filter :load_parent, :except => :destroy
-  before_filter :check_logged_in
-  # GET /uploads
-  # GET /uploads.json
+  class UploadsController < ApplicationController
+  before_filter :load_parent #for all below methods, require that user must own the event
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
+
+  # gives list of all event uploads in json
   def index
     @uploads = @event.uploads
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @uploads.map{|upload| upload.to_jq_upload } }
     end
   end
 
-  # GET /uploads/1
-  # GET /uploads/1.json
+  # gives event upload as json object
   def show
     @upload = @event.uploads.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
       format.json { render json: @upload }
     end
   end
 
-  # GET /uploads/new
-  # GET /uploads/new.json
-  def new
-    @upload = @event.uploads.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @upload }
-    end
-  end
-
-  # GET /uploads/1/edit
-  def edit
-    @upload = @event.uploads.find(params[:id])
-  end
-
-  # POST /uploads
-  # POST /uploads.json
+  # creates new event upload and renders json representation of upload or error messages
   def create
     @upload = @event.uploads.new(params[:upload])
 
@@ -59,26 +40,10 @@ class UploadsController < ApplicationController
     end
   end
 
-  # PUT /uploads/1
-  # PUT /uploads/1.json
-  def update
-    @upload = @event.uploads.find(params[:id])
 
-    respond_to do |format|
-      if @upload.update_attributes(params[:upload])
-        format.html { redirect_to @upload, notice: 'Upload was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @upload.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /uploads/1
-  # DELETE /uploads/1.json
+  # destroys upload, if it belongs to the event
   def destroy
-    @upload = Upload.find(params[:id])
+    @upload = @event.uploads.find(params[:id])
     @upload.destroy
 
     respond_to do |format|
@@ -87,16 +52,17 @@ class UploadsController < ApplicationController
     end
   end
 
+  # finds all images associated with event
   def images
     @images = @event.uploads.where(:upload_content_type => ["image/png", "image/gif", "image/jpe", "image/jpeg"])
 
     respond_to do |format|
-      format.html # images.html.erb
       format.json { render json: @images.map{|image| image.to_redactor_img } }
     end
 
   end
 
+  # upload image from within redactor (publicity email sending). Returns json of file information or error message
   def create_from_redactor
     @image = @event.uploads.new
     @image.upload = params[:file]    
@@ -114,17 +80,6 @@ class UploadsController < ApplicationController
 
   def load_parent
     @event = current_user.events.find(params[:event_id])
-  end
-
-  def check_logged_in
-    if !current_user
-      flash[:alert] = 'Please sign in to continue'
-
-      respond_to do |format|
-        format.html { redirect_to new_user_session_path }
-        format.js { render 'sign_in' }
-      end
-    end
   end
 
 end

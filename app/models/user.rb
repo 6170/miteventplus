@@ -30,8 +30,10 @@ class User < ActiveRecord::Base
   # and associate those with the newly created user.
   def prepopulate_tags
     preprocessed_tags = AsaDb.find_by_name(self.club_name).unprocessed_tags
-    preprocessed_tags.split(",").each do |tag|
-      self.tags.create(:name => tag)
+    if preprocessed_tags != nil
+      preprocessed_tags.split(",").each do |tag|
+        self.tags.create(:name => tag)
+      end
     end
   end
 

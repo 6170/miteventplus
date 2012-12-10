@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  before_filter :check_logged_in #for all below methods, require that user must be logged in
 
   # creates a new tag object, and responds with that tag
   # as a json object
