@@ -62,6 +62,9 @@ class EventsController < ApplicationController
     redirect_to :back
   end
 
+  # gets all publicity emails associated with current user
+  # renders publicity email page associated with an event.
+  # requires user owns the event.
   def publicity
     @event = current_user.events.find(params[:id])
     @publicity_emails = []
