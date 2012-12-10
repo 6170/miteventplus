@@ -13,7 +13,7 @@ $(function(){
   });
 
   $(".new-checklist-item").keypress(function(e) {
-    if (e.which == 13) {
+    if (e.which == 13 && $(this).val() != "") {
       var event_id = $(this).attr('id');
       var text = $(this).val();
       e.preventDefault();
@@ -25,7 +25,7 @@ $(function(){
           $(this).val('');
           var div_start = '<div id="checklist-item-' + data.id + '" style="padding-left:10px;">';
           var icon_code = '<i class="general foundicon-remove unchecked" id="' + data.id + '"></i>';
-          var text_code = '<span class="bold"><span class="edit" id="' + data.id + '">&nbsp;' + text + '</span></span>';
+          var text_code = '<span class="bold"><span class="editableitem" id="' + data.id + '">&nbsp;' + text + '</span></span>';
           var delete_button = '<span class="right-align"><a href="#" class="delete-checklist-item" id="' + data.id + '" data-confirm="Are you sure you want to delete this checklist item?">Delete</a></span>';
           var ending = '<br></div>';
           $(div_start + icon_code + text_code + delete_button + ending).hide().appendTo("#existing-checklist-items-" + event_id).fadeIn(800);
