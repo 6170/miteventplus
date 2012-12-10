@@ -28,7 +28,7 @@
                 %hr
                 .content
                   %div{:id => "existing-checklist-items-" + event.id.to_s}
-                    - event.checklist_items.each do |checklist_item|
+                    - event.checklist_items.order("id").each do |checklist_item|
                       %div{:id => "checklist-item-" + checklist_item.id.to_s, :style => "padding-left:10px;"}
                         %i{:class => "general #{checklist_item.checked? ? 'foundicon-checkmark checked' : 'foundicon-remove unchecked'}", :id => checklist_item.id}
                         %span{:class => "#{checklist_item.checked? ? 'strikethrough' : 'bold'}"}
