@@ -13,9 +13,9 @@
     #container.container
       %header
         = render 'layouts/navigation'
-      #main{:role => "main"}
-        .twelve.columns.centered
+        .six.columns.centered
           = render 'layouts/messages'
+      #main{:role => "main"}
         = yield
       %footer
       #loginModal.reveal-modal.medium
