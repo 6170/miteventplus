@@ -70,7 +70,7 @@ function toFormattedDateString(x){
 			}
 			calendar.fullCalendar('unselect');
 		},
-		events: '/events/1',
+		events: '/getevents',
 		editable: false,
 		eventClick: function(event, jsEvent, view) {
 		//shows event description on click
@@ -95,7 +95,7 @@ function toFormattedDateString(x){
 		year: current_start_date.getFullYear(),
         month: current_start_date.getMonth(),
         day: current_start_date.getDay(),
-		events: '/events/1',
+		events: '/getevents',
 		selectable: true,
 		selectHelper: true,
 		select: function(start, end, allDay) { 
@@ -115,7 +115,7 @@ function toFormattedDateString(x){
 		firstDay: 1,
 		minTime: '7am',
 		maxTime:'11:59pm',
-		resources: '/events/1/resources',
+		resources: '/getresources',
 		refetchResources: true,
 		refetchEvents: true,
 		columnFormat: {

@@ -12,7 +12,6 @@ Risd::Application.routes.draw do
       post 'select_restaurant'
       post 'deselect_restaurant'
       delete 'clear_restaurants'
-      get 'resources'
     end
   end
   resources :uploads
@@ -27,4 +26,6 @@ Risd::Application.routes.draw do
   match "/events/:event_id/images" => "uploads#images", :as => "event_images"
   get "/settime/:id" => "events#new_time"
   post "/settime/:id" => "events#set_time"
+  get "/getevents" => "events#getevents"
+  get "/getresources" => "events#getresources"
 end
