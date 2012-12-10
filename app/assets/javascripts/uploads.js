@@ -24,7 +24,6 @@ $(function () {
     var fu = $('#fileupload').data('fileupload'), 
       template;
     fu._adjustMaxNumberOfFiles(-files.length);
-    console.log(files);
     template = fu._renderDownload(files)
       .appendTo($('#fileupload .files'));
     // Force reflow:
