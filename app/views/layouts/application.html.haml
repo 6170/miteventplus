@@ -16,6 +16,7 @@
       #main{:role => "main"}
         = yield
       %footer
+        = render 'layouts/bottom'
       #loginModal.reveal-modal.medium
         %h2 Sign in
         = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-vertical' }) do |f|
