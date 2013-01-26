@@ -1,5 +1,5 @@
 $(function(){
-  $(".checked, .unchecked").live('click', function() {
+  $(".checked, .unchecked").on('click', function() {
     if ($(this).attr('type') === "checklist") {
       $.ajax({
         type: "POST",
@@ -35,7 +35,7 @@ $(function(){
     }
   });
 
-  $(".delete-checklist-item").live('click', function() {
+  $(".delete-checklist-item").on('click', function() {
     var checklist_id = $(this).attr('id');
     $.ajax({
       type: "DELETE",
@@ -50,7 +50,7 @@ $(function(){
     return false;
   });
 
-  $("div[id|='checklist-item']").live({
+  $("div[id|='checklist-item']").on({
     mouseenter:
       function() {
         $("a.delete-checklist-item", this).show();
@@ -88,7 +88,7 @@ $(function(){
     }
   });
 
-  $(".delete-tag").live('click', function() {
+  $(".delete-tag").on('click', function() {
     var tag_id = $(this).attr('id');
     $.ajax({
       type: "DELETE",
@@ -102,7 +102,7 @@ $(function(){
     return false;
   });
 
-  $("div[id|='tag']").live({
+  $("div[id|='tag']").on({
     mouseenter:
       function() {
         $("a.delete-tag", this).show();

@@ -20,6 +20,9 @@
 //= require redactor
 
 $(document).one('ready', function () {
+  $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+  $("a.gallery").colorbox({rel: 'gallery'});
+
 	$("#loginModalButton").click(function() {
 		$("#loginModal").reveal();
 	});
@@ -28,9 +31,6 @@ $(document).one('ready', function () {
     $("#createEventModal").reveal();
     return false;
   });
-  
-  $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-  $("a.gallery").colorbox({rel: 'gallery'});
 });
 
 

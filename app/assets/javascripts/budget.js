@@ -46,7 +46,7 @@ $(function(){
   })
 
   // Bind the delete button
-  $('.delete_budget').live('click',function(e){
+  $('.delete_budget').on('click',function(e){
         if (confirm('Are you sure you want to delete this item?')){
          // The delete AJAX call
          id = $(this).attr('id');

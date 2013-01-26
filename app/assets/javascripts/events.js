@@ -153,7 +153,7 @@ function toFormattedDateString(x){
     });
    
   var event_id = $("h1.center").attr("id");
-  $(".yelp-search").live('click', function() {
+  $(".yelp-search").on('click', function() {
     var search_term = $(".yelp_search_term").val();
     var search_zip = $(".yelp_search_zip").val();
     $(".yelp-search-results").empty();
@@ -187,7 +187,7 @@ function toFormattedDateString(x){
   $(".yelp_search_term").keypress(yelp_search_enter);
   $(".yelp_search_zip").keypress(yelp_search_enter);
 
-  $(".select-restaurant.not-checked").live('click', function() {
+  $(".select-restaurant.not-checked").on('click', function() {
     var event_id = $("h1.center").attr("id");
     var id = $(this).attr("id");
     var restaurant_div = $("." + id);
@@ -210,7 +210,7 @@ function toFormattedDateString(x){
     });
   }); 
 
-  $(".select-restaurant.checked").live('click', function() {
+  $(".select-restaurant.checked").on('click', function() {
     var event_id = $("h1.center").attr("id");
     var id = $(this).attr("id");
     $.ajax({
