@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+qqqqsource 'https://rubygems.org'
 gem 'rails', "3.2.11"
 group :development, :test do
   gem 'sqlite3'
@@ -32,4 +32,3 @@ gem 'yelpster'
 gem 'ZenTest', '4.6.0'
 gem 'fuzzy-string-match'
 gem 'mail_form'
-gem 'newrelic_rpm'
